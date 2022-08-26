@@ -222,10 +222,13 @@ sudo dnf -y install terminology
 Vào Settings->Keyboard -> Keyboard Shortcuts -> View and Customize Shortcuts -> Custome Shortcut.
 
 Terminal shortcut:
+
 ![Terminal Shortcut](./images/TerminalShortcut.png)
 
 Desktop Shortcut:
+
 ![Desktop Short](./images/DesktopShortcut.png)
+
 Cài thư viện wmctrl: 
 
 Fedora/RHEL:
