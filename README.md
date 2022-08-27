@@ -241,7 +241,10 @@ sudo apt-get update
 sudo apt-get install wmctrl
 ```
 
-Câu lệnh: `wmctrl -k on`
+Câu lệnh: 
+```console
+wmctrl -k on
+```
 
 Tham khảo: 
 
