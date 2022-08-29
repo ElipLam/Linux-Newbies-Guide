@@ -5,10 +5,10 @@
 - [Mục lục](#mục-lục)
 - [Các lệnh cơ bản](#các-lệnh-cơ-bản)
   - [Kiểm tra phiên bản của distro](#kiểm-tra-phiên-bản-của-distro)
-  - [Thao tác với kernel](#thao-tác-với-kernel)
+  - [Làm quen với kernel](#làm-quen-với-kernel)
   - [Cập nhật kernel](#cập-nhật-kernel)
-  - [Chọn kernel mặc định](#chọn-kernel-mặc-định)
-  - [Xóa kernel:](#xóa-kernel)
+  - [Chọn kernel làm mặc định](#chọn-kernel-làm-mặc-định)
+  - [Xóa kernel](#xóa-kernel)
   - [Kiểm tra Display Server](#kiểm-tra-display-server)
   - [Kiểm tra các gói đã cài đặt](#kiểm-tra-các-gói-đã-cài-đặt)
 - [Sửa lỗi headphone microphone](#sửa-lỗi-headphone-microphone)
@@ -19,7 +19,7 @@
 - [Cài đặt bộ gõ tiếng Việt](#cài-đặt-bộ-gõ-tiếng-việt)
   - [Ubuntu](#ubuntu)
   - [Cài đặt từ mã nguồn](#cài-đặt-từ-mã-nguồn)
-    - [Gỡ cài đặt:](#gỡ-cài-đặt)
+    - [Gỡ cài đặt](#gỡ-cài-đặt)
 - [Cài đặt neofetch](#cài-đặt-neofetch)
 - [Cài đặt bashtop](#cài-đặt-bashtop)
 - [Terminal](#terminal)
@@ -27,6 +27,7 @@
   - [Terminology](#terminology)
 - [Cài đặt phím tắt](#cài-đặt-phím-tắt)
 - [Gnome extention](#gnome-extention)
+- [GNOME Tweaks](#gnome-tweaks)
 - [Themes](#themes)
 - [Icons](#icons)
 - [Các ứng dụng thu âm](#các-ứng-dụng-thu-âm)
@@ -34,7 +35,7 @@
   - [Audio Recorder](#audio-recorder)
   - [Audacity](#audacity)
   - [Ardour](#ardour)
-- [Cài đặt NVIDIA driver cho các RedHat distro](#cài-đặt-nvidia-driver-cho-các-redhat-distro)
+- [Cài đặt NVIDIA Drivers cho các RedHat distro](#cài-đặt-nvidia-drivers-cho-các-redhat-distro)
   - [Kiểm tra GPUs và Drivers đã dùng](#kiểm-tra-gpus-và-drivers-đã-dùng)
   - [Cập nhật hệ thống](#cập-nhật-hệ-thống)
   - [Cài đặt EPEL](#cài-đặt-epel)
@@ -111,13 +112,13 @@ Hoặc cũng có thể nhìn vào màu sắc của terminal để xác định. 
 
 ### Cập nhật kernel
 
-*** Cảnh báo: Use DNF to install kernels whenever possible.
-Whenever possible, use either the ***DNF*** or ***PackageKit*** package manager to install a new kernel because they always ***install*** a new kernel instead of replacing the current one, which could potentially leave your system unable to boot.
+*** Cảnh báo: Sử dụng DNF để cài đặt các kernel bất cứ khi nào có thể.
+Khi có thể, hãy sử dụng trình quản lý gói ***DNF*** hoặc ***PackageKit*** để cài đặt kernel mới bởi vì nó luôn ***cài đặt*** một kernel mới thay vì thay thế phiên bản hiện tại, điều này có thể tránh việc hệ thống của bạn không thể khởi động.
 
-*** Keep the old kernel when performing the upgrade
-It is strongly recommended that you keep the old kernel in case there are problems with the new kernel.
+*** Hãy giữ lại kernel phiên bản cũ khi thực hiện nâng cấp kernel.
+Chúng tôi đặc biệt đề xuất điều này trong trường hợp có nhiều lỗi với kernel mới.
 
-To update to the latest kernel, run the following DNF command, which automatically installs the most suitable kernel version for your system.
+Để cập nhật kernel mới nhất, hãy chạy câu lệnh DNF dưới đây, nó tự động cài đặt phiên bản kernel mới phù hợp nhất với hệ thống của bạn.
 
 ```console
 sudo dnf install kernel --best
@@ -132,32 +133,28 @@ hoặc
 Ví dụ: sudo dnf install kernel-5.19.4-200.fc36.x86_64
 ```
 
-To take the changes into effect, reboot the system. Otherwise, your system will continue running on the older kernel.
+Để các thay đổi có hiệu lực, khởi động lại hệ thống. Nếu không, hệ thống của bạn vẫn sẽ chạy trên kernel cũ.
 
 ```console
 reboot
 ```
 
-
 ### Chọn kernel làm mặc định
 
-If multiple versions of the kernel are installed, then one kernel will become the default version that is loaded when the system boots. It is also possible to configure an alternate version of the kernel to be used as the default kernel.
+Nếu có nhiều phiên bản của kernel được cài đặt thì sẽ có một kernel được chọn làm kernel mặc định khi khởi động máy tính. Ta cũng có thể chọn một phiên bản khác để làm kernel mặc định.
 
-The following command will print the default kernel.
 
-The **grubby** command is a tool used for configuring bootloader menu entries. However, the grubby command can also be used to display the kernel version.
+Câu lệnh **grubby** là một công cụ được sử dụng để cấu hình bootloader. Tuy nhiên, câu lệnh grubby cũng có thể được sử dụng để hiển thị thông tin của phiên bản kernel.
 
-Xem phiên bản kernel đang dùng làm mặc định:
+Chạy câu lệnh grubby dưới đây để in ra vị trí lưu và phiên bản của kernel mặc định khi boot.
 
 ```console
 sudo grubby --default-kernel
 ```
 ![default_kernel](images/defaut_kernel.png)
 
+Tiếp theo, câu lệnh bên dưới sẽ liệt kê tất cả các kernel đã cài đặt, nó cũng in ra tất cả các thành phần của GRUB của tất các các kernel đó.
 
-Run the following grubby command to print the location of the default kernel that loaded during boot.
-
-Next, issue the following command to list all the installed kernels, which will also print all the GRUB menu entries for all the kernels.
 
 ```console
 sudo grubby --info=ALL
@@ -165,7 +162,7 @@ sudo grubby --info=ALL
 
 ![kernel_info_all](/images/kernel_info_all.png)
 
-To set a different kernel as the default kernel, take a note of the kernel location from the previous step and apply this location in the following command. In this case, I have set /boot/vmlinuz-5.17.5-300.fc36.x86_64 as the default kernel, instead of /boot/vmlinuz-5.18.19-200.fc36.x86_64.
+Để cài đặt phiên bản kernel như kernel mặc định, ta lấy vị trí của kernel các bước trước và áp dụng vào câu lệnh bên dưới. Ví dụ, tôi chuyển /boot/vmlinuz-5.17.5-300.fc36.x86_64 thành phiên bản kernel mặc định thay vì boot/vmlinuz-5.18.19-200.fc36.x86_64.
 
 ```console
 sudo grubby --set-default <kernel>
@@ -173,9 +170,13 @@ sudo grubby --set-default <kernel>
 ```
 ![set_default_kernel](images/set_default_kernel.png)
 
-Reboot the system to take the changes into effect.
+Khởi động lại hệ thống để các thay đổi được áp dụng.
 
-Updating the kernel is no longer a difficult task. 
+```console
+reboot
+```
+
+Việc cập nhật kernel không còn là một tác vụ khó khăn nữa. 
 
 ### Xóa kernel
 
@@ -190,7 +191,7 @@ sudo dnf remove $(rpm -qa | grep ^kernel | grep <kernel-version>)
 # sudo dnf remove $(rpm -qa | grep ^kernel | grep 5.18)
 ```
 
-Sau đó khởi động lại để áp dụng thay đổi và kiểm tra xem boot menu đã xóa phiên bản kernel đó hay chưa.
+Sau đó khởi động lại để áp dụng thay đổi và kiểm tra xem menu boot đã xóa phiên bản kernel đó hay chưa.
 
 ```console
 reboot
@@ -237,7 +238,7 @@ sudo dnf list installed
 ```
 ## Sửa lỗi headphone microphone
 
-Khi cắm tai nghe có micro vào máy, linux có thể không nhận dạng được micro. Để sữa lỗi này ta làm theo các bước bên dưới.
+Khi cắm tai nghe có microphone vào máy, linux có thể không nhận dạng được microphone. Để sữa lỗi này ta làm theo các bước bên dưới.
 
 Chạy câu lệnh: 
 
@@ -262,6 +263,8 @@ Chọn như hình:
 Chỉnh như hình: 
 
 ![alsamixer2](./images/alsamixer_2.png)
+
+Nhấn nút **M** hoặc **,** hoặc **.** để chuyển từ `MM -> 00`
 
 Nhấn `Esc` để thoát.
 
@@ -326,6 +329,9 @@ source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 Tham khảo: https://viblo.asia/p/cach-cai-dat-zsh-va-zsh-autosuggestions-tren-ubuntu-LzD5ddDO5jY
 
 ## Theme Power10k cho zsh shell
+
+Powerlevel10k là theme cho Zsh. Nó nhấn mạnh vào [tốc độ](https://github.com/romkatv/powerlevel10k#uncompromising-performance), [tính linh hoạt](https://github.com/romkatv/powerlevel10k#extremely-customizable) và [trải nghiệm vượt trội](https://github.com/romkatv/powerlevel10k#configuration-wizard).
+
 Cài font [MesloLGS NF](https://github.com/romkatv/powerlevel10k#fonts).
 
 Cài đặt vào oh-my-zsh:
@@ -427,6 +433,7 @@ Tác giả của bộ đôi công cụ giám sát này đã phát triển Bashto
 
 Nhà phát triển tuyên bố `Bpytop` `nhanh hơn` `Bashtop` và Bpytop có nhiều tính năng hơn và đề xuất chúng tôi sử dụng Bpytop thay vì Bashtop. Tuy nhiên đó là sự lựa chọn cá nhân của bạn. Bạn có thể thử cả hai và chọn loại phù hợp với mình.
 
+Bài này sẽ hướng dẫn cài đặt bashtop nhé.
 
 ```console
 git clone https://github.com/aristocratos/bashtop.git
@@ -468,6 +475,8 @@ sudo dnf install terminator
 
 Tắt **Show titlebar**: Chuột phải vào màn hình terminator -> Preferences -> Profiles -> General -> bỏ chọn Show titlebar.
 
+![uncheck_show_titlebar](images/uncheck_show_titlebar.png)
+
 ### Terminology
 Là terminal có thể xem ảnh và video ngay bên  trong.
 
@@ -481,11 +490,11 @@ sudo dnf -y install terminology
 ## Cài đặt phím tắt
 Vào Settings -> Keyboard -> Keyboard Shortcuts -> View and Customize Shortcuts -> Custome Shortcut.
 
-Terminal shortcut:
+Phím tắt mở Terminal mới:
 
 ![Terminal Shortcut](./images/TerminalShortcut.png)
 
-Desktop Shortcut:
+Phím tắt đến Desktop:
 
 ![Desktop Short](./images/DesktopShortcut.png)
 
@@ -531,6 +540,14 @@ Extention thường dùng:
 sudo dnf makecache --refresh
 sudo dnf install -y gnome-tweaks 
 ```
+
+Mở Gnome tweaks bằng câu lệnh bên dưới:
+
+```
+gnome-tweaks
+```
+
+
 ![gnome-tweaks](./images/gnome-tweaks.png)
 
 
@@ -562,14 +579,14 @@ sudo cp -r Otis /usr/share/themes/Otis
 gsettings set org.gnome.desktop.interface gtk-theme "Otis"
 gsettings set org.gnome.desktop.wm.preferences theme "Otis"
 ```
-Hoặc chỉnh qua công cụ [Gnome Tweak](#gnome-tweaks).
+Hoặc chỉnh qua công cụ [Gnome Tweaks](#gnome-tweaks).
 
 ## Icons
 - [Adwaita-Blue](https://www.gnome-look.org/p/1310137)
 
 Copy thư mục chứa icon vào `/usr/share/icons/`
 
-Chỉnh qua công cụ [Gnome Tweak](#gnome-tweaks).
+Chỉnh qua công cụ [Gnome Tweaks](#gnome-tweaks).
 
 ## Các ứng dụng thu âm
 
@@ -592,14 +609,13 @@ gnome-sound-recorder
 [Audio Recorder](https://launchpad.net/audio-recorder) là một trình ghi âm tuyệt vời trên hệ điều hành Linux có tất cả các loại tùy chọn để hoạt động như một nguồn âm thanh. Ví dụ, bạn có thể sử dụng micrô, webcam và thậm chí cả Skype. Thời gian có thể được đặt cho bản ghi âm của bạn để bạn kiểm soát môi trường làm việc. Nó hỗ trợ các định dạng MP3, FLAC, OGG, WAV và SPX.
 
 
-looi:
-configure: error: Package requirements (gstreamer-1.0 >= 1.4) were not met
+Sửa lỗi : configure: error: Package requirements (gstreamer-1.0 >= 1.4) were not met.
 
-sua: cai gstreamer:
-tham khao tai [day](https://gstreamer.freedesktop.org/documentation/installing/on-linux.html?gi-language=c)
 ```console
 sudo dnf install -y gstreamer1-devel gstreamer1-plugins-base-tools gstreamer1-doc gstreamer1-plugins-base-devel gstreamer1-plugins-good gstreamer1-plugins-good-extras gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-free-devel gstreamer1-plugins-bad-free-extras
 ```
+
+Tham khảo tại [đây](https://gstreamer.freedesktop.org/documentation/installing/on-linux.html?gi-language=c)
 
 loi: Package requirements (appindicator3-0.1 >= 0.3) were not met:
 
@@ -626,7 +642,7 @@ sudo dnf makecache --refresh
 
 ![ardour](./images/ardour.png)
 
-## Cài đặt NVIDIA driver cho các RedHat distro
+## Cài đặt NVIDIA Drivers cho các RedHat distro
 
 ### Kiểm tra GPUs và Drivers đã dùng
 Bạn có thể [kiểm tra](https://rpmfusion.org/Howto/NVIDIA#Determining_your_card_model) liệu rằng máy vi tính của bạn đã cài GPU NVIDIA hay chưa với câu lệnh sau:
@@ -647,11 +663,11 @@ lsmod | grep nvidia
 
 ![empty_nvidia](images/empty_nvidia.png)
 
-By default, Fedora 36 will use the open-source Nouveau drivers if you have an NVIDIA GPU installed on your computer, as you can see in the screenshot below.
+Theo mặc định, Fedora 36 sẽ sử dụng drivers Nouveau mã nguồn mở nếu bạn đã cài đặt GPU NVIDIA trên máy tính của mình, như bạn có thể thấy trong ảnh chụp màn hình bên dưới.
 
-Most modern Linux Desktop systems such as AlmaLinux come with an NVIDIA driver pre-installed in the Nouveau open-source graphics device driver for Nvidia video cards. For the most part, this is acceptable; however, if you are using your Linux system for graphical design or gaming, you may get better drivers.
+Hầu hết các hệ thống Máy tính để bàn Linux hiện đại như AlmaLinux đều có trình điều khiển NVIDIA được cài đặt sẵn trong trình điều khiển thiết bị đồ họa nguồn mở Nouveau dành cho cạc video Nvidia. Đối với hầu hết các phần, điều này có thể chấp nhận được; tuy nhiên, nếu bạn đang sử dụng hệ thống Linux của mình để thiết kế đồ họa hoặc chơi game, bạn có thể nhận được trình điều khiển tốt hơn.
 
-Historically, the Nouveau proprietary drivers are slower than Nvidia’s, which lacks the latest graphics card hardware features, software technology, and support. In most situations, upgrading your Nvidia Drivers with proper NVIDIA drivers is more beneficial than not. In some cases, you may see some substantial improvements overall.
+Về mặt lịch sử, các driver độc quyền của Nouveau chậm hơn của Nvidia, vốn thiếu các tính năng phần cứng, công nghệ phần mềm và hỗ trợ mới nhất của cạc đồ họa. Trong hầu hết các tình huống, việc nâng cấp drivers Nvidia của bạn với các phiên bản driver phù hợp sẽ có lợi hơn là không nâng cấp. Trong một số trường hợp, bạn có thể thấy một số cải tiến đáng kể về tổng thể.
 
 ```console
 lsmod | grep nouveau
@@ -661,20 +677,15 @@ lsmod | grep nouveau
 
 ### Cập nhật hệ thống
 
-First, update the DNF package repository cache with the following command:
+Đầu tiên, cập nhật kho lưu trữ gói DNF cache với câu lệnh bên dưới:
 
 ```console
 sudo dnf upgrade --refresh -y
 ```
 
-If there are any updates to be installed, the DNF package manager should show you a summary of the upgrade, as shown in the screenshot below. Otherwise, it will tell you that your system is up to date.
+Nếu có bất kỳ bản cập nhật nào cần được cài đặt, trình quản lý gói DNF sẽ hiển thị cho bạn bản tóm tắt về bản nâng cấp, như được hiển thị trong ảnh chụp màn hình bên dưới. Nếu không, nó sẽ cho bạn biết rằng hệ thống của bạn đã được cập nhật.
 
-
-The DNF package manager will download all the required updates from the internet. It may take a while to complete.
-
-Updates are being installed. It may take a while to complete.
-
-At this point, all the updates should be installed.
+Trình quản lý gói DNF sẽ tải xuống tất cả các bản cập nhật được yêu cầu từ internet. Có thể mất một lúc để hoàn thành.
 
 ### Cài đặt EPEL
 Nếu không phải Fedora thì cài thêm [EPEL](https://docs.fedoraproject.org/en-US/epel/) - 
