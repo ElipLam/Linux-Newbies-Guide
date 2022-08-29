@@ -48,6 +48,139 @@ echo $(rpm -E %fedora)
 # Output:
 # 36
 ```
+### Thao tác với kernel
+
+Xem kernel hiện tại: 
+```console
+uname -r
+```
+
+![uname_r](images/uname_r.png)
+
+Xem danh sách các kernel:
+
+```console
+dnf list kernel
+```
+
+![list_kernel](images/dnf_list_kernel.png)
+
+Xem toàn bộ thông tin về kernel: 
+
+```console
+dnf info kernel
+# dnf list kernel
+```
+
+![kernel_info](images/kernel_info.png)
+
+Phiên bản kernel có cấu trúc:
+
+```
+<major_version>-<minor_version>-<release>.<architecture>
+hoặc 
+<major_version>-<release>.<architecture>
+Ví dụ: 5.17.5-300.fc36.x86_64
+```
+
+Tại dòng **Available Packages** ta có thể xem các kernel phiên bản mới chưa được cài đặt.
+
+Hoặc cũng có thể nhìn vào màu sắc của terminal để xác định. Nhìn màu sắc của `kernel` ta có thể thấy được kernel phiên bản 5.19.4 là phiên bản mới chưa được cài đặt vào máy.
+
+Xem thời gian cài đặt kernel:
+
+```console
+uname -v
+```
+
+![installed_kernel_time](images/installed_kernel_time.png)
+
+
+### Cập nhật kernel
+
+*** Cảnh báo: Use DNF to install kernels whenever possible.
+Whenever possible, use either the ***DNF*** or ***PackageKit*** package manager to install a new kernel because they always ***install*** a new kernel instead of replacing the current one, which could potentially leave your system unable to boot.
+
+*** Keep the old kernel when performing the upgrade
+It is strongly recommended that you keep the old kernel in case there are problems with the new kernel.
+
+To update to the latest kernel, run the following DNF command, which automatically installs the most suitable kernel version for your system.
+```console
+sudo dnf install kernel --best
+```
+
+Nếu muốn cài một kernel cụ thể thì dùng lệnh sau:
+```
+# sudo dnf install kernel-<major_version>-<minor_version>-<release>.<architecture>
+hoặc
+# sudo dnf install kernel-<major_version>-<release>.<architecture>
+
+Ví dụ: sudo dnf install kernel-5.19.4-200.fc36.x86_64
+```
+
+To take the changes into effect, reboot the system. Otherwise, your system will continue running on the older kernel.
+
+```console
+reboot
+```
+
+
+### Chọn kernel mặc định
+
+If multiple versions of the kernel are installed, then one kernel will become the default version that is loaded when the system boots. It is also possible to configure an alternate version of the kernel to be used as the default kernel.
+
+The following command will print the default kernel.
+
+The **grubby** command is a tool used for configuring bootloader menu entries. However, the grubby command can also be used to display the kernel version.
+
+Xem phiên bản kernel đang dùng làm mặc định:
+
+```console
+sudo grubby --default-kernel
+```
+![default_kernel](images/defaut_kernel.png)
+
+
+Run the following grubby command to print the location of the default kernel that loaded during boot.
+
+Next, issue the following command to list all the installed kernels, which will also print all the GRUB menu entries for all the kernels.
+
+```console
+sudo grubby --info=ALL
+```
+
+![kernel_info_all](/images/kernel_info_all.png)
+
+To set a different kernel as the default kernel, take a note of the kernel location from the previous step and apply this location in the following command. In this case, I have set /boot/vmlinuz-5.17.5-300.fc36.x86_64 as the default kernel, instead of /boot/vmlinuz-5.18.19-200.fc36.x86_64.
+
+```console
+sudo grubby --set-default <kernel>
+# sudo grubby --set-default /boot/vmlinuz-5.17.5-300.fc36.x86_64
+```
+![set_default_kernel](images/set_default_kernel.png)
+
+Reboot the system to take the changes into effect.
+
+Updating the kernel is no longer a difficult task. 
+
+Xóa kernel:
+```
+sudo dnf remove $(rpm -qa | grep ^kernel | grep <kernel-version>)
+```
+
+```console
+# sudo dnf remove $(rpm -qa | grep ^kernel | grep 5.18)
+```
+
+you may try rebuilding your grub menu
+
+```console
+sudo mkconfig-grub2 -o /boot/efi/EFI/fedora/grub.cfg
+```
+
+(the above assumes that you are running a UEFI system).
+
+
 
 ### Kiểm tra Display Server
 
@@ -396,7 +529,7 @@ loi: Package requirements (appindicator3-0.1 >= 0.3) were not met:
 ```
 sudo dnf install -y libindicator-devel 
 libindicator-gtk3-devel
-z
+libindicator-gtk3-tools
 ```
 
 ```console 
@@ -623,5 +756,6 @@ https://www.linuxcapable.com/how-to-install-nvidia-drivers-on-almalinux-9/#Optio
 https://vi.linuxcapable.com/how-to-install-nvidia-drivers-on-fedora-36-linux/
 https://linuxhint.com/install-nvidia-drivers-on-fedora-35/
 https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Fedora&target_version=35
+https://linuxhint.com/check-version-update-fedora-linux-kernel/#:~:text=The%20best%20way%20to%20update,run%20the%20following%20DNF%20command.
 
 ###### [on top](#mục-lục)
