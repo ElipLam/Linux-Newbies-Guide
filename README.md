@@ -1,39 +1,51 @@
-# Hướng dẫn cài đặt cơ bản cho người mới dùng linux
+<font size =6>**Hướng dẫn cài đặt cơ bản cho người mới dùng linux**</font>
+<!-- Font sizr of heading 1 is 6 -->
 
 ## Mục lục
-  - [Các lệnh cơ bản](#các-lệnh-cơ-bản)
-    - [Kiểm tra các gói đã cài đặt](#kiểm-tra-các-gói-đã-cài-đặt)
-    - [Kiểm tra Display Server](#kiểm-tra-display-server)
-  - [Fix headphone microphone](#fix-headphone-microphone)
-  - [Cài đặt zsh](#cài-đặt-zsh)
-  - [Cài đặt oh-my-zsh](#cài-đặt-oh-my-zsh)
-  - [Cài đặt zsh autosuggestions](#cài-đặt-zsh-autosuggestions)
-  - [Theme Power10k cho zsh shell](#theme-power10k-cho-zsh-shell)
-  - [Cài đặt bộ gõ tiếng Việt](#cài-đặt-bộ-gõ-tiếng-việt)
-    - [Ubuntu](#ubuntu)
-    - [Cài đặt từ mã nguồn](#cài-đặt-từ-mã-nguồn)
-      - [Gỡ cài đặt:](#gỡ-cài-đặt)
-  - [Cài đặt neofetch](#cài-đặt-neofetch)
-  - [Cài đặt bashtop](#cài-đặt-bashtop)
-  - [Terminal](#terminal)
-    - [Terminator](#terminator)
-    - [Terminology](#terminology)
-  - [Cài đặt phím tắt](#cài-đặt-phím-tắt)
-  - [Gnome extention](#gnome-extention)
-  - [Themes](#themes)
-  - [Icons](#icons)
-  - [Cài đặt NVIDIA driver cho các RedHat distro](#cài-đặt-nvidia-driver-cho-các-redhat-distro)
-    - [Kiểm tra GPUs và Drivers đã dùng](#kiểm-tra-gpus-và-drivers-đã-dùng)
-    - [Cập nhật hệ thống](#cập-nhật-hệ-thống)
-    - [Cài đặt EPEL](#cài-đặt-epel)
-    - [Tùy chọn - Xóa EPEL](#tùy-chọn---xóa-epel)
-    - [Cài đặt kho lưu trữ tổng hợp RPM Fusion](#cài-đặt-kho-lưu-trữ-tổng-hợp-rpm-fusion)
-    - [Tùy chọn thêm](#tùy-chọn-thêm)
-    - [Cài đặt NVIDIA Drivers](#cài-đặt-nvidia-drivers)
-    - [Xác minh cài đặt NVIDIA Drivers](#xác-minh-cài-đặt-nvidia-drivers)
-    - [Cập nhật Nvidia Drivers](#cập-nhật-nvidia-drivers)
-    - [Cách xóa Nvidia Drivers và RollBack](#cách-xóa-nvidia-drivers-và-rollback)
-          - [on top](#on-top)
+- [Mục lục](#mục-lục)
+- [Các lệnh cơ bản](#các-lệnh-cơ-bản)
+  - [Kiểm tra phiên bản của distro](#kiểm-tra-phiên-bản-của-distro)
+  - [Thao tác với kernel](#thao-tác-với-kernel)
+  - [Cập nhật kernel](#cập-nhật-kernel)
+  - [Chọn kernel mặc định](#chọn-kernel-mặc-định)
+  - [Xóa kernel:](#xóa-kernel)
+  - [Kiểm tra Display Server](#kiểm-tra-display-server)
+  - [Kiểm tra các gói đã cài đặt](#kiểm-tra-các-gói-đã-cài-đặt)
+- [Sửa lỗi headphone microphone](#sửa-lỗi-headphone-microphone)
+- [Cài đặt zsh](#cài-đặt-zsh)
+- [Cài đặt oh-my-zsh](#cài-đặt-oh-my-zsh)
+- [Cài đặt zsh autosuggestions](#cài-đặt-zsh-autosuggestions)
+- [Theme Power10k cho zsh shell](#theme-power10k-cho-zsh-shell)
+- [Cài đặt bộ gõ tiếng Việt](#cài-đặt-bộ-gõ-tiếng-việt)
+  - [Ubuntu](#ubuntu)
+  - [Cài đặt từ mã nguồn](#cài-đặt-từ-mã-nguồn)
+    - [Gỡ cài đặt:](#gỡ-cài-đặt)
+- [Cài đặt neofetch](#cài-đặt-neofetch)
+- [Cài đặt bashtop](#cài-đặt-bashtop)
+- [Terminal](#terminal)
+  - [Terminator](#terminator)
+  - [Terminology](#terminology)
+- [Cài đặt phím tắt](#cài-đặt-phím-tắt)
+- [Gnome extention](#gnome-extention)
+- [Themes](#themes)
+- [Icons](#icons)
+- [Các ứng dụng thu âm](#các-ứng-dụng-thu-âm)
+  - [Gnome Sound Recorder](#gnome-sound-recorder)
+  - [Audio Recorder](#audio-recorder)
+  - [Audacity](#audacity)
+  - [Ardour](#ardour)
+- [Cài đặt NVIDIA driver cho các RedHat distro](#cài-đặt-nvidia-driver-cho-các-redhat-distro)
+  - [Kiểm tra GPUs và Drivers đã dùng](#kiểm-tra-gpus-và-drivers-đã-dùng)
+  - [Cập nhật hệ thống](#cập-nhật-hệ-thống)
+  - [Cài đặt EPEL](#cài-đặt-epel)
+  - [Tùy chọn - Xóa EPEL](#tùy-chọn---xóa-epel)
+  - [Cài đặt kho lưu trữ tổng hợp RPM Fusion](#cài-đặt-kho-lưu-trữ-tổng-hợp-rpm-fusion)
+  - [Tùy chọn thêm](#tùy-chọn-thêm)
+  - [Cài đặt NVIDIA Drivers](#cài-đặt-nvidia-drivers)
+  - [Xác minh cài đặt NVIDIA Drivers](#xác-minh-cài-đặt-nvidia-drivers)
+  - [Cập nhật Nvidia Drivers](#cập-nhật-nvidia-drivers)
+  - [Cách xóa Nvidia Drivers và RollBack](#cách-xóa-nvidia-drivers-và-rollback)
+        - [on top](#on-top)
 
 
 ## Các lệnh cơ bản
@@ -48,7 +60,7 @@ echo $(rpm -E %fedora)
 # Output:
 # 36
 ```
-### Thao tác với kernel
+### Làm quen với kernel
 
 Xem kernel hiện tại: 
 ```console
@@ -56,6 +68,14 @@ uname -r
 ```
 
 ![uname_r](images/uname_r.png)
+
+Xem thời gian cài đặt kernel hiện tại:
+
+```console
+uname -v
+```
+
+![installed_kernel_time](images/installed_kernel_time.png)
 
 Xem danh sách các kernel:
 
@@ -87,13 +107,6 @@ Tại dòng **Available Packages** ta có thể xem các kernel phiên bản m�
 
 Hoặc cũng có thể nhìn vào màu sắc của terminal để xác định. Nhìn màu sắc của `kernel` ta có thể thấy được kernel phiên bản 5.19.4 là phiên bản mới chưa được cài đặt vào máy.
 
-Xem thời gian cài đặt kernel:
-
-```console
-uname -v
-```
-
-![installed_kernel_time](images/installed_kernel_time.png)
 
 
 ### Cập nhật kernel
@@ -105,11 +118,12 @@ Whenever possible, use either the ***DNF*** or ***PackageKit*** package manager 
 It is strongly recommended that you keep the old kernel in case there are problems with the new kernel.
 
 To update to the latest kernel, run the following DNF command, which automatically installs the most suitable kernel version for your system.
+
 ```console
 sudo dnf install kernel --best
 ```
 
-Nếu muốn cài một kernel cụ thể thì dùng lệnh sau:
+Nếu muốn cài đặt một kernel cụ thể thì dùng lệnh sau:
 ```
 # sudo dnf install kernel-<major_version>-<minor_version>-<release>.<architecture>
 hoặc
@@ -125,7 +139,7 @@ reboot
 ```
 
 
-### Chọn kernel mặc định
+### Chọn kernel làm mặc định
 
 If multiple versions of the kernel are installed, then one kernel will become the default version that is loaded when the system boots. It is also possible to configure an alternate version of the kernel to be used as the default kernel.
 
@@ -163,28 +177,36 @@ Reboot the system to take the changes into effect.
 
 Updating the kernel is no longer a difficult task. 
 
-Xóa kernel:
+### Xóa kernel
+
+Để xóa toàn bộ kernel, hãy dùng câu lệnh bên dưới:
 ```
 sudo dnf remove $(rpm -qa | grep ^kernel | grep <kernel-version>)
 ```
 
+
 ```console
+# xóa phiên bản kernel 5.18.xxx
 # sudo dnf remove $(rpm -qa | grep ^kernel | grep 5.18)
 ```
 
-you may try rebuilding your grub menu
+Sau đó khởi động lại để áp dụng thay đổi và kiểm tra xem boot menu đã xóa phiên bản kernel đó hay chưa.
+
+```console
+reboot
+```
+
+Nếu chưa, hãy thử rebuilding grub menu:
 
 ```console
 sudo mkconfig-grub2 -o /boot/efi/EFI/fedora/grub.cfg
 ```
 
-(the above assumes that you are running a UEFI system).
-
-
+(Câu lệnh trên giả định rằng bạn đang chạy trên hệ thống UEFI).
 
 ### Kiểm tra Display Server
 
-Kiểm tra là Wayland hay Xorg: 
+Kiểm tra là [Wayland](https://quantrimang.com/cong-nghe/chu-y-khi-su-dung-linux-voi-wayland-168753) hay Xorg: 
 
 ```console
 echo $XDG_SESSION_TYPE
@@ -194,6 +216,8 @@ echo $XDG_SESSION_TYPE
 # Output:
 # wayland
 ```
+
+Để biết thêm sự khác biệt giữa Wayland và Xorg thì hãy xem tại [đây](https://www.secjuice.com/wayland-vs-xorg/).
 
 ### Kiểm tra các gói đã cài đặt
 
@@ -211,23 +235,33 @@ sudo dnf list installed
 # sudo dnf list
 # sudo dnf list installed | grep <package name>
 ```
-## Fix headphone microphone
-chạy cli: 
+## Sửa lỗi headphone microphone
+
+Khi cắm tai nghe có micro vào máy, linux có thể không nhận dạng được micro. Để sữa lỗi này ta làm theo các bước bên dưới.
+
+Chạy câu lệnh: 
 
 ```console
 hdajackretask
 ```
 
-Chọn như hình: ![HDAJackRetask](./images/HDAJackRetask.png)
+Chọn như hình: 
+
+![HDAJackRetask](./images/HDAJackRetask.png)
+
 Chọn `Apply Now`, nhập password.
 
 Nếu lỗi thì chọn `Install boot override` sau đó khởi động lại máy. 
 
 Tiếp theo chạy lệnh cli `alsamixer`.
 
-Chọn như hình: ![alsamixer1](./images/alsamixer_1.png)
+Chọn như hình: 
 
-Chỉnh như hình: ![alsamixer2](./images/alsamixer_2.png)
+![alsamixer1](./images/alsamixer_1.png)
+
+Chỉnh như hình: 
+
+![alsamixer2](./images/alsamixer_2.png)
 
 Nhấn `Esc` để thoát.
 
@@ -237,6 +271,8 @@ Tham khảo: https://www.reddit.com/r/Fedora/comments/qzaofq/headset_mic_not_wor
 https://www.youtube.com/watch?v=yx33W-c4Cmg 
 
 ## Cài đặt zsh
+> Zsh is a shell designed for interactive use, although it is also a powerful scripting language. Many of the useful features of bash, ksh, and tcsh were incorporated into zsh; many original features were added.
+
 Debian/Ubuntu: 
 
 ```console
@@ -257,19 +293,30 @@ $ which zsh
 Mở file *.bashrc*, thêm `exec zsh` vào đầu file.
 
 ## Cài đặt oh-my-zsh
+
+Oh-my-zsh hiểu đơn giản là một framework giúp bạn quản lý các thiết lập của zsh một cách dễ dàng. oh-my-zsh hiện đang cung cấp hơn 200 plugins và hơn 140 themes được phát triển từ cộng đồng.
+
 ```console
 sudo curl -L http://install.ohmyz.sh | sh
 ```
 ## Cài đặt zsh autosuggestions
+
+Cài đặt plugin **zsh-autosuggestions**, giúp tự động **suggetions** các lệnh mà mình đã dùng:
+
 ```console
 git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 ```
-Mở file ~/.zshrc, sửa dòng `plugins=(git)` thành `plugins=(git zsh-autosuggestions)`
+Mở file **.zshrc**:
 
-Nếu autosuggestions plugin không hoạt động thì thêm câu lệnh này vào cuối file .zshrc
 ```console
-~ vim ~/.zshrc
-...
+nano ~/.zshrc
+```
+
+Sửa dòng `plugins=(git)` thành `plugins=(git zsh-autosuggestions)`.
+
+*** Nếu autosuggestions plugin không hoạt động thì thêm câu lệnh này vào cuối file `.zshrc`
+```console
+# ...
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -286,9 +333,9 @@ Cài đặt vào oh-my-zsh:
 ```console
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 ```
-Mở file ~/.zshrc, sửa dòng `ZSH_THEME="robbyrussell"` thành `ZSH_THEME="powerlevel10k/powerlevel10k"`.
+Mở file **~/.zshrc**, sửa dòng `ZSH_THEME="robbyrussell"` thành `ZSH_THEME="powerlevel10k/powerlevel10k"`.
 
-Lưu file, mở terminal để cài đặt themes. File cài đặt được lưu ở `~/.p10k.zsh`.
+Lưu file, mở terminal để cài đặt themes. File cấu hình được lưu ở `~/.p10k.zsh`.
 
 Nếu muốn thay đổi tùy chọn của theme thì gõ lệnh `p10k configure`.
 
@@ -296,7 +343,7 @@ Chỉnh lại font của terminal là `MesloLGS NF`.
 
 Xong rồi. Tận hưởng thôi! 
 
-Dưới đây là giao diện mình đã tùy chỉnh.
+Dưới đây là [giao diện của mình](.p10k.zsh) đã tùy chỉnh.
 ![gnome-terminal](./images/gnome-terminal.png)
 Tham khảo: https://github.com/romkatv/powerlevel10k#configuration
 
@@ -328,7 +375,7 @@ sudo yum install make go libX11-devel libXtst-devel gtk3-devel
 # openSUSE Tumbleweed
 sudo zypper install make go libX11-devel libXtst-devel gtk3-devel
 ```
-Tải xuống: 
+Tải bamboo repository xuống: 
 ```console
 wget https://github.com/BambooEngine/ibus-bamboo/archive/master.zip -O ibus-bamboo.zip
 unzip ibus-bamboo.zip
@@ -336,7 +383,7 @@ unzip ibus-bamboo.zip
 # hoặc clone từ github:
 git clone https://github.com/BambooEngine/ibus-bamboo.git
 ```
-Build và Install: 
+Build và cài đặt: 
 ```console
 cd ibus-bamboo
 sudo make install
@@ -344,7 +391,7 @@ sudo make install
 # Restart ibus
 ibus restart
 ```
-#### Gỡ cài đặt:
+#### Gỡ cài đặt
 ```console
 sudo make uninstall
 ibus restart
@@ -353,6 +400,8 @@ ibus restart
 Nguồn: https://github.com/BambooEngine/ibus-bamboo/wiki/H%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-c%C3%A0i-%C4%91%E1%BA%B7t-t%E1%BB%AB-m%C3%A3-ngu%E1%BB%93n 
 
 ## Cài đặt neofetch
+
+Neofetch được mô tả là "công cụ kiểm tra thông tin hệ thống dưới dạng dòng lệnh, được viết bằng bash 3.2+" và dễ sử dụng hơn trên các bản phân phối Linux, nhưng cũng có thể được sử dụng trên macOS và Windows sau khi cài đặt một số thành phần bổ sung.
 
 Debian/Ubuntu:
 ```console
@@ -368,16 +417,32 @@ sudo dnf -y install neofetch
 ```
 
 ![neofetch](./images/neofetch.png)
+
 ## Cài đặt bashtop
+
+
+Các công cụ giám sát rất quan trọng và mọi quản trị viên hệ thống đều biết điều đó. Với sự trợ giúp của các ứng dụng giám sát tài nguyên, chúng ta có thể liên tục quan sát tình trạng tài nguyên của hệ thống khi một tác vụ đang chạy.
+
+Tác giả của bộ đôi công cụ giám sát này đã phát triển Bashtop trước và sau đó tạo ra cổng Python của Bashtop và đặt tên là Bpytop. Chúng không có nhiều sự khác biệt. Cả hai tiện ích đều phục vụ cùng một mục đích và có cùng một bộ tính năng. Sự khác biệt duy nhất là cả hai đều được viết bằng các ngôn ngữ lập trình khác nhau. Bashtop được viết bằng Bash và Bpytop được viết bằng Python. Bashtop và Bpytop hỗ trợ GNU / Linux, Mac OS và FreeBSD.
+
+Nhà phát triển tuyên bố `Bpytop` `nhanh hơn` `Bashtop` và Bpytop có nhiều tính năng hơn và đề xuất chúng tôi sử dụng Bpytop thay vì Bashtop. Tuy nhiên đó là sự lựa chọn cá nhân của bạn. Bạn có thể thử cả hai và chọn loại phù hợp với mình.
+
 
 ```console
 git clone https://github.com/aristocratos/bashtop.git
 cd bashtop
 sudo make install 
 ```
+
+Sau khi cài đặt xong thì gọi câu lệnh bên dưới để chạy:
+
+```console
+bashtop
+```
+
 ![bashtop](./images/bashtop.png)
 
-https://github.com/aristocratos/bashtop#manual-installation-linux-osx-and-freebsd
+Tham khảo: https://github.com/aristocratos/bashtop#manual-installation-linux-osx-and-freebsd
 
 ## Terminal
 ### Terminator
@@ -388,7 +453,7 @@ Terminator là một trình giả lập thiết bị đầu cuối dành cho cá
 ```console
 sudo apt-get install terminator
  ```
-Nếu điều đó không xảy ra, bạn có thể cần thêm kho lưu trữ PPA và phiên bản Ubuntu mới hơn mà bạn không phải chạy lệnh ‘cập nhật’.
+Nếu cài đặt không thành công, bạn có thể cần thêm kho lưu trữ PPA và phiên bản Ubuntu mới hơn mà bạn không phải chạy lệnh **update**.
 ```console
 sudo add-apt-repository ppa:gnome-terminator
 sudo apt-get update
@@ -404,7 +469,7 @@ sudo dnf install terminator
 Tắt **Show titlebar**: Chuột phải vào màn hình terminator -> Preferences -> Profiles -> General -> bỏ chọn Show titlebar.
 
 ### Terminology
-Có thể xem ảnh và video ngay trong terminal.
+Là terminal có thể xem ảnh và video ngay bên  trong.
 
 Fedora/RHEL:
 ```console
@@ -414,7 +479,7 @@ sudo dnf -y install terminology
 ![terminology](./images/terminology.png)
 
 ## Cài đặt phím tắt
-Vào Settings->Keyboard -> Keyboard Shortcuts -> View and Customize Shortcuts -> Custome Shortcut.
+Vào Settings -> Keyboard -> Keyboard Shortcuts -> View and Customize Shortcuts -> Custome Shortcut.
 
 Terminal shortcut:
 
@@ -452,11 +517,21 @@ https://extensions.gnome.org/
 
 Extention thường dùng:
 - [User Themes](https://extensions.gnome.org/extension/19/user-themes/) - làm mờ topbar.
-- [Dash2Dock Lite](https://extensions.gnome.org/extension/4994/dash2dock-lite/)
-- [Resource Monitor](https://extensions.gnome.org/extension/1634/resource-monitor/) - hiển thị thông tin phần cứng.
+- [Dash2Dock Lite](https://extensions.gnome.org/extension/4994/dash2dock-lite/) - chuyển Dash thành Dock và có thêm hiệu ứng chuyển động.
+- [Resource Monitor](https://extensions.gnome.org/extension/1634/resource-monitor/) - hiển thị thông tin phần cứng trên topbar.
 - [Remove App Menu](https://extensions.gnome.org/extension/3906/remove-app-menu/)
 - [Show Desktop Button](https://extensions.gnome.org/extension/1194/show-desktop-button/)
 - [Unblank lock screen](https://extensions.gnome.org/extension/1414/unblank/) - Luôn hiện màn hình khóa.
+
+## GNOME Tweaks
+
+[GNOME Tweaks](https://icare24h.net/cach-cai-dat-gnome-tweaks-tren-fedora-linux/) là một ứng dụng nhỏ tuyệt vời cung cấp cho bạn quyền truy cập vào các tùy chọn bổ sung để sửa đổi trải nghiệm GNOME của bạn. Điều này bao gồm mọi thứ từ tiện ích mở rộng, đến thay đổi chủ đề và điều chỉnh cài đặt nguồn.
+
+```console
+sudo dnf makecache --refresh
+sudo dnf install -y gnome-tweaks 
+```
+![gnome-tweaks](./images/gnome-tweaks.png)
 
 
 ## Themes
@@ -487,14 +562,14 @@ sudo cp -r Otis /usr/share/themes/Otis
 gsettings set org.gnome.desktop.interface gtk-theme "Otis"
 gsettings set org.gnome.desktop.wm.preferences theme "Otis"
 ```
-Hoặc chỉnh qua tool Gnome Tweak.
+Hoặc chỉnh qua công cụ [Gnome Tweak](#gnome-tweaks).
 
 ## Icons
 - [Adwaita-Blue](https://www.gnome-look.org/p/1310137)
 
 Copy thư mục chứa icon vào `/usr/share/icons/`
 
-Chỉnh qua tool Gnome Tweak.
+Chỉnh qua công cụ [Gnome Tweak](#gnome-tweaks).
 
 ## Các ứng dụng thu âm
 
@@ -511,6 +586,8 @@ gnome-sound-recorder
 
 
 ### Audio Recorder
+
+*** Đang bị lỗi, chưa cài thành công.
 
 [Audio Recorder](https://launchpad.net/audio-recorder) là một trình ghi âm tuyệt vời trên hệ điều hành Linux có tất cả các loại tùy chọn để hoạt động như một nguồn âm thanh. Ví dụ, bạn có thể sử dụng micrô, webcam và thậm chí cả Skype. Thời gian có thể được đặt cho bản ghi âm của bạn để bạn kiểm soát môi trường làm việc. Nó hỗ trợ các định dạng MP3, FLAC, OGG, WAV và SPX.
 
@@ -697,11 +774,10 @@ Alternatively, if you opened a terminal, use the following command.
 nvidia-settings
 ```
 
+![nvidia_settings](images/nvidia_settings.png)
+
+Hoặc cũng có thể Once your computer boots, you should find the NVIDIA X Server Settings app in the Application Menu. Click on the NVIDIA X Server Settings app icon as marked in the screenshot below.
 Ví dụ nếu cài đặt thành công:
-
-Them anh tai day
-
-Once your computer boots, you should find the NVIDIA X Server Settings app in the Application Menu. Click on the NVIDIA X Server Settings app icon as marked in the screenshot below.
 
 ![nvidia_installed](images/nvidia_installed.png)
 
@@ -712,7 +788,6 @@ nvidia-smi
 ```
 Câu lệnh này cũng có thể kiểm tra phiên bản của Drivers.
 
-Them anh tai day.
 
 The proprietary NVIDIA drivers are used, as you can see in the screenshot below.
 
