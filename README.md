@@ -1031,6 +1031,16 @@ LƯU Ý: Tiện ích mở rộng này yêu cầu cài đặt [Envy Control](#cà
   <img src="images/gnome_extension_gpu_profile_selector.png">
 </p>
 
+Sau khi thực hiện chuyển đổi, bạn có thể xác minh nó bằng cách chạy một lệnh duy nhất trong terminal:
+
+```console
+glxinfo | egrep "OpenGL vendor|OpenGL renderer"
+```
+
+<p align="center">
+  <img src="./images/glxinfo_is_gpu_used.png">
+</p>
+
 ## Tham khảo
 
 https://www.linuxcapable.com/how-to-install-nvidia-drivers-on-almalinux-9/#Optional_-_Enable_RPM_Fusion_TESTING_Branch
