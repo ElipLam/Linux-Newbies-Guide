@@ -110,7 +110,9 @@ Xem kernel hiện tại:
 uname -r
 ```
 
-![uname_r](images/uname_r.png)
+<p align="center">
+  <img src="images/uname_r.png">
+</p>
 
 Xem thời gian cài đặt kernel hiện tại:
 
@@ -118,7 +120,9 @@ Xem thời gian cài đặt kernel hiện tại:
 uname -v
 ```
 
-![installed_kernel_time](images/installed_kernel_time.png)
+<p align="center">
+  <img src="images/installed_kernel_time.png">
+</p>
 
 Xem danh sách các kernel:
 
@@ -126,7 +130,9 @@ Xem danh sách các kernel:
 dnf list kernel
 ```
 
-![list_kernel](images/dnf_list_kernel.png)
+<p align="center">
+  <img src="images/dnf_list_kernel.png">
+</p>
 
 Xem toàn bộ thông tin về kernel: 
 
@@ -135,7 +141,9 @@ dnf info kernel
 # dnf list kernel
 ```
 
-![kernel_info](images/kernel_info.png)
+<p align="center">
+  <img src="images/kernel_info.png">
+</p>
 
 Phiên bản kernel có cấu trúc:
 
@@ -192,7 +200,9 @@ Chạy câu lệnh grubby dưới đây để in ra vị trí lưu và phiên b�
 ```console
 sudo grubby --default-kernel
 ```
-![default_kernel](images/defaut_kernel.png)
+<p align="center">
+  <img src="images/defaut_kernel.png">
+</p>
 
 Tiếp theo, câu lệnh bên dưới sẽ liệt kê tất cả các kernel đã cài đặt, nó cũng in ra tất cả các thành phần của GRUB của tất các các kernel đó.
 
@@ -200,7 +210,9 @@ Tiếp theo, câu lệnh bên dưới sẽ liệt kê tất cả các kernel đ�
 sudo grubby --info=ALL
 ```
 
-![kernel_info_all](/images/kernel_info_all.png)
+<p align="center">
+  <img src="images/kernel_info_all.png">
+</p>
 
 Để cài đặt phiên bản kernel như kernel mặc định, ta lấy vị trí của kernel các bước trước và áp dụng vào câu lệnh bên dưới. Ví dụ, tôi chuyển /boot/vmlinuz-5.17.5-300.fc36.x86_64 thành phiên bản kernel mặc định thay vì boot/vmlinuz-5.18.19-200.fc36.x86_64.
 
@@ -209,7 +221,9 @@ sudo grubby --set-default <kernel>
 # sudo grubby --set-default /boot/vmlinuz-5.17.5-300.fc36.x86_64
 ```
 
-![set_default_kernel](images/set_default_kernel.png)
+<p align="center">
+  <img src="images/set_default_kernel.png">
+</p>
 
 Khởi động lại hệ thống để các thay đổi được áp dụng.
 
@@ -258,7 +272,9 @@ hdajackretask
 
 Chọn như hình: 
 
-![HDAJackRetask](./images/HDAJackRetask.png)
+<p align="center">
+  <img src="./images/HDAJackRetask.png">
+</p>
 
 Chọn `Apply Now`, nhập password.
 
@@ -268,11 +284,15 @@ Tiếp theo chạy lệnh cli `alsamixer`.
 
 Chọn như hình: 
 
-![alsamixer1](./images/alsamixer_1.png)
+<p align="center">
+  <img src="./images/alsamixer_1.png">
+</p>
 
 Chỉnh như hình: 
 
-![alsamixer2](./images/alsamixer_2.png)
+<p align="center">
+  <img src="./images/alsamixer_2.png">
+</p>
 
 Nhấn nút **M** hoặc **,** hoặc **.** để chuyển từ `MM -> 00`
 
@@ -369,7 +389,9 @@ Xong rồi. Tận hưởng thôi!
 
 Dưới đây là [giao diện của mình](.p10k.zsh) đã tùy chỉnh.
 
-![gnome-terminal](./images/gnome-terminal.png)
+<p align="center">
+  <img src="./images/gnome-terminal.png">
+</p>
 
 Tham khảo: https://github.com/romkatv/powerlevel10k#configuration
 
@@ -453,7 +475,9 @@ sudo dnf makecache --refresh
 sudo dnf -y install neofetch
 ```
 
-![neofetch](./images/neofetch.png)
+<p align="center">
+  <img src="./images/neofetch.png">
+</p>
 
 ## Cài đặt bashtop
 
@@ -477,7 +501,9 @@ Sau khi cài đặt xong thì gọi câu lệnh bên dưới để chạy:
 bashtop
 ```
 
-![bashtop](./images/bashtop.png)
+<p align="center">
+  <img src="./images/bashtop.png">
+</p>
 
 Tham khảo: https://github.com/aristocratos/bashtop#manual-installation-linux-osx-and-freebsd
 
@@ -507,11 +533,15 @@ sudo dnf makecache --refresh
 sudo dnf install terminator
  ```
 
-![terminator](./images/terminator.png)
+<p align="center">
+  <img src="./images/terminator.png">
+</p>
 
 Tắt **Show titlebar**: Chuột phải vào màn hình terminator -> Preferences -> Profiles -> General -> bỏ chọn Show titlebar.
 
-![uncheck_show_titlebar](images/uncheck_show_titlebar.png)
+<p align="center">
+  <img src="images/uncheck_show_titlebar.png">
+</p>
 
 ### Terminology
 
@@ -523,7 +553,9 @@ sudo dnf makecache --refresh
 sudo dnf -y install terminology
 ```
 
-![terminology](./images/terminology.png)
+<p align="center">
+  <img src="./images/terminology.png">
+</p>
 
 ## Cài đặt phím tắt
 
@@ -531,11 +563,15 @@ Vào Settings -> Keyboard -> Keyboard Shortcuts -> View and Customize Shortcuts 
 
 ### Phím tắt mở Terminal mới
 
-![Terminal Shortcut](./images/TerminalShortcut.png)
+<p align="center">
+  <img src="./images/TerminalShortcut.png">
+</p>
 
 ### Phím tắt đến Desktop
 
-![Desktop Short](./images/DesktopShortcut.png)
+<p align="center">
+  <img src="./images/DesktopShortcut.png">
+</p>
 
 Cài thư viện `wmctrl`: 
 
@@ -592,7 +628,9 @@ Mở Gnome tweaks bằng câu lệnh bên dưới:
 gnome-tweaks
 ```
 
-![gnome-tweaks](./images/gnome-tweaks.png)
+<p align="center">
+  <img src="./images/gnome-tweaks.png">
+</p>
 
 ## Themes
 
@@ -650,7 +688,9 @@ Chạy:
 gnome-sound-recorder
 ```
 
-![gnome-sound-recorder](images/gnome-sound-recorder.png)
+<p align="center">
+  <img src="./images/gnome-sound-recorder.png">
+</p>
 
 
 ### Audio Recorder
@@ -684,13 +724,17 @@ sudo dnf makecache --refresh
 
 [Audacity](https://www.audacityteam.org/) là một phần mềm tự do, trình sửa nhạc số đa nền tảng và ứng dụng ghi âm. Nó có thể hoạt động trên Windows, Mac OS X, Linux và BSD. Audacity được tạo ra bởi Dominic Mazzoni khi anh đang là nghiên cứu sinh tại Đại học Carnegie Mellon, bang Pennsylvania, Hoa Kỳ.
 
-![audacity](images/audacity.png)
+<p align="center">
+  <img src="images/audacity.png">
+</p>
 
 ### Ardour
 
 [Ardor](https://ardour.org/) là một giải pháp mã nguồn mở tại chỗ giúp các doanh nghiệp tải lên, ghi và chỉnh sửa các đoạn âm thanh trên các thiết bị Linux, MacOS và Windows. Người chỉnh sửa có thể trích xuất nhạc phim từ video đã nhập, thêm khung trống và định tuyến các bản nhạc đa kênh đến các dải trộn riêng biệt.
 
-![ardour](./images/ardour.png)
+<p align="center">
+  <img src="./images/ardour.png">
+</p>
 
 ## Cài đặt NVIDIA Drivers cho các RedHat distro
 
@@ -704,7 +748,9 @@ lspci -k | grep -A 2 -E "(VGA|3D)"
 lspci | egrep 'VGA|NVIDIA'
 ```
 
-![VGA|3D](images/lspci.png)
+<p align="center">
+  <img src="images/lspci.png">
+</p>
 
 Kiểm tra card nvidia:
 
@@ -712,7 +758,9 @@ Kiểm tra card nvidia:
 lsmod | grep nvidia
 ```
 
-![empty_nvidia](images/empty_nvidia.png)
+<p align="center">
+  <img src="images/empty_nvidia.png">
+</p>
 
 Theo mặc định, Fedora 36 sẽ sử dụng drivers Nouveau mã nguồn mở nếu bạn đã cài đặt GPU NVIDIA trên máy tính của mình, như bạn có thể thấy trong ảnh chụp màn hình bên dưới.
 
@@ -724,7 +772,9 @@ Về mặt lịch sử, các driver độc quyền của Nouveau chậm hơn c�
 lsmod | grep nouveau
 ```
 
-![nouveau](/images/nouveau.png)
+<p align="center">
+  <img src="./images/nouveau.png">
+</p>
 
 ### Cập nhật hệ thống
 
@@ -836,12 +886,16 @@ Ngoài ra, nếu bạn đã mở một terminal, hãy sử dụng lệnh sau.
 nvidia-settings
 ```
 
-![nvidia_settings](images/nvidia_settings.png)
+<p align="center">
+  <img src="images/nvidia_settings.png">
+</p>
 
 Hoặc cũng có thể, sau khi khởi động lại hệ thống, bạn có thể tìm thấy ứng dụng NVIDIA X Server Settings ở trong Application Menu. Nhấn vào biểu tượng NVIDIA X Server Settings như màn hình bên dưới.
 Ví dụ nếu cài đặt thành công:
 
-![nvidia_installed](images/nvidia_installed.png)
+<p align="center">
+  <img src="images/nvidia_installed.png">
+</p>
 
 Những hệ thống đã cài đặt **Cuda support** có thể chạy câu lệnh bên dưới.
 
@@ -857,7 +911,9 @@ Các trình điều khiển NVIDIA độc quyền được sử dụng, như b�
 lsmod | grep nvidia
 ```
 
-![lsmod_nvidia](./images/lsmod_nvidia.png)
+<p align="center">
+  <img src="./images/lsmod_nvidia.png">
+</p>
 
 Drivers Nouveau đã không còn được sử dụng.
 
@@ -963,13 +1019,17 @@ sudo envycontrol -s nvidia --dm sddm
 
 Có một tiện ích mở rộng được gọi là GPU profile selector cho phép bạn chuyển đổi giữa các GPU thông qua menu hệ thống ở góc trên bên phải.
 
-![envycontrol_system_menu](images/envycontrol_system_menu.png)
+<p align="center">
+  <img src="images/envycontrol_system_menu.png">
+</p>
 
 Đối với giai diện Gnome(Fedora/Ubuntu,...), chỉ cần mở [liên kết này](https://extensions.gnome.org/extension/5009/gpu-profile-selector/) và sử dụng nút ON/OFF để cài đặt tiện ích mở rộng.
 
 LƯU Ý: Tiện ích mở rộng này yêu cầu cài đặt [Envy Control](#cài-đặt-envy-control) trước. Và, nếu bạn không thấy nút ON/OFF, hãy nhấp vào liên kết **Click here to install browser extension** để cài đặt tiện ích mở rộng trình duyệt và tải lại trang web.
 
-![gnome_extension_gpu_profile_selector](images/gnome_extension_gpu_profile_selector.png)
+<p align="center">
+  <img src="images/gnome_extension_gpu_profile_selector.png">
+</p>
 
 ## Tham khảo
 
