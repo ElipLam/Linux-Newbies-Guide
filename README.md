@@ -2,15 +2,15 @@
 <!-- Font sizr of heading 1 is 6 -->
 
 ## Mục lục
-- [Mục lục](#mục-lục)
 - [Các lệnh cơ bản](#các-lệnh-cơ-bản)
   - [Kiểm tra phiên bản của distro](#kiểm-tra-phiên-bản-của-distro)
+  - [Kiểm tra Display Server](#kiểm-tra-display-server)
+  - [Kiểm tra các gói đã cài đặt](#kiểm-tra-các-gói-đã-cài-đặt)
+- [Thao tác với kernel](#thao-tác-với-kernel)
   - [Làm quen với kernel](#làm-quen-với-kernel)
   - [Cập nhật kernel](#cập-nhật-kernel)
   - [Chọn kernel làm mặc định](#chọn-kernel-làm-mặc-định)
   - [Xóa kernel](#xóa-kernel)
-  - [Kiểm tra Display Server](#kiểm-tra-display-server)
-  - [Kiểm tra các gói đã cài đặt](#kiểm-tra-các-gói-đã-cài-đặt)
 - [Sửa lỗi headphone microphone](#sửa-lỗi-headphone-microphone)
 - [Cài đặt zsh](#cài-đặt-zsh)
 - [Cài đặt oh-my-zsh](#cài-đặt-oh-my-zsh)
@@ -26,6 +26,8 @@
   - [Terminator](#terminator)
   - [Terminology](#terminology)
 - [Cài đặt phím tắt](#cài-đặt-phím-tắt)
+  - [Phím tắt mở Terminal mới](#phím-tắt-mở-terminal-mới)
+  - [Phím tắt đến Desktop](#phím-tắt-đến-desktop)
 - [Gnome extention](#gnome-extention)
 - [GNOME Tweaks](#gnome-tweaks)
 - [Themes](#themes)
@@ -46,8 +48,10 @@
   - [Xác minh cài đặt NVIDIA Drivers](#xác-minh-cài-đặt-nvidia-drivers)
   - [Cập nhật Nvidia Drivers](#cập-nhật-nvidia-drivers)
   - [Cách xóa Nvidia Drivers và RollBack](#cách-xóa-nvidia-drivers-và-rollback)
-        - [on top](#on-top)
-
+- [Chuyển đổi cạc đồ họa NVIDIA và Intel/AMD](#chuyển-đổi-cạc-đồ-họa-nvidia-và-intelamd)
+  - [Cài đặt Envy Control](#cài-đặt-envy-control)
+  - [Chuyển đổi cạc đồ hoa thông qua System Menu](#chuyển-đổi-cạc-đồ-hoa-thông-qua-system-menu)
+- [Tham khảo](#tham-khảo)
 
 ## Các lệnh cơ bản
 
@@ -57,10 +61,48 @@ Fedora:
 ```console
 echo $(rpm -E %fedora)
 ```
+
 ```
 # Output:
 # 36
 ```
+
+### Kiểm tra Display Server
+
+Kiểm tra là [Wayland](https://quantrimang.com/cong-nghe/chu-y-khi-su-dung-linux-voi-wayland-168753) hay Xorg: 
+
+```console
+echo $XDG_SESSION_TYPE
+```
+
+```
+# Output:
+# wayland
+```
+
+Để biết thêm sự khác biệt giữa Wayland và Xorg thì hãy xem tại [đây](https://www.secjuice.com/wayland-vs-xorg/).
+
+### Kiểm tra các gói đã cài đặt
+
+Debian/Ubuntu:
+
+```console
+sudo apt list
+# or
+# sudo apt list | grep <package name>
+```
+
+Fedora/RHEL/AlmaLinux:
+
+```console
+sudo dnf list installed
+# or
+# sudo dnf list
+# sudo dnf list installed | grep <package name>
+```
+
+## Thao tác với kernel
+
 ### Làm quen với kernel
 
 Xem kernel hiện tại: 
@@ -108,8 +150,6 @@ Tại dòng **Available Packages** ta có thể xem các kernel phiên bản m�
 
 Hoặc cũng có thể nhìn vào màu sắc của terminal để xác định. Nhìn màu sắc của `kernel` ta có thể thấy được kernel phiên bản 5.19.4 là phiên bản mới chưa được cài đặt vào máy.
 
-
-
 ### Cập nhật kernel
 
 *** Cảnh báo: Sử dụng DNF để cài đặt các kernel bất cứ khi nào có thể.
@@ -125,12 +165,14 @@ sudo dnf install kernel --best
 ```
 
 Nếu muốn cài đặt một kernel cụ thể thì dùng lệnh sau:
+
 ```
 # sudo dnf install kernel-<major_version>-<minor_version>-<release>.<architecture>
-hoặc
+# hoặc
 # sudo dnf install kernel-<major_version>-<release>.<architecture>
 
-Ví dụ: sudo dnf install kernel-5.19.4-200.fc36.x86_64
+# Ví dụ: 
+sudo dnf install kernel-5.19.4-200.fc36.x86_64
 ```
 
 Để các thay đổi có hiệu lực, khởi động lại hệ thống. Nếu không, hệ thống của bạn vẫn sẽ chạy trên kernel cũ.
@@ -143,7 +185,6 @@ reboot
 
 Nếu có nhiều phiên bản của kernel được cài đặt thì sẽ có một kernel được chọn làm kernel mặc định khi khởi động máy tính. Ta cũng có thể chọn một phiên bản khác để làm kernel mặc định.
 
-
 Câu lệnh **grubby** là một công cụ được sử dụng để cấu hình bootloader. Tuy nhiên, câu lệnh grubby cũng có thể được sử dụng để hiển thị thông tin của phiên bản kernel.
 
 Chạy câu lệnh grubby dưới đây để in ra vị trí lưu và phiên bản của kernel mặc định khi boot.
@@ -154,7 +195,6 @@ sudo grubby --default-kernel
 ![default_kernel](images/defaut_kernel.png)
 
 Tiếp theo, câu lệnh bên dưới sẽ liệt kê tất cả các kernel đã cài đặt, nó cũng in ra tất cả các thành phần của GRUB của tất các các kernel đó.
-
 
 ```console
 sudo grubby --info=ALL
@@ -168,6 +208,7 @@ sudo grubby --info=ALL
 sudo grubby --set-default <kernel>
 # sudo grubby --set-default /boot/vmlinuz-5.17.5-300.fc36.x86_64
 ```
+
 ![set_default_kernel](images/set_default_kernel.png)
 
 Khởi động lại hệ thống để các thay đổi được áp dụng.
@@ -181,10 +222,10 @@ Việc cập nhật kernel không còn là một tác vụ khó khăn nữa.
 ### Xóa kernel
 
 Để xóa toàn bộ kernel, hãy dùng câu lệnh bên dưới:
+
 ```
 sudo dnf remove $(rpm -qa | grep ^kernel | grep <kernel-version>)
 ```
-
 
 ```console
 # xóa phiên bản kernel 5.18.xxx
@@ -205,37 +246,6 @@ sudo mkconfig-grub2 -o /boot/efi/EFI/fedora/grub.cfg
 
 (Câu lệnh trên giả định rằng bạn đang chạy trên hệ thống UEFI).
 
-### Kiểm tra Display Server
-
-Kiểm tra là [Wayland](https://quantrimang.com/cong-nghe/chu-y-khi-su-dung-linux-voi-wayland-168753) hay Xorg: 
-
-```console
-echo $XDG_SESSION_TYPE
-```
-
-```
-# Output:
-# wayland
-```
-
-Để biết thêm sự khác biệt giữa Wayland và Xorg thì hãy xem tại [đây](https://www.secjuice.com/wayland-vs-xorg/).
-
-### Kiểm tra các gói đã cài đặt
-
-Debian/Ubuntu:
-```console
-sudo apt list
-# or
-# sudo apt list | grep <package name>
-```
-
-Fedora/RHEL/AlmaLinux:
-```console
-sudo dnf list installed
-# or
-# sudo dnf list
-# sudo dnf list installed | grep <package name>
-```
 ## Sửa lỗi headphone microphone
 
 Khi cắm tai nghe có microphone vào máy, linux có thể không nhận dạng được microphone. Để sữa lỗi này ta làm theo các bước bên dưới.
@@ -274,6 +284,7 @@ Tham khảo: https://www.reddit.com/r/Fedora/comments/qzaofq/headset_mic_not_wor
 https://www.youtube.com/watch?v=yx33W-c4Cmg 
 
 ## Cài đặt zsh
+
 > Zsh is a shell designed for interactive use, although it is also a powerful scripting language. Many of the useful features of bash, ksh, and tcsh were incorporated into zsh; many original features were added.
 
 Debian/Ubuntu: 
@@ -287,12 +298,15 @@ Fedora/RHEL/Almalinux:
 ```console
 sudo dnf install zsh -y
 ```
+
 Kiểm tra xem đã cài đặt thành công chưa:
+
 ```
 $ which zsh
 
 /usr/bin/zsh
 ```
+
 Mở file *.bashrc*, thêm `exec zsh` vào đầu file.
 
 ## Cài đặt oh-my-zsh
@@ -302,6 +316,7 @@ Oh-my-zsh hiểu đơn giản là một framework giúp bạn quản lý các th
 ```console
 sudo curl -L http://install.ohmyz.sh | sh
 ```
+
 ## Cài đặt zsh autosuggestions
 
 Cài đặt plugin **zsh-autosuggestions**, giúp tự động **suggetions** các lệnh mà mình đã dùng:
@@ -309,6 +324,7 @@ Cài đặt plugin **zsh-autosuggestions**, giúp tự động **suggetions** c�
 ```console
 git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 ```
+
 Mở file **.zshrc**:
 
 ```console
@@ -326,6 +342,7 @@ Sửa dòng `plugins=(git)` thành `plugins=(git zsh-autosuggestions)`.
 
 source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ```
+
 Tham khảo: https://viblo.asia/p/cach-cai-dat-zsh-va-zsh-autosuggestions-tren-ubuntu-LzD5ddDO5jY
 
 ## Theme Power10k cho zsh shell
@@ -339,6 +356,7 @@ Cài đặt vào oh-my-zsh:
 ```console
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 ```
+
 Mở file **~/.zshrc**, sửa dòng `ZSH_THEME="robbyrussell"` thành `ZSH_THEME="powerlevel10k/powerlevel10k"`.
 
 Lưu file, mở terminal để cài đặt themes. File cấu hình được lưu ở `~/.p10k.zsh`.
@@ -350,11 +368,15 @@ Chỉnh lại font của terminal là `MesloLGS NF`.
 Xong rồi. Tận hưởng thôi! 
 
 Dưới đây là [giao diện của mình](.p10k.zsh) đã tùy chỉnh.
+
 ![gnome-terminal](./images/gnome-terminal.png)
+
 Tham khảo: https://github.com/romkatv/powerlevel10k#configuration
 
 ## Cài đặt bộ gõ tiếng Việt
+
 ### Ubuntu
+
 ```console
 sudo add-apt-repository ppa:bamboo-engine/ibus-bamboo
 sudo apt-get update
@@ -363,7 +385,9 @@ ibus restart
 # Đặt ibus-bamboo làm bộ gõ mặc định
 env DCONF_PROFILE=ibus dconf write /desktop/ibus/general/preload-engines "['BambooUs', 'Bamboo']" && gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('ibus', 'Bamboo')]"
 ```
+
 ### Cài đặt từ mã nguồn
+
 Cài đặt các gói phụ thuộc:
 - make
 - golang
@@ -381,6 +405,7 @@ sudo yum install make go libX11-devel libXtst-devel gtk3-devel
 # openSUSE Tumbleweed
 sudo zypper install make go libX11-devel libXtst-devel gtk3-devel
 ```
+
 Tải bamboo repository xuống: 
 ```console
 wget https://github.com/BambooEngine/ibus-bamboo/archive/master.zip -O ibus-bamboo.zip
@@ -389,7 +414,9 @@ unzip ibus-bamboo.zip
 # hoặc clone từ github:
 git clone https://github.com/BambooEngine/ibus-bamboo.git
 ```
+
 Build và cài đặt: 
+
 ```console
 cd ibus-bamboo
 sudo make install
@@ -397,7 +424,9 @@ sudo make install
 # Restart ibus
 ibus restart
 ```
+
 #### Gỡ cài đặt
+
 ```console
 sudo make uninstall
 ibus restart
@@ -410,12 +439,14 @@ Nguồn: https://github.com/BambooEngine/ibus-bamboo/wiki/H%C6%B0%E1%BB%9Bng-d%E
 Neofetch được mô tả là "công cụ kiểm tra thông tin hệ thống dưới dạng dòng lệnh, được viết bằng bash 3.2+" và dễ sử dụng hơn trên các bản phân phối Linux, nhưng cũng có thể được sử dụng trên macOS và Windows sau khi cài đặt một số thành phần bổ sung.
 
 Debian/Ubuntu:
+
 ```console
 sudo apt update
 sudo apt install neofetch
 ```
 
 Fedora/RHEL:
+
 ```console
 sudo dnf makecache --refresh
 #sudo yum install epel-release
@@ -425,7 +456,6 @@ sudo dnf -y install neofetch
 ![neofetch](./images/neofetch.png)
 
 ## Cài đặt bashtop
-
 
 Các công cụ giám sát rất quan trọng và mọi quản trị viên hệ thống đều biết điều đó. Với sự trợ giúp của các ứng dụng giám sát tài nguyên, chúng ta có thể liên tục quan sát tình trạng tài nguyên của hệ thống khi một tác vụ đang chạy.
 
@@ -452,25 +482,31 @@ bashtop
 Tham khảo: https://github.com/aristocratos/bashtop#manual-installation-linux-osx-and-freebsd
 
 ## Terminal
+
 ### Terminator
 
 Terminator là một trình giả lập thiết bị đầu cuối dành cho các hệ thống giống như Linux và Unix, cho phép người dùng tạo nhiều thiết bị đầu cuối trong một cửa sổ duy nhất và sắp xếp chúng thành lưới. Mỗi cửa sổ đầu cuối có thể được thay đổi kích thước tùy theo nhu cầu. Terminator dựa trên Gnome và được viết bằng ngôn ngữ Python.
 
 **Debian/Ubuntu**
+
 ```console
 sudo apt-get install terminator
  ```
+
 Nếu cài đặt không thành công, bạn có thể cần thêm kho lưu trữ PPA và phiên bản Ubuntu mới hơn mà bạn không phải chạy lệnh **update**.
 ```console
 sudo add-apt-repository ppa:gnome-terminator
 sudo apt-get update
 sudo apt-get install terminator
- ```
+```
+
 **Fedora/RHEL**
+
 ```console
 sudo dnf makecache --refresh
 sudo dnf install terminator
  ```
+
 ![terminator](./images/terminator.png)
 
 Tắt **Show titlebar**: Chuột phải vào màn hình terminator -> Preferences -> Profiles -> General -> bỏ chọn Show titlebar.
@@ -478,6 +514,7 @@ Tắt **Show titlebar**: Chuột phải vào màn hình terminator -> Preference
 ![uncheck_show_titlebar](images/uncheck_show_titlebar.png)
 
 ### Terminology
+
 Là terminal có thể xem ảnh và video ngay bên  trong.
 
 Fedora/RHEL:
@@ -485,32 +522,38 @@ Fedora/RHEL:
 sudo dnf makecache --refresh
 sudo dnf -y install terminology
 ```
+
 ![terminology](./images/terminology.png)
 
 ## Cài đặt phím tắt
+
 Vào Settings -> Keyboard -> Keyboard Shortcuts -> View and Customize Shortcuts -> Custome Shortcut.
 
-Phím tắt mở Terminal mới:
+### Phím tắt mở Terminal mới
 
 ![Terminal Shortcut](./images/TerminalShortcut.png)
 
-Phím tắt đến Desktop:
+### Phím tắt đến Desktop
 
 ![Desktop Short](./images/DesktopShortcut.png)
 
-Cài thư viện wmctrl: 
+Cài thư viện `wmctrl`: 
 
 Fedora/RHEL:
+
 ```console
 sudo dnf -y install wmctrl
 ```
+
 Debian/Ubuntu:
+
 ```console
 sudo apt-get update
 sudo apt-get install wmctrl
 ```
 
 Câu lệnh: 
+
 ```console
 wmctrl -k on
 ```
@@ -525,10 +568,12 @@ https://askubuntu.com/questions/97219/how-to-show-desktop-from-command-line
 https://extensions.gnome.org/
 
 Extention thường dùng:
+
 - [User Themes](https://extensions.gnome.org/extension/19/user-themes/) - làm mờ topbar.
 - [Dash2Dock Lite](https://extensions.gnome.org/extension/4994/dash2dock-lite/) - chuyển Dash thành Dock và có thêm hiệu ứng chuyển động.
 - [Resource Monitor](https://extensions.gnome.org/extension/1634/resource-monitor/) - hiển thị thông tin phần cứng trên topbar.
 - [Remove App Menu](https://extensions.gnome.org/extension/3906/remove-app-menu/)
+- [GPU profile selector](https://extensions.gnome.org/extension/5009/gpu-profile-selector/) - chuyển đổi giữa các GPU thông qua System Menu ở góc phải của topbar. Cần phải cài đặt [Envy Control](#cài-đặt-envy-control) trước.
 - [Show Desktop Button](https://extensions.gnome.org/extension/1194/show-desktop-button/)
 - [Unblank lock screen](https://extensions.gnome.org/extension/1414/unblank/) - Luôn hiện màn hình khóa.
 
@@ -547,41 +592,42 @@ Mở Gnome tweaks bằng câu lệnh bên dưới:
 gnome-tweaks
 ```
 
-
 ![gnome-tweaks](./images/gnome-tweaks.png)
 
-
 ## Themes
+
 - [Tokyo Night](https://github.com/Fausto-Korpsvart/Tokyo-Night-GTK-Theme)
-
 - [Otis](https://github.com/EliverLara/otis)
-
 - [Graphite](https://github.com/vinceliuice/Graphite-gtk-theme)
-
 - [Colloid](https://github.com/vinceliuice/Colloid-gtk-theme)
-
 
 Copy thư mục chứa theme vào `/usr/share/themes/`.
 
 Ví dụ: 
 
 - Tải theme Otis:
+
 ```console
 git clone https://github.com/EliverLara/Otis.git
 ```
+
 - Sao chép theme Otis vào nơi cài đặt:
+
 ```console
 sudo cp -r Otis /usr/share/themes/Otis
 ```
+
 - Để sử dụng theme Otis trên Gnome, thì chạy câu lệnh trong Terminal:
 
 ```console
 gsettings set org.gnome.desktop.interface gtk-theme "Otis"
 gsettings set org.gnome.desktop.wm.preferences theme "Otis"
 ```
+
 Hoặc chỉnh qua công cụ [Gnome Tweaks](#gnome-tweaks).
 
 ## Icons
+
 - [Adwaita-Blue](https://www.gnome-look.org/p/1310137)
 
 Copy thư mục chứa icon vào `/usr/share/icons/`
@@ -592,9 +638,14 @@ Chỉnh qua công cụ [Gnome Tweaks](#gnome-tweaks).
 
 ### Gnome Sound Recorder
 
+Cài đặt:
+
 ```console
 sudo dnf install -y gnome-sound-recorder
 ```
+
+Chạy:
+
 ```console
 gnome-sound-recorder
 ```
@@ -608,7 +659,6 @@ gnome-sound-recorder
 
 [Audio Recorder](https://launchpad.net/audio-recorder) là một trình ghi âm tuyệt vời trên hệ điều hành Linux có tất cả các loại tùy chọn để hoạt động như một nguồn âm thanh. Ví dụ, bạn có thể sử dụng micrô, webcam và thậm chí cả Skype. Thời gian có thể được đặt cho bản ghi âm của bạn để bạn kiểm soát môi trường làm việc. Nó hỗ trợ các định dạng MP3, FLAC, OGG, WAV và SPX.
 
-
 Sửa lỗi : configure: error: Package requirements (gstreamer-1.0 >= 1.4) were not met.
 
 ```console
@@ -617,7 +667,7 @@ sudo dnf install -y gstreamer1-devel gstreamer1-plugins-base-tools gstreamer1-do
 
 Tham khảo tại [đây](https://gstreamer.freedesktop.org/documentation/installing/on-linux.html?gi-language=c)
 
-loi: Package requirements (appindicator3-0.1 >= 0.3) were not met:
+Lỗi: Package requirements (appindicator3-0.1 >= 0.3) were not met: - chưa sửa được.
 
 ```
 sudo dnf install -y libindicator-devel 
@@ -645,6 +695,7 @@ sudo dnf makecache --refresh
 ## Cài đặt NVIDIA Drivers cho các RedHat distro
 
 ### Kiểm tra GPUs và Drivers đã dùng
+
 Bạn có thể [kiểm tra](https://rpmfusion.org/Howto/NVIDIA#Determining_your_card_model) liệu rằng máy vi tính của bạn đã cài GPU NVIDIA hay chưa với câu lệnh sau:
 
 ```console
@@ -688,16 +739,17 @@ Nếu có bất kỳ bản cập nhật nào cần được cài đặt, trình 
 Trình quản lý gói DNF sẽ tải xuống tất cả các bản cập nhật được yêu cầu từ internet. Có thể mất một lúc để hoàn thành.
 
 ### Cài đặt EPEL
+
 Nếu không phải Fedora thì cài thêm [EPEL](https://docs.fedoraproject.org/en-US/epel/) - 
 Extra Packages for Enterprise Linux.
 
-First, enable the CRB repository.
+Trước tiên, bật CRB repository.
 
 ```console
 sudo dnf config-manager --set-enabled crb
 ```
 
-Next, install `EPEL` using the following `(dnf)` terminal command.
+Tiếp theo, cài đặt `EPEL` thông qua `dnf`.
 
 ```console
 dnf install epel-release epel-next-release
@@ -718,19 +770,21 @@ Xoá gói package bằng command **rpm -e**.
 # rpm -e epel-release-6-8.noarch
 ```
 
-
 ### Cài đặt kho lưu trữ tổng hợp RPM Fusion
-RPM Fusion is a repository of add-on packages for Fedora and EL+EPEL that a group of community volunteers maintains. RPM Fusion is not a standalone repository but an extension of Fedora’s default packages that could not be included due to Fedora being bound by the same legal restrictions as Red Hat.
 
 Theo mặc định, giống như hầu hết các bản phân phối Linux, Fedora không đi kèm với các trình điều khiển độc quyền của NVIDIA. Phương pháp tốt nhất để cài đặt những thứ này trên Fedora 36 là sử dụng kho lưu trữ tổng hợp RPM.
 
-Đầu tiên, mở thiết bị đầu cuối của bạn và thêm các kho lưu trữ sau
+RPM Fusion là một kho chứa các gói tiện ích bổ sung cho Fedora và EL + EPEL mà một nhóm tình nguyện viên cộng đồng duy trì. RPM Fusion không phải là một kho lưu trữ độc lập mà là một phần mở rộng của các gói mặc định của Fedora không thể được đưa vào do Fedora bị ràng buộc bởi các hạn chế pháp lý giống như Red Hat.
 
-Thêm RPM Fusion Free repository:
+Đầu tiên, mở terminal của bạn và thêm các kho lưu trữ sau:
+
+- Thêm RPM Fusion Free repository:
+
 ```console
 sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 ```
-Thêm RPM Fusion Non-Free repository:
+
+- Thêm RPM Fusion Non-Free repository:
 
 ```console
 sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
@@ -752,21 +806,19 @@ Tham khảo tại [đây](https://www.linuxcapable.com/how-to-install-nvidia-dri
 
 Bây giờ bạn đã nhập kho lưu trữ RPM Fusion, hãy thực thi lệnh sau để cài đặt trình điều khiển Nvidia mới nhất trên hệ thống của bạn.
 
-
 ```console
 sudo dnf install -y akmod-nvidia
 ```
 
-Next, install the CUDA driver support. Ideally, you may not need this, but sometimes if issues persist, installing the CUDA support can solve problems.
-
-Tiếp theo, cài đặt hỗ trợ trình điều khiển CUDA. Lý tưởng nhất là bạn có thể không cần điều này, nhưng đôi khi nếu sự cố vẫn tiếp diễn, việc cài đặt hỗ trợ CUDA có thể giải quyết vấn đề.
+Tiếp theo, cài đặt drivers hỗ trợ CUDA. Bạn có thể không cần điều này, nhưng đôi khi nếu sự cố vẫn tiếp diễn, việc cài đặt hỗ trợ CUDA có thể giải quyết vấn đề.
 
 ```console
 sudo dnf install -y xorg-x11-drv-nvidia-cuda
 ```
-Note the NVIDIA-SMI command is only useable with Cuda support.
 
-Once everything has been installed, you must restart your system. By default, this will also disable Nouveau drivers automatically.
+Lưu ý rằng lệnh NVIDIA-SMI chỉ có thể sử dụng được với sự hỗ trợ của Cuda.
+
+Khi mọi thứ đã được cài đặt, bạn phải khởi động lại hệ thống của mình. Theo mặc định, điều này cũng sẽ tự động tắt trình điều khiển Nouveau.
 
 ```console
 reboot
@@ -774,12 +826,11 @@ reboot
 
 ### Xác minh cài đặt NVIDIA Drivers
 
-Once you have returned, view the NVIDIA X Server Settings by using the following path.
+Khi bạn đã quay lại, xem NVIDIA X Server Settings bằng cách sử dụng đường dẫn sau.
 
 `Activities > Show Applications > NVIDIA X Server`
 
-Alternatively, if you opened a terminal, use the following command.
-
+Ngoài ra, nếu bạn đã mở một terminal, hãy sử dụng lệnh sau.
 
 ```console
 nvidia-settings
@@ -787,26 +838,28 @@ nvidia-settings
 
 ![nvidia_settings](images/nvidia_settings.png)
 
-Hoặc cũng có thể Once your computer boots, you should find the NVIDIA X Server Settings app in the Application Menu. Click on the NVIDIA X Server Settings app icon as marked in the screenshot below.
+Hoặc cũng có thể, sau khi khởi động lại hệ thống, bạn có thể tìm thấy ứng dụng NVIDIA X Server Settings ở trong Application Menu. Nhấn vào biểu tượng NVIDIA X Server Settings như màn hình bên dưới.
 Ví dụ nếu cài đặt thành công:
 
 ![nvidia_installed](images/nvidia_installed.png)
 
-Users who installed **Cuda support** can run the following command in your terminal.
+Những hệ thống đã cài đặt **Cuda support** có thể chạy câu lệnh bên dưới.
 
 ```console
 nvidia-smi
 ```
-Câu lệnh này cũng có thể kiểm tra phiên bản của Drivers.
 
+Lệnh `nvidia-smi` chỉ có thể sử dụng được với sự hỗ trợ của Cuda. Câu lệnh này cũng có thể kiểm tra phiên bản của Drivers.
 
-The proprietary NVIDIA drivers are used, as you can see in the screenshot below.
+Các trình điều khiển NVIDIA độc quyền được sử dụng, như bạn có thể thấy trong ảnh chụp màn hình bên dưới.
 
 ```console
 lsmod | grep nvidia
 ```
 
-The open-source Nouveau drivers are no longer used.
+![lsmod_nvidia](./images/lsmod_nvidia.png)
+
+Drivers Nouveau đã không còn được sử dụng.
 
 ```console
 lsmod | grep nouveau
@@ -814,34 +867,122 @@ lsmod | grep nouveau
 
 ### Cập nhật Nvidia Drivers
 
-All future updates will be in the standard dnf refresh command procedure, and this will check the RPM Fusion repository for updates and the rest of your AlmaLinux packages.
+Tất cả các bản cập nhật trong tương lai sẽ nằm trong quy trình lệnh `dnf refresh` tiêu chuẩn và điều này sẽ kiểm tra kho lưu trữ RPM Fusion để biết các bản cập nhật của các driver và các gói phần mềm còn lại của bạn.
 
 ```console
 sudo dnf upgrade --refresh
 ```
+
 ### Cách xóa Nvidia Drivers và RollBack
 
-If you do not want to continue to use the Nvidia official drivers, use the following command:
+Nếu bạn không muốn tiếp tục sử dụng trình điều khiển chính thức của Nvidia, hãy sử dụng lệnh sau:
 
 ```console
 sudo dnf -y autoremove akmod-nvidia xorg-x11-drv-nvidia-cuda
 ```
 
-This will remove all dependencies installed, and once removed, you must reboot.
+Thao tác này sẽ xóa tất cả các phần phụ thuộc đã cài đặt. Sau khi xóa, bạn phải khởi động lại.
 
 ```console
 reboot
 ```
 
-During the reboot, the process will re-enable the Nouveau drivers. You will see a message stating Nvidia drivers not found re-enabling Nouveau drivers, making it easier to switch back and forth if needed.
+Trong quá trình khởi động lại, quá trình này sẽ kích hoạt lại các driver Nouveau. Bạn sẽ thấy một thông báo cho biết không tìm thấy trình điều khiển Nvidia đang bật lại trình điều khiển Nouveau, giúp bạn dễ dàng chuyển đổi qua lại nếu cần.
 
+`NVIDIA kernel module missing. Falling back to nouveau.`
 
-Tham khảo:
+## Chuyển đổi cạc đồ họa NVIDIA và Intel/AMD
+
+### Cài đặt Envy Control
+
+[EnvyControl](https://github.com/geminis3/envycontrol) là một chương trình nhằm cung cấp một cách dễ dàng để chuyển đổi chế độ GPU trên hệ thống Nvidia Optimus (ví dụ như máy tính xách tay có cấu hình Intel + Nvidia hoặc AMD + Nvidia) trong hệ điều hành Linux.
+
+EnvyControl có thể hoạt động trên bất kỳ bản phân phối nào của Linux, hãy xem [các bản phân phối đã thử nghiệm](https://github.com/geminis3/envycontrol/wiki/Frequently-Asked-Questions#tested-distros).
+
+Mở terminal, tải repository Envy Control:
+
+```console
+git clone https://github.com/geminis3/envycontrol.git
+```
+
+Cài đặt thư viện pip:
+
+```console
+sudo dnf install -y python3-pip
+```
+
+Để áp dụng trên toàn bộ hệ thống, vào thư mục vừa tải và cài đặt gói thông qua pip:
+
+```console
+cd envycontrol
+sudo pip3 install .
+```
+
+Cách dùng:
+
+```console 
+usage: envycontrol.py [-h] [-v] [-s MODE] [-q] [--dm DISPLAY_MANAGER] [--reset_sddm]
+
+options:
+  -h, --help            show this help message and exit
+  -v, --version         show this program's version number and exit
+  -s MODE, --switch MODE
+                        switch the graphics mode, supported modes: integrated, hybrid, nvidia
+  -q, --query           query the current graphics mode set by EnvyControl
+  --dm DISPLAY_MANAGER  Manually specify your Display Manager. This is required only for systems without systemd. Supported DMs: gdm, sddm, lightdm
+  --reset_sddm          restore original SDDM Xsetup file
+```
+
+Ví dụ:
+
+Xem chế độ đồ họa hiện tại:
+
+```cosonle
+envycontrol --query
+```
+
+Chuyển chế độ đồ họa hiện tại thành integrated (tắt nguồn Nvidia dGPU):
+
+```console
+sudo envycontrol -s integrated
+```
+
+Chuyển chế độ đồ họa hiện tại thành nvidia (tự động cài đặt display manager)
+
+```console
+sudo envycontrol -s nvidia
+```
+
+Chuyển chế độ đồ họa hiện tại thành nvidia và cài đặt SDDM display manager.
+
+```console
+sudo envycontrol -s nvidia --dm sddm
+```
+
+### Chuyển đổi cạc đồ hoa thông qua System Menu
+
+Có một tiện ích mở rộng được gọi là GPU profile selector cho phép bạn chuyển đổi giữa các GPU thông qua menu hệ thống ở góc trên bên phải.
+
+![envycontrol_system_menu](images/envycontrol_system_menu.png)
+
+Đối với giai diện Gnome(Fedora/Ubuntu,...), chỉ cần mở [liên kết này](https://extensions.gnome.org/extension/5009/gpu-profile-selector/) và sử dụng nút ON/OFF để cài đặt tiện ích mở rộng.
+
+LƯU Ý: Tiện ích mở rộng này yêu cầu cài đặt [Envy Control](#cài-đặt-envy-control) trước. Và, nếu bạn không thấy nút ON/OFF, hãy nhấp vào liên kết **Click here to install browser extension** để cài đặt tiện ích mở rộng trình duyệt và tải lại trang web.
+
+![gnome_extension_gpu_profile_selector](images/gnome_extension_gpu_profile_selector.png)
+
+## Tham khảo
 
 https://www.linuxcapable.com/how-to-install-nvidia-drivers-on-almalinux-9/#Optional_-_Enable_RPM_Fusion_TESTING_Branch
+
 https://vi.linuxcapable.com/how-to-install-nvidia-drivers-on-fedora-36-linux/
+
 https://linuxhint.com/install-nvidia-drivers-on-fedora-35/
+
 https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Fedora&target_version=35
-https://linuxhint.com/check-version-update-fedora-linux-kernel/#:~:text=The%20best%20way%20to%20update,run%20the%20following%20DNF%20command.
+
+https://linuxhint.com/check-version-update-fedora-linux-kernel/#:~:text=The%20best%20way%20to%20update,run%20the%20following%20DNF%20command
+
+https://fostips.com/install-nvidia-driver-fedora-36/
 
 ###### [on top](#mục-lục)
