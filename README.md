@@ -57,6 +57,15 @@
 
 ### Kiểm tra phiên bản của distro
 
+Linux:
+```console
+cat /etc/os-release
+```
+
+<p align="center">
+  <img src="images/os-release.png">
+</p>
+
 Fedora:
 ```console
 echo $(rpm -E %fedora)
