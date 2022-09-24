@@ -552,7 +552,7 @@ Tắt **Show titlebar**: Chuột phải vào màn hình terminator -> Preference
   <img src="images/uncheck_show_titlebar.png">
 </p>
 
-Để gỡ cài đặt terminator, dùng câu lệnh:
+Để **gỡ cài đặt** terminator, dùng câu lệnh:
 
 ```console
 sudo dnf remove terminator; sudo dnf autoremove terminator;sudo dnf clean packages;
