@@ -540,7 +540,7 @@ sudo apt-get install terminator
 ```console
 sudo dnf makecache --refresh
 sudo dnf install terminator
- ```
+```
 
 <p align="center">
   <img src="./images/terminator.png">
@@ -551,6 +551,18 @@ Tắt **Show titlebar**: Chuột phải vào màn hình terminator -> Preference
 <p align="center">
   <img src="images/uncheck_show_titlebar.png">
 </p>
+
+Để gỡ cài đặt terminator, dùng câu lệnh:
+
+```console
+sudo dnf remove terminator; sudo dnf autoremove terminator;sudo dnf clean packages;
+```
+
+Tập tin cấu hình của terminator nằm ở địa chỉ: `/home/<your-user-name>/.config/terminator/config`. Để xóa sạch hoàn toàn terminator, ta sẽ xóa luôn thư mục này. 
+
+```console
+rm -rfvI /home/your_user_name/.config/terminator
+```
 
 ### Terminology
 
