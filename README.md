@@ -307,7 +307,7 @@ Nhấn nút **M** hoặc **,** hoặc **.** để chuyển từ `MM -> 00`
 
 Nhấn `Esc` để thoát.
 
-Nếu cách này không thành công thì ta tiếp tục thử chạy câu lệnh bên dưới,   
+Nếu cách này không thành công thì ta tiếp tục thử chạy câu lệnh bên dưới:   
 > the issue is most likely in wireplumber not pipewire itself. People have been switching that for pipewire-media-server instead in the short term:
 
 ``` console 
