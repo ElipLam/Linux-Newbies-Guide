@@ -307,10 +307,22 @@ Nhấn nút **M** hoặc **,** hoặc **.** để chuyển từ `MM -> 00`
 
 Nhấn `Esc` để thoát.
 
+Nếu cách này không thành công thì ta tiếp tục thử chạy câu lệnh bên dưới,   
+> the issue is most likely in wireplumber not pipewire itself. People have been switching that for pipewire-media-server instead in the short term:
+
+``` console 
+dnf swap wireplumber pipewire-media-session
+```
+
 Xong!
 
-Tham khảo: https://www.reddit.com/r/Fedora/comments/qzaofq/headset_mic_not_working/
+Tham khảo: 
+https://www.reddit.com/r/Fedora/comments/qzaofq/headset_mic_not_working/
+
 https://www.youtube.com/watch?v=yx33W-c4Cmg 
+
+https://teddit.net/r/Fedora/comments/qmtl59/no_sound_audio_after_upgrade_to_fedora_35/
+
 
 ## Cài đặt zsh
 
