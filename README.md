@@ -11,6 +11,7 @@
   - [Cập nhật kernel](#cập-nhật-kernel)
   - [Chọn kernel làm mặc định](#chọn-kernel-làm-mặc-định)
   - [Xóa kernel](#xóa-kernel)
+- [Cửa hàng ứng dụng gói Flathub và Snap Store](#cửa-hàng-ứng-dụng-gói-flathub-và-snap-store) 
 - [Sửa lỗi headphone microphone](#sửa-lỗi-headphone-microphone)
 - [Cài đặt zsh](#cài-đặt-zsh)
 - [Cài đặt oh-my-zsh](#cài-đặt-oh-my-zsh)
@@ -269,6 +270,18 @@ sudo mkconfig-grub2 -o /boot/efi/EFI/fedora/grub.cfg
 
 (Câu lệnh trên giả định rằng bạn đang chạy trên hệ thống UEFI).
 
+## Cửa hàng ứng dụng gói Flathub và Snap Store
+
+Flathub và Snap Store là hai trang web phát triển xung quanh hai định dạng gói phổ quát riêng biệt dành cho Linux: Flakpak và snap.
+
+Ý tưởng đằng sau cả hai định dạng gói này là chúng cung cấp cách phân phối ứng dụng trên Linux, hoạt động bất kể bạn sử dụng bản phân phối nào. Các định dạng này cũng cung cấp những cải tiến bảo mật. Cả hai đều có thể cách ly các ứng dụng với nhau, để một phần mềm không thể truy cập vào các hình ảnh hoặc mật khẩu mà bạn đã mở ở nơi khác trên desktop.
+
+`Flatpak` được tích hợp rất nhiều vào môi trường desktop GNOME, nhưng nó vẫn hoạt động với những môi trường khác. Nhiều bản phân phối Linux đã coi Flatpak là định dạng gói phổ biến ưa thích. Flatpak là một dự án cộng đồng, mặc dù các công ty tư nhân Red Hat và Endless đã tài trợ phần lớn cho sự phát triển của công cụ này.
+
+`Snap` là một định dạng file đến từ Canonical, công ty tạo ra phân phối Linux Ubuntu. Không giống như Flatpak, snap ban đầu được dành cho các máy chủ. Mặc dù snap hoạt động trên rất nhiều bản phân phối Linux khác nhau, nhưng chúng lại cực kỳ phù hợp với Ubuntu. Tất nhiên, với số lượng người sử dụng Ubuntu lớn hơn rất nhiều so với các bản phân phối khác, Snap Store không hề thiếu các ứng dụng.
+
+Xem chi tiết tại [đây](https://quantrimang.com/cong-nghe/so-sanh-flathub-va-snap-store-166089#:~:text=Snap%20l%C3%A0%20m%E1%BB%99t%20%C4%91%E1%BB%8Bnh%20d%E1%BA%A1ng,k%E1%BB%B3%20ph%C3%B9%20h%E1%BB%A3p%20v%E1%BB%9Bi%20Ubuntu)
+
 ## Sửa lỗi headphone microphone
 
 Khi cắm tai nghe có microphone vào máy, linux có thể không nhận dạng được microphone. Để sữa lỗi này ta làm theo các bước bên dưới.
@@ -322,7 +335,6 @@ https://www.reddit.com/r/Fedora/comments/qzaofq/headset_mic_not_working/
 https://www.youtube.com/watch?v=yx33W-c4Cmg 
 
 https://teddit.net/r/Fedora/comments/qmtl59/no_sound_audio_after_upgrade_to_fedora_35/
-
 
 ## Cài đặt zsh
 
