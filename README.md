@@ -33,6 +33,7 @@
 - [GNOME Tweaks](#gnome-tweaks)
 - [Themes](#themes)
 - [Icons](#icons)
+- [Fonts](#fonts)
 - [Các ứng dụng thu âm](#các-ứng-dụng-thu-âm)
   - [Gnome Sound Recorder](#gnome-sound-recorder)
   - [Audio Recorder](#audio-recorder)
@@ -52,6 +53,7 @@
 - [Chuyển đổi cạc đồ họa NVIDIA và Intel/AMD](#chuyển-đổi-cạc-đồ-họa-nvidia-và-intelamd)
   - [Cài đặt Envy Control](#cài-đặt-envy-control)
   - [Chuyển đổi cạc đồ hoa thông qua System Menu](#chuyển-đổi-cạc-đồ-hoa-thông-qua-system-menu)
+- [Cài đặt ICC profile cho Linux](#cài-đặt-icc-profile-cho-linux)
 - [Tham khảo](#tham-khảo)
 
 ## Các lệnh cơ bản
@@ -280,7 +282,7 @@ Flathub và Snap Store là hai trang web phát triển xung quanh hai định d�
 
 `Snap` là một định dạng file đến từ Canonical, công ty tạo ra phân phối Linux Ubuntu. Không giống như Flatpak, snap ban đầu được dành cho các máy chủ. Mặc dù snap hoạt động trên rất nhiều bản phân phối Linux khác nhau, nhưng chúng lại cực kỳ phù hợp với Ubuntu. Tất nhiên, với số lượng người sử dụng Ubuntu lớn hơn rất nhiều so với các bản phân phối khác, Snap Store không hề thiếu các ứng dụng.
 
-Xem chi tiết tại [đây](https://quantrimang.com/cong-nghe/so-sanh-flathub-va-snap-store-166089#:~:text=Snap%20l%C3%A0%20m%E1%BB%99t%20%C4%91%E1%BB%8Bnh%20d%E1%BA%A1ng,k%E1%BB%B3%20ph%C3%B9%20h%E1%BB%A3p%20v%E1%BB%9Bi%20Ubuntu)
+Xem chi tiết tại [đây](https://quantrimang.com/cong-nghe/so-sanh-flathub-va-snap-store-166089#:~:text=Snap%20l%C3%A0%20m%E1%BB%99t%20%C4%91%E1%BB%8Bnh%20d%E1%BA%A1ng,k%E1%BB%B3%20ph%C3%B9%20h%E1%BB%A3p%20v%E1%BB%9Bi%20Ubuntu).
 
 ## Sửa lỗi headphone microphone
 
@@ -683,8 +685,9 @@ gnome-tweaks
 - [Otis](https://github.com/EliverLara/otis)
 - [Graphite](https://github.com/vinceliuice/Graphite-gtk-theme)
 - [Colloid](https://github.com/vinceliuice/Colloid-gtk-theme)
+- [Orchis](https://github.com/vinceliuice/Orchis-theme) (đề xuất - có hướng dẫn cài đặt)
 
-Copy thư mục chứa theme vào `/usr/share/themes/`.
+Copy thư mục chứa theme vào `/usr/share/themes/` hoặc `$HOME/.themes`.
 
 Ví dụ: 
 
@@ -712,10 +715,26 @@ Hoặc chỉnh qua công cụ [Gnome Tweaks](#gnome-tweaks).
 ## Icons
 
 - [Adwaita-Blue](https://www.gnome-look.org/p/1310137)
+- [Sevi](https://github.com/TaylanTatli/Sevi) (đề xuất - có hướng dẫn cài đặt)
 
 Copy thư mục chứa icon vào `/usr/share/icons/`
 
 Chỉnh qua công cụ [Gnome Tweaks](#gnome-tweaks).
+
+## Fonts
+
+- [Roboto](https://fonts.google.com/specimen/Roboto)
+- [Fira Code Retina Nerd Font Complete](https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/FiraCode/Retina/complete/Fira%20Code%20Retina%20Nerd%20Font%20Complete.ttf)
+- [Tổng hợp sẵn](https://www.pling.com/p/1939902/)
+
+Copy các font vừa tải vào thư mục `Home/.local/share/fonts`.
+
+Cấu hình Font theo hình bên dưới:
+
+<p align="center">
+  <img src="./images/font_customize.png">
+</p>
+
 
 ## Các ứng dụng thu âm
 
@@ -1085,6 +1104,38 @@ glxinfo | egrep "OpenGL vendor|OpenGL renderer"
 <p align="center">
   <img src="./images/glxinfo_is_gpu_used.png">
 </p>
+
+## Cài đặt ICC profile cho Linux
+
+Cấu hình ICC ([International Color Consortium](https://en.wikipedia.org/wiki/International_Color_Consortium)) là tệp nhị phân chứa dữ liệu chính xác về các thuộc tính màu sắc của đầu vào hoặc thiết bị đầu ra (màn hình). Một hoặc nhiều hồ sơ có thể được áp dụng trên một hệ thống và các thiết bị của nó để tạo ra kết quả nhất quán và có thể lặp lại để chỉnh sửa và xuất bản đồ họa và tài liệu.
+
+Nói nôm na, *.icc là file giúp cân bằng màu sắc của thiết bị, cụ thể  là màn hình.
+
+Tải 1 file icc, sau đó copy vào đường dẫn `/usr/share/color/icc/colord`. 
+Ví dụ  tải file icc cho màn hình [Galax Vivance-01](https://tftcentral.co.uk/icc_profiles/acer_nitro_vg270up.icc).
+
+Các profile cho các màn hình khác có thể tham khảo ở [đây](https://tftcentral.co.uk/articles/icc_profiles).
+
+Nếu bạn có `gnome-color-manager` hoặc `colord-kde` đã được cài đặt thì chỉ cần nhấn đôi vào profile *.icc và nhấn Import. Bạn có thể gán một profile mới cho một thiết bị màn hình đã tồn tại bằng cách vào `System Settings` ▸ `Color panel`. Chọn màn hình muốn cài đặt profile, sau đó nhấn `Add profile`.
+
+<p align="center">
+  <img src="./images/ICC_initial.png">
+</p>
+
+Chọn profile mong muốn, sau đó nhấn `Add`:
+
+<p align="center">
+  <img src="./images/ICC_initial_select_profile.png">
+</p>
+
+Hình ảnh đã chọn thành công.
+
+<p align="center">
+  <img src="./images/ICC_initial_done.png">
+</p>
+
+Đường cong hiệu chỉnh cấu hình (profile calibration curves) sẽ được tải tự động khi đăng nhập hoặc có thể được tải cho tất cả người dùng khi khởi động nếu nhấp vào nút `Set for all users`.
+
 
 ## Tham khảo
 
