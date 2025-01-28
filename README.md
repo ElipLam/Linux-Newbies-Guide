@@ -6,22 +6,30 @@
   - [Kiểm tra phiên bản của distro](#kiểm-tra-phiên-bản-của-distro)
   - [Kiểm tra Display Server](#kiểm-tra-display-server)
   - [Kiểm tra các gói đã cài đặt](#kiểm-tra-các-gói-đã-cài-đặt)
+- [Thao tác với kho lưu trữ (repositories)](#thao-tác-với-kho-lưu-trữ-repositories)
+  - [Thêm repositories](#thêm-repositories)
+  - [Kích hoạt repositories](#kích-hoạt-repositories)
+  - [Vô hiệu hóa repositories](#vô-hiệu-hóa-repositories)
+  - [Xóa repositories](#xóa-repositories)
 - [Thao tác với kernel](#thao-tác-với-kernel)
   - [Làm quen với kernel](#làm-quen-với-kernel)
   - [Cập nhật kernel](#cập-nhật-kernel)
   - [Chọn kernel làm mặc định](#chọn-kernel-làm-mặc-định)
   - [Xóa kernel](#xóa-kernel)
-- [Cửa hàng ứng dụng gói Flathub và Snap Store](#cửa-hàng-ứng-dụng-gói-flathub-và-snap-store) 
+- [Cửa hàng ứng dụng gói Flathub và Snap Store](#cửa-hàng-ứng-dụng-gói-flathub-và-snap-store)
+  - [Snap Store](#snap-store)
 - [Sửa lỗi headphone microphone](#sửa-lỗi-headphone-microphone)
 - [Cài đặt zsh](#cài-đặt-zsh)
 - [Cài đặt oh-my-zsh](#cài-đặt-oh-my-zsh)
 - [Cài đặt zsh autosuggestions](#cài-đặt-zsh-autosuggestions)
 - [Theme Power10k cho zsh shell](#theme-power10k-cho-zsh-shell)
 - [Cài đặt bộ gõ tiếng Việt](#cài-đặt-bộ-gõ-tiếng-việt)
-  - [Ubuntu](#ubuntu)
+  - [Cài đặt cho Ubuntu](#cài-đặt-cho-ubuntu)
   - [Cài đặt từ mã nguồn](#cài-đặt-từ-mã-nguồn)
-    - [Gỡ cài đặt](#gỡ-cài-đặt)
-- [Cài đặt neofetch](#cài-đặt-neofetch)
+  - [Cài đặt từ OpenBuildService (khuyên dùng)](#cài-đặt-từ-openbuildservice-khuyên-dùng)
+  - [Hướng dẫn sử dụng](#hướng-dẫn-sử-dụng)
+- [Cài đặt neofetch (ngừng phát triển)](#cài-đặt-neofetch-ngừng-phát-triển)
+- [Cài đặt fastfetch](#cài-đặt-fastfetch)
 - [Cài đặt bashtop](#cài-đặt-bashtop)
 - [Terminal](#terminal)
   - [Terminator](#terminator)
@@ -55,6 +63,7 @@
   - [Chuyển đổi cạc đồ hoa thông qua System Menu](#chuyển-đổi-cạc-đồ-hoa-thông-qua-system-menu)
 - [Cài đặt ICC profile cho Linux](#cài-đặt-icc-profile-cho-linux)
 - [Tham khảo](#tham-khảo)
+        - [on top](#on-top)
 
 ## Các lệnh cơ bản
 
@@ -112,6 +121,107 @@ sudo dnf list installed
 # sudo dnf list
 # sudo dnf list installed | grep <package name>
 ```
+
+## Thao tác với kho lưu trữ (repositories)
+
+Danh sách các repo đang được bật:
+
+```console
+dnf repolist
+```
+
+Tất cả danh sách các repo:
+
+```console
+dnf repolist --all
+```
+
+### Thêm repositories
+
+Dành cho Fedora 40 hoặc cũ hơn (DNF 4):
+
+- Để thêm kho lưu trữ mới, hãy thực hiện như sau **root**.
+
+  1. Xác định một kho lưu trữ mới bằng cách thêm một tệp mới có hậu tố `.repo` vào thư mục `/etc/yum.repos.d/`. Để biết chi tiết về các tùy chọn khác nhau để sử dụng trong file `.repo`.
+
+  2. Thêm kho lưu trữ bằng --add-repo, trong đó kho lưu trữ là đường dẫn tệp:
+
+      ```console
+      dnf config-manager --add-repo <repository>
+      ```
+
+     Ví dụ:
+
+      ```console
+      dnf config-manager --add-repo /tmp/fedora_extras.repo
+      ```
+
+Dành cho Fedora 41 trở lên (DNF 5):
+
+- Để thêm kho lưu trữ mới, hãy thực hiện như sau **root**.
+
+  1. Xác định một kho lưu trữ mới bằng cách thêm một tệp mới có hậu tố `.repo` vào thư mục `/etc/yum.repos.d/`. Để biết chi tiết về các tùy chọn khác nhau để sử dụng trong file `.repo`.
+
+  2. Thêm kho lưu trữ bằng --add-repo, trong đó kho lưu trữ là đường dẫn tệp:
+
+      ```console
+      dnf config-manager addrepo --from-repofile=<repository>
+      ```
+
+     Ví dụ:
+
+      ```console
+      dnf config-manager addrepo --from-repofile=/tmp/fedora_extras.repo
+      ```
+
+### Kích hoạt repositories
+
+Phần này hướng dẫn cách kích hoạt kho phần mềm cụ thể bằng cách sử dụng lệnh `dnf config-manager`.
+
+- Để kích hoạt một kho lưu trữ cụ thể, hãy chạy lệnh sau dưới dạng **root**.
+
+  ```console
+  sudo dnf config-manager setopt <repository>.enabled=1
+  ```
+
+  Khi repository có ID repository duy nhất, ví dụ:
+
+  ```console
+  sudo dnf config-manager setopt fedora-extras.enabled=1
+  ```
+  
+### Vô hiệu hóa repositories
+
+Phần này hướng dẫn cách vô hiệu hóa kho phần mềm cụ thể bằng cách sử dụng lệnh `dnf config-manager`.
+
+- Để kích hoạt một kho lưu trữ cụ thể, hãy chạy lệnh sau dưới dạng **root**.
+
+  ```console
+  sudo dnf config-manager setopt <repository>.enabled=0
+  ```
+
+  Khi repository có ID repository duy nhất, ví dụ:
+
+  ```console
+  sudo dnf config-manager setopt fedora-extras.enabled=0
+  ```
+
+### Xóa repositories
+
+Phần này hướng dẫn cách xóa kho lưu trữ Yum (hoặc file `.repo`).
+
+*NOTE: Nếu bạn biết ID của một kho lưu trữ, nhưng không chắc `.repo` nó thuộc về kho lưu trữ nào, bạn có thể chạy lệnh sau `grep -E "^\[.*]" /etc/yum.repos.d/*`. Lệnh này sẽ in ra danh sách ID kho lưu trữ được liên kết với từng kho lưu trữ Yum.
+
+- Để xóa kho lưu trữ Yum, hãy chạy lệnh sau dưới dạng root.
+
+  ```console
+  rm /etc/yum.repos.d/<file_name>.repo
+  ```
+
+  Trong đó `file_name` là tên của file `.repo`.
+
+Tham khảo:
+https://docs.fedoraproject.org/en-US/quick-docs/adding-or-removing-software-repositories-in-fedora/
 
 ## Thao tác với kernel
 
@@ -284,6 +394,42 @@ Flathub và Snap Store là hai trang web phát triển xung quanh hai định d�
 
 Xem chi tiết tại [đây](https://quantrimang.com/cong-nghe/so-sanh-flathub-va-snap-store-166089#:~:text=Snap%20l%C3%A0%20m%E1%BB%99t%20%C4%91%E1%BB%8Bnh%20d%E1%BA%A1ng,k%E1%BB%B3%20ph%C3%B9%20h%E1%BB%A3p%20v%E1%BB%9Bi%20Ubuntu).
 
+### Snap Store
+
+Cài đặt snap cho Fedora:
+
+```console
+sudo dnf install snapd -y
+```
+
+*NOTE: Hãy đăng xuất và đăng nhập lại hoặc khởi động lại hệ thống để đảm bảo đường dẫn của snap được cập nhật chính xác.
+
+Để bật hỗ trợ `classic` snap, nhập lệnh sau để tạo liên kết tượng trưng giữa `/var/lib/snapd/snap` và `/snap`:
+
+```console
+sudo ln -s /var/lib/snapd/snap /snap
+```
+
+Danh sách các ứng dụng đã cài đặt:
+
+```console
+snap list
+```
+
+Cài đặt 1 ứng dụng trong snap store:
+
+```console
+sudo snap install <app name>
+```
+
+Xóa 1 ứng dụng trong snap:
+
+```console
+sudo snap remove <app name>
+```
+
+Còn nếu bạn muốn xem tất cả các ứng dụng có sẵn, bạn có thể duyệt Snap Store qua trang web chính thức của Snap: https://snapcraft.io/store.
+
 ## Sửa lỗi headphone microphone
 
 Khi cắm tai nghe có microphone vào máy, linux có thể không nhận dạng được microphone. Để sữa lỗi này ta làm theo các bước bên dưới.
@@ -362,7 +508,18 @@ $ which zsh
 /usr/bin/zsh
 ```
 
-Mở file *.bashrc*, thêm `exec zsh` vào đầu file.
+~~Mở file *.bashrc*, thêm `exec zsh` vào đầu file.~~
+
+Thay đổi shell mặc định của người dùng thành `zsh`.
+
+Mở terminal, chạy đoạn lệnh bên dưới:
+
+```console
+zsh
+chsh -s $(which zsh)
+```
+
+Sau đó **Logout** rồi đăng nhập lại.
 
 ## Cài đặt oh-my-zsh
 
@@ -386,9 +543,10 @@ Mở file **.zshrc**:
 nano ~/.zshrc
 ```
 
-Sửa dòng `plugins=(git)` thành `plugins=(git zsh-autosuggestions)`.
+Sửa dòng `plugins=(git)` thành `plugins=(git zsh-autosuggestions)`. Lưu lại file.
 
-*** Nếu autosuggestions plugin không hoạt động thì thêm câu lệnh này vào cuối file `.zshrc`
+*** Nếu autosuggestions plugin không hoạt động thì hãy thử đăng xuất và được nhập lại, nếu như không được thì thêm câu lệnh này vào cuối file `.zshrc`
+
 ```console
 # ...
 # Example aliases
@@ -430,9 +588,27 @@ Dưới đây là [giao diện của mình](.p10k.zsh) đã tùy chỉnh.
 
 Tham khảo: https://github.com/romkatv/powerlevel10k#configuration
 
+### CopyQ - Quản lý bảng nhớ tạm
+
+CopyQ là trình quản lý bảng nhớ tạm – một ứng dụng cho "desktop" để lưu trữ nội dung của hệ thống bất cứ khi nào nó thay đổi và cho phép tìm kiếm lịch sử và sao chép lại vào bảng nhớ tạm của hệ thống hoặc dán trực tiếp vào các ứng dụng khác. Nó có thể hoạt động trên cả Linux, Windows và MacOS
+
+Fedora:
+
+  ```console
+  sudo dnf install -y copyq
+  ```
+Ubuntu:
+  ```console
+  sudo apt install software-properties-common python-software-properties
+  sudo add-apt-repository ppa:hluk/copyq
+  sudo apt update
+  sudo apt install copyq
+  # this package contains all plugins and documentation
+  ```
+
 ## Cài đặt bộ gõ tiếng Việt
 
-### Ubuntu
+### Cài đặt cho Ubuntu
 
 ```console
 sudo add-apt-repository ppa:bamboo-engine/ibus-bamboo
@@ -482,16 +658,58 @@ sudo make install
 ibus restart
 ```
 
-#### Gỡ cài đặt
+Gỡ cài đặt
 
 ```console
 sudo make uninstall
 ibus restart
 ```
 
-Nguồn: https://github.com/BambooEngine/ibus-bamboo/wiki/H%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-c%C3%A0i-%C4%91%E1%BA%B7t-t%E1%BB%AB-m%C3%A3-ngu%E1%BB%93n 
+### Cài đặt từ OpenBuildService (khuyên dùng)
 
-## Cài đặt neofetch
+[![OpenBuildService](./images/obs.png)](https://software.opensuse.org//download.html?project=home%3Alamlng&package=ibus-bamboo)
+
+### Hướng dẫn sử dụng
+
+Sau khi cài đặt xong thì restart lại ibus
+
+```console
+ibus restart
+```
+
+Đặt ibus-bamboo làm bộ gõ mặc định cho `Ubuntu` và `Fedora`:
+- Với command:
+
+  ```console
+  env DCONF_PROFILE=ibus dconf write /desktop/ibus/general/preload-engines "['BambooUs', 'Bamboo']" && gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('ibus', 'Bamboo')]"
+  ```
+
+- Với Gnome:
+  
+  Vào `Settings` -> `Keyboard` -> `Input Source` -> `Add Input Source`. 
+  
+  Kéo xuống cuối, chọn `More`, gõ và chọn `Vietnamese`. 
+
+  <p align="center">
+  <img src="./images/add-keyboard-layout.png">
+</p>
+
+  Chọn 1 layout muốn sử dụng rồi nhấn `Add`.
+
+  <p align="center">
+  <img src="./images/add-keyboard-layout_1.png">
+  </p>
+  
+Mặc định ,để chuyển đổi ngôn ngữ tiếng Anh và tiếng Việt cho nhau, sử dụng tổ hợp phím `Super` + `Space`.
+
+Ảnh minh họa cho cài đặt phím tắt.
+<p align="center">
+<img src="./images/add-keyboard-layout-shortcut.png">
+</p>
+
+Nguồn: https://github.com/BambooEngine/ibus-bamboo/blob/master/README.md 
+
+## Cài đặt neofetch (ngừng phát triển)
 
 Neofetch được mô tả là "công cụ kiểm tra thông tin hệ thống dưới dạng dòng lệnh, được viết bằng bash 3.2+" và dễ sử dụng hơn trên các bản phân phối Linux, nhưng cũng có thể được sử dụng trên macOS và Windows sau khi cài đặt một số thành phần bổ sung.
 
@@ -512,6 +730,36 @@ sudo dnf -y install neofetch
 
 <p align="center">
   <img src="./images/neofetch.png">
+</p>
+
+## Cài đặt fastfetch
+
+[Fastfetch](https://github.com/fastfetch-cli/fastfetch) là một công cụ giống như neofetch để lấy thông tin hệ thống và hiển thị thông tin đó một cách đẹp mắt. Nó được viết chủ yếu bằng C, chú trọng đến hiệu suất và khả năng tùy chỉnh. Hiện tại, Linux, Android, FreeBSD, macOS, SunOS và Windows 7+ được hỗ trợ.
+
+Một số distro đóng gói phiên bản fastfetch lỗi thời. Các phiên bản cũ hơn không được hỗ trợ, vì vậy hãy luôn cố gắng sử dụng phiên bản mới nhất.
+
+* Ubuntu: [`ppa:zhangsongcui3371/fastfetch`](https://launchpad.net/~zhangsongcui3371/+archive/ubuntu/fastfetch) (for Ubuntu 22.04 or newer)
+* Debian: `apt install fastfetch` (for Debian 13 or newer)
+* Debian / Ubuntu: Download `fastfetch-linux-<proper architecture>.deb` from [Github release page](https://github.com/fastfetch-cli/fastfetch/releases/latest) and double-click it (for Ubuntu 20.04 or newer and Debian 11 or newer).
+* Arch Linux: `pacman -S fastfetch`
+* Fedora: `dnf install fastfetch -y`
+* Gentoo: `emerge --ask app-misc/fastfetch`
+* Alpine: `apk add --upgrade fastfetch`
+* NixOS: `nix-shell -p fastfetch`
+* openSUSE: `zypper install fastfetch`
+* ALT Linux: `apt-get install fastfetch`
+* Exherbo: `cave resolve --execute app-misc/fastfetch`
+* Solus: `eopkg install fastfetch`
+* Slackware: `sbopkg -i fastfetch`
+* Void Linux: `xbps-install fastfetch`
+* Venom Linux: `scratch install fastfetch`
+
+Bạn có thể cần dùng `sudo`, `doas` or `sup` để chạy những câu lệnh này.
+
+Nếu fastfetch không được đóng gói cho bản phân phối của bạn hoặc phiên bản được đóng gói đã cũ, [linuxbrew](https://brew.sh/) là một giải pháp thay thế tốt: `brew install fastfetch`
+
+<p align="center">
+  <img src="./images/fastfetch.png">
 </p>
 
 ## Cài đặt bashtop
@@ -1113,6 +1361,8 @@ Nói nôm na, *.icc là file giúp cân bằng màu sắc của thiết bị, c�
 
 Tải 1 file icc, sau đó copy vào đường dẫn `/usr/share/color/icc/colord`. 
 Ví dụ  tải file icc cho màn hình [Galax Vivance-01](https://tftcentral.co.uk/icc_profiles/acer_nitro_vg270up.icc).
+
+Tải file icc cho [Lenovo Thinkbook 14 G7+](./LEN8AB1_23-01-2025.icm).
 
 Các profile cho các màn hình khác có thể tham khảo ở [đây](https://tftcentral.co.uk/articles/icc_profiles).
 
