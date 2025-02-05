@@ -19,6 +19,8 @@
 - [Cửa hàng ứng dụng gói Flathub và Snap Store](#cửa-hàng-ứng-dụng-gói-flathub-và-snap-store)
   - [Snap Store](#snap-store)
 - [Sửa lỗi headphone microphone](#sửa-lỗi-headphone-microphone)
+- [Sửa lỗi không bật được Bluetooth](#sửa-lỗi-không-bật-được-bluetooth)
+  - [Sửa lỗi thủ công bằng bash script](#sửa-lỗi-thủ-công-bằng-bash-script)
 - [Cài đặt zsh](#cài-đặt-zsh)
 - [Cài đặt oh-my-zsh](#cài-đặt-oh-my-zsh)
 - [Cài đặt zsh autosuggestions](#cài-đặt-zsh-autosuggestions)
@@ -484,6 +486,120 @@ https://www.reddit.com/r/Fedora/comments/qzaofq/headset_mic_not_working/
 https://www.youtube.com/watch?v=yx33W-c4Cmg 
 
 https://teddit.net/r/Fedora/comments/qmtl59/no_sound_audio_after_upgrade_to_fedora_35/
+
+## Sửa lỗi không bật được Bluetooth
+
+*NOTE: hướng dẫn sửa lỗi này được thực hiện ở Fedora distro:
+  - version 41
+  - Destop Environment: Gnome 47
+  - kernel 6.12.12-200.fc41.x86_64
+  - Bluetooth card: Foxconn / Hon Hai Wireless_Device
+  - Wifi card: etwork controller: MEDIATEK Corp. Device 7925
+
+Bạn kiểm tra thấy bluetooth hoạt động nhưng không bật được bluetooth. Lỗi này do Gnome không tương thích, nếu sử dụng `KDE Plasma 6.2.5` thì không có trường hợp này.
+
+
+```console
+systemctl status bluetooth
+```
+
+<p align="center">
+  <img src="./images/systemctl_status_bluetooth.png">
+</p>
+
+
+Chạy lệnh `rfkill` nhưng không thấy device `hci0`.
+
+```console
+rfkill
+```
+
+<p align="center">
+  <img src="./images/rfkill_bt_notfound.png">
+</p>
+
+Chạy lệnh `inxi -E` nhưng bluetooth không có driver.
+
+```console
+inxi -E
+```
+
+<p align="center">
+  <img src="./images/inxi_E_notfound.png">
+</p>
+
+Không thấy module `btusb` được cài đặt.
+
+```console
+lsmod | grep btusb
+```
+
+<p align="center">
+  <img src="./images/lsmod_btusb_notfound.png">
+</p>
+
+Chúng ta có thể sửa lỗi bằng cách cài đặt lại module bluetooth `btusb` cho thiết bị.
+
+```console
+sudo rmmod btusb
+sudo modprobe btusb
+```
+
+Sau khi cài đặt, có thể kiểm tra lại bằng 1 trong các câu lệnh dưới đây:
+
+```console
+rfkill
+```
+
+<p align="center">
+  <img src="./images/rfkill.png">
+</p>
+
+```console
+inxi -NE
+```
+
+<p align="center">
+  <img src="./images/inxi_NE.png">
+</p>
+
+```console
+lsmod | grep btusb
+```
+
+<p align="center">
+  <img src="./images/lsmod_btusb.png">
+</p>
+
+### Sửa lỗi thủ công bằng bash script
+
+Tạo script bluetooth-reload.sh:
+
+```console
+sudo nano ./bluetooth-reload.sh
+```
+
+Có nội dung:
+
+```console
+#!/bin/bash
+
+sudo rmmod btusb
+sudo modprobe btusb
+sudo systemctl restart bluetooth
+```
+
+Cấp quyền thực thi cho file:
+
+```console
+sudo chmod +x bluetooth-reload.sh
+```
+
+Mở terminal và chạy script thủ công sau mỗi lần đăng nhập:
+
+```console
+./bluetooth-reload.sh
+```
 
 ## Cài đặt zsh
 
