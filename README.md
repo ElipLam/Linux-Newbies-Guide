@@ -23,6 +23,7 @@
 - [Cài đặt oh-my-zsh](#cài-đặt-oh-my-zsh)
 - [Cài đặt zsh autosuggestions](#cài-đặt-zsh-autosuggestions)
 - [Theme Power10k cho zsh shell](#theme-power10k-cho-zsh-shell)
+- [CopyQ - Quản lý bảng nhớ tạm](#copyq---quản-lý-bảng-nhớ-tạm)
 - [Cài đặt bộ gõ tiếng Việt](#cài-đặt-bộ-gõ-tiếng-việt)
   - [Cài đặt cho Ubuntu](#cài-đặt-cho-ubuntu)
   - [Cài đặt từ mã nguồn](#cài-đặt-từ-mã-nguồn)
@@ -37,7 +38,7 @@
 - [Cài đặt phím tắt](#cài-đặt-phím-tắt)
   - [Phím tắt mở Terminal mới](#phím-tắt-mở-terminal-mới)
   - [Phím tắt đến Desktop](#phím-tắt-đến-desktop)
-- [Gnome extention](#gnome-extention)
+- [Gnome extentions](#gnome-extentions)
 - [GNOME Tweaks](#gnome-tweaks)
 - [Themes](#themes)
 - [Icons](#icons)
@@ -588,7 +589,7 @@ Dưới đây là [giao diện của mình](.p10k.zsh) đã tùy chỉnh.
 
 Tham khảo: https://github.com/romkatv/powerlevel10k#configuration
 
-### CopyQ - Quản lý bảng nhớ tạm
+## CopyQ - Quản lý bảng nhớ tạm
 
 CopyQ là trình quản lý bảng nhớ tạm – một ứng dụng cho "desktop" để lưu trữ nội dung của hệ thống bất cứ khi nào nó thay đổi và cho phép tìm kiếm lịch sử và sao chép lại vào bảng nhớ tạm của hệ thống hoặc dán trực tiếp vào các ứng dụng khác. Nó có thể hoạt động trên cả Linux, Windows và MacOS
 
@@ -605,6 +606,11 @@ Ubuntu:
   sudo apt install copyq
   # this package contains all plugins and documentation
   ```
+*NOTE: `CopyQ` hiện tại không hoạt động tốt trên **Wayland**, bạn có thể sử dụng [Clipboard Indicator](#gnome-extentions) để thay thế.
+
+<p align="center">
+  <img src="./images/CopyQ.png">
+</p>
 
 ## Cài đặt bộ gõ tiếng Việt
 
@@ -894,7 +900,7 @@ Tham khảo:
 https://www.redhat.com/sysadmin/linux-terminal-window
 https://askubuntu.com/questions/97219/how-to-show-desktop-from-command-line 
 
-## Gnome extention
+## Gnome extentions
 
 https://extensions.gnome.org/
 
@@ -907,6 +913,7 @@ Extention thường dùng:
 - [GPU profile selector](https://extensions.gnome.org/extension/5009/gpu-profile-selector/) - chuyển đổi giữa các GPU thông qua System Menu ở góc phải của topbar. Cần phải cài đặt [Envy Control](#cài-đặt-envy-control) trước.
 - [Show Desktop Button](https://extensions.gnome.org/extension/1194/show-desktop-button/)
 - [Unblank lock screen](https://extensions.gnome.org/extension/1414/unblank/) - Luôn hiện màn hình khóa.
+- [Clipboard Indicator](https://extensions.gnome.org/extension/779/clipboard-indicator/) - Quản lý bảng nhớ tạm.
 
 ## GNOME Tweaks
 
