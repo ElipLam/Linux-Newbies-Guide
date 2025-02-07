@@ -21,6 +21,7 @@
 - [Sửa lỗi headphone microphone](#sửa-lỗi-headphone-microphone)
 - [Sửa lỗi không bật được Bluetooth](#sửa-lỗi-không-bật-được-bluetooth)
   - [Sửa lỗi thủ công bằng bash script](#sửa-lỗi-thủ-công-bằng-bash-script)
+- [Sửa lỗi Suspend không hoạt động](#sửa-lỗi-suspend-không-hoạt-động)
 - [Cài đặt zsh](#cài-đặt-zsh)
 - [Cài đặt oh-my-zsh](#cài-đặt-oh-my-zsh)
 - [Cài đặt zsh autosuggestions](#cài-đặt-zsh-autosuggestions)
@@ -599,6 +600,22 @@ Mở terminal và chạy script thủ công sau mỗi lần đăng nhập:
 
 ```console
 ./bluetooth-reload.sh
+```
+
+## Sửa lỗi Suspend không hoạt động
+
+Một vài thiết bị hoặc kernel đang dùng không hỗ trợ tính năng Suspend. Khi ta sử dụng tính năng này bằng cách chạy lệnh `systemctl suspend` hoặc gập laptop, máy tính sẽ không thể gọi dậy được, ta phải **reset cứng** lại thiết bị. Điều này làm cho công việc không được lưu lại, bị mất dữ liệu. Để giải quyết vấn đề này ta có thể tắt tính năng suspend đi.
+
+Tắt suspend:
+
+```console
+sudo systemctl mask suspend.target
+```
+
+Bật lại suspend:
+
+```console
+sudo systemctl unmask suspend.target
 ```
 
 ## Cài đặt zsh
