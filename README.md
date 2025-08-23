@@ -74,7 +74,7 @@
 ### Kiểm tra phiên bản của distro
 
 Linux:
-```console
+```sh
 cat /etc/os-release
 ```
 
@@ -83,7 +83,7 @@ cat /etc/os-release
 </p>
 
 Fedora:
-```console
+```sh
 echo $(rpm -E %fedora)
 ```
 
@@ -96,7 +96,7 @@ echo $(rpm -E %fedora)
 
 Kiểm tra là [Wayland](https://quantrimang.com/cong-nghe/chu-y-khi-su-dung-linux-voi-wayland-168753) hay Xorg: 
 
-```console
+```sh
 echo $XDG_SESSION_TYPE
 ```
 
@@ -111,7 +111,7 @@ echo $XDG_SESSION_TYPE
 
 Debian/Ubuntu:
 
-```console
+```sh
 sudo apt list
 # or
 # sudo apt list | grep <package name>
@@ -119,7 +119,7 @@ sudo apt list
 
 Fedora/RHEL/AlmaLinux:
 
-```console
+```sh
 sudo dnf list installed
 # or
 # sudo dnf list
@@ -130,13 +130,13 @@ sudo dnf list installed
 
 Danh sách các repo đang được bật:
 
-```console
+```sh
 dnf repolist
 ```
 
 Tất cả danh sách các repo:
 
-```console
+```sh
 dnf repolist --all
 ```
 
@@ -150,13 +150,13 @@ Dành cho Fedora 40 hoặc cũ hơn (DNF 4):
 
   2. Thêm kho lưu trữ bằng --add-repo, trong đó kho lưu trữ là đường dẫn tệp:
 
-      ```console
+      ```sh
       dnf config-manager --add-repo <repository>
       ```
 
      Ví dụ:
 
-      ```console
+      ```sh
       dnf config-manager --add-repo /tmp/fedora_extras.repo
       ```
 
@@ -168,13 +168,13 @@ Dành cho Fedora 41 trở lên (DNF 5):
 
   2. Thêm kho lưu trữ bằng --add-repo, trong đó kho lưu trữ là đường dẫn tệp:
 
-      ```console
+      ```sh
       dnf config-manager addrepo --from-repofile=<repository>
       ```
 
      Ví dụ:
 
-      ```console
+      ```sh
       dnf config-manager addrepo --from-repofile=/tmp/fedora_extras.repo
       ```
 
@@ -184,13 +184,13 @@ Phần này hướng dẫn cách kích hoạt kho phần mềm cụ thể bằng
 
 - Để kích hoạt một kho lưu trữ cụ thể, hãy chạy lệnh sau dưới dạng **root**.
 
-  ```console
+  ```sh
   sudo dnf config-manager setopt <repository>.enabled=1
   ```
 
   Khi repository có ID repository duy nhất, ví dụ:
 
-  ```console
+  ```sh
   sudo dnf config-manager setopt fedora-extras.enabled=1
   ```
   
@@ -200,13 +200,13 @@ Phần này hướng dẫn cách vô hiệu hóa kho phần mềm cụ thể b�
 
 - Để kích hoạt một kho lưu trữ cụ thể, hãy chạy lệnh sau dưới dạng **root**.
 
-  ```console
+  ```sh
   sudo dnf config-manager setopt <repository>.enabled=0
   ```
 
   Khi repository có ID repository duy nhất, ví dụ:
 
-  ```console
+  ```sh
   sudo dnf config-manager setopt fedora-extras.enabled=0
   ```
 
@@ -218,7 +218,7 @@ Phần này hướng dẫn cách xóa kho lưu trữ Yum (hoặc file `.repo`).
 
 - Để xóa kho lưu trữ Yum, hãy chạy lệnh sau dưới dạng root.
 
-  ```console
+  ```sh
   rm /etc/yum.repos.d/<file_name>.repo
   ```
 
@@ -232,7 +232,7 @@ https://docs.fedoraproject.org/en-US/quick-docs/adding-or-removing-software-repo
 ### Làm quen với kernel
 
 Xem kernel hiện tại: 
-```console
+```sh
 uname -r
 ```
 
@@ -242,7 +242,7 @@ uname -r
 
 Xem thời gian cài đặt kernel hiện tại:
 
-```console
+```sh
 uname -v
 ```
 
@@ -252,7 +252,7 @@ uname -v
 
 Xem danh sách các kernel:
 
-```console
+```sh
 dnf list kernel
 ```
 
@@ -262,7 +262,7 @@ dnf list kernel
 
 Xem toàn bộ thông tin về kernel: 
 
-```console
+```sh
 dnf info kernel
 # dnf list kernel
 ```
@@ -294,7 +294,7 @@ Chúng tôi đặc biệt đề xuất điều này trong trường hợp có nh
 
 Để cập nhật kernel mới nhất, hãy chạy câu lệnh DNF dưới đây, nó tự động cài đặt phiên bản kernel mới phù hợp nhất với hệ thống của bạn.
 
-```console
+```sh
 sudo dnf install kernel --best
 ```
 
@@ -311,7 +311,7 @@ sudo dnf install kernel-5.19.4-200.fc36.x86_64
 
 Để các thay đổi có hiệu lực, khởi động lại hệ thống. Nếu không, hệ thống của bạn vẫn sẽ chạy trên kernel cũ.
 
-```console
+```sh
 reboot
 ```
 
@@ -323,7 +323,7 @@ Câu lệnh **grubby** là một công cụ được sử dụng để cấu hì
 
 Chạy câu lệnh grubby dưới đây để in ra vị trí lưu và phiên bản của kernel mặc định khi boot.
 
-```console
+```sh
 sudo grubby --default-kernel
 ```
 <p align="center">
@@ -332,7 +332,7 @@ sudo grubby --default-kernel
 
 Tiếp theo, câu lệnh bên dưới sẽ liệt kê tất cả các kernel đã cài đặt, nó cũng in ra tất cả các thành phần của GRUB của tất các các kernel đó.
 
-```console
+```sh
 sudo grubby --info=ALL
 ```
 
@@ -342,7 +342,7 @@ sudo grubby --info=ALL
 
 Để cài đặt phiên bản kernel như kernel mặc định, ta lấy vị trí của kernel các bước trước và áp dụng vào câu lệnh bên dưới. Ví dụ, tôi chuyển /boot/vmlinuz-5.17.5-300.fc36.x86_64 thành phiên bản kernel mặc định thay vì boot/vmlinuz-5.18.19-200.fc36.x86_64.
 
-```console
+```sh
 sudo grubby --set-default <kernel>
 # sudo grubby --set-default /boot/vmlinuz-5.17.5-300.fc36.x86_64
 ```
@@ -353,7 +353,7 @@ sudo grubby --set-default <kernel>
 
 Khởi động lại hệ thống để các thay đổi được áp dụng.
 
-```console
+```sh
 reboot
 ```
 
@@ -367,20 +367,20 @@ Việc cập nhật kernel không còn là một tác vụ khó khăn nữa.
 sudo dnf remove $(rpm -qa | grep ^kernel | grep <kernel-version>)
 ```
 
-```console
+```sh
 # xóa phiên bản kernel 5.18.xxx
 # sudo dnf remove $(rpm -qa | grep ^kernel | grep 5.18)
 ```
 
 Sau đó khởi động lại để áp dụng thay đổi và kiểm tra xem menu boot đã xóa phiên bản kernel đó hay chưa.
 
-```console
+```sh
 reboot
 ```
 
 Nếu chưa, hãy thử rebuilding grub menu:
 
-```console
+```sh
 sudo mkconfig-grub2 -o /boot/efi/EFI/fedora/grub.cfg
 ```
 
@@ -402,7 +402,7 @@ Xem chi tiết tại [đây](https://quantrimang.com/cong-nghe/so-sanh-flathub-v
 
 Cài đặt snap cho Fedora:
 
-```console
+```sh
 sudo dnf install snapd -y
 ```
 
@@ -410,25 +410,25 @@ sudo dnf install snapd -y
 
 Để bật hỗ trợ `classic` snap, nhập lệnh sau để tạo liên kết tượng trưng giữa `/var/lib/snapd/snap` và `/snap`:
 
-```console
+```sh
 sudo ln -s /var/lib/snapd/snap /snap
 ```
 
 Danh sách các ứng dụng đã cài đặt:
 
-```console
+```sh
 snap list
 ```
 
 Cài đặt 1 ứng dụng trong snap store:
 
-```console
+```sh
 sudo snap install <app name>
 ```
 
 Xóa 1 ứng dụng trong snap:
 
-```console
+```sh
 sudo snap remove <app name>
 ```
 
@@ -440,7 +440,7 @@ Khi cắm tai nghe có microphone vào máy, linux có thể không nhận dạn
 
 Chạy câu lệnh: 
 
-```console
+```sh
 hdajackretask
 ```
 
@@ -475,7 +475,7 @@ Nhấn `Esc` để thoát.
 Nếu cách này không thành công thì ta tiếp tục thử chạy câu lệnh bên dưới:   
 > the issue is most likely in wireplumber not pipewire itself. People have been switching that for pipewire-media-server instead in the short term:
 
-``` console 
+``` sh 
 dnf swap wireplumber pipewire-media-session
 ```
 
@@ -500,7 +500,7 @@ https://teddit.net/r/Fedora/comments/qmtl59/no_sound_audio_after_upgrade_to_fedo
 Bạn kiểm tra thấy bluetooth hoạt động nhưng không bật được bluetooth. Lỗi này do Gnome không tương thích, nếu sử dụng `KDE Plasma 6.2.5` thì không có trường hợp này.
 
 
-```console
+```sh
 systemctl status bluetooth
 ```
 
@@ -511,7 +511,7 @@ systemctl status bluetooth
 
 Chạy lệnh `rfkill` nhưng không thấy device `hci0`.
 
-```console
+```sh
 rfkill
 ```
 
@@ -521,7 +521,7 @@ rfkill
 
 Chạy lệnh `inxi -E` nhưng bluetooth không có driver.
 
-```console
+```sh
 inxi -E
 ```
 
@@ -531,7 +531,7 @@ inxi -E
 
 Không thấy module `btusb` được cài đặt.
 
-```console
+```sh
 lsmod | grep btusb
 ```
 
@@ -541,14 +541,14 @@ lsmod | grep btusb
 
 Chúng ta có thể sửa lỗi bằng cách cài đặt lại module bluetooth `btusb` cho thiết bị.
 
-```console
+```sh
 sudo rmmod btusb
 sudo modprobe btusb
 ```
 
 Sau khi cài đặt, có thể kiểm tra lại bằng 1 trong các câu lệnh dưới đây:
 
-```console
+```sh
 rfkill
 ```
 
@@ -556,7 +556,7 @@ rfkill
   <img src="./images/rfkill.png">
 </p>
 
-```console
+```sh
 inxi -NE
 ```
 
@@ -564,7 +564,7 @@ inxi -NE
   <img src="./images/inxi_NE.png">
 </p>
 
-```console
+```sh
 lsmod | grep btusb
 ```
 
@@ -576,13 +576,13 @@ lsmod | grep btusb
 
 Tạo script bluetooth-reload.sh:
 
-```console
+```sh
 sudo nano ./bluetooth-reload.sh
 ```
 
 Có nội dung:
 
-```console
+```sh
 #!/bin/bash
 
 sudo rmmod btusb
@@ -592,13 +592,13 @@ sudo systemctl restart bluetooth
 
 Cấp quyền thực thi cho file:
 
-```console
+```sh
 sudo chmod +x bluetooth-reload.sh
 ```
 
 Mở terminal và chạy script thủ công sau mỗi lần đăng nhập:
 
-```console
+```sh
 ./bluetooth-reload.sh
 ```
 
@@ -608,13 +608,13 @@ Một vài thiết bị hoặc kernel đang dùng không hỗ trợ tính năng 
 
 Tắt suspend:
 
-```console
+```sh
 sudo systemctl mask suspend.target
 ```
 
 Bật lại suspend:
 
-```console
+```sh
 sudo systemctl unmask suspend.target
 ```
 
@@ -624,13 +624,13 @@ sudo systemctl unmask suspend.target
 
 Debian/Ubuntu: 
 
-```console
+```sh
 sudo apt-get install zsh -y
 ```
 
 Fedora/RHEL/Almalinux: 
 
-```console
+```sh
 sudo dnf install zsh -y
 ```
 
@@ -648,9 +648,15 @@ Thay đổi shell mặc định của người dùng thành `zsh`.
 
 Mở terminal, chạy đoạn lệnh bên dưới:
 
-```console
+```sh
 zsh
 chsh -s $(which zsh)
+```
+*** Để cài đặt tự động Zsh, Oh My Zsh và Powerlevel10k bạn có thể chạy scipt này:
+
+```sh
+chmod +x ./install_OhMyZsh.sh
+./install_OhMyZsh.sh
 ```
 
 Sau đó **Logout** rồi đăng nhập lại.
@@ -659,7 +665,7 @@ Sau đó **Logout** rồi đăng nhập lại.
 
 Oh-my-zsh hiểu đơn giản là một framework giúp bạn quản lý các thiết lập của zsh một cách dễ dàng. oh-my-zsh hiện đang cung cấp hơn 200 plugins và hơn 140 themes được phát triển từ cộng đồng.
 
-```console
+```sh
 sudo curl -L http://install.ohmyz.sh | sh
 ```
 
@@ -667,13 +673,13 @@ sudo curl -L http://install.ohmyz.sh | sh
 
 Cài đặt plugin **zsh-autosuggestions**, giúp tự động **suggetions** các lệnh mà mình đã dùng:
 
-```console
+```sh
 git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 ```
 
 Mở file **.zshrc**:
 
-```console
+```sh
 nano ~/.zshrc
 ```
 
@@ -681,7 +687,7 @@ Sửa dòng `plugins=(git)` thành `plugins=(git zsh-autosuggestions)`. Lưu l�
 
 *** Nếu autosuggestions plugin không hoạt động thì hãy thử đăng xuất và được nhập lại, nếu như không được thì thêm câu lệnh này vào cuối file `.zshrc`
 
-```console
+```sh
 # ...
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -700,7 +706,7 @@ Cài font [MesloLGS NF](https://github.com/romkatv/powerlevel10k#fonts).
 
 Cài đặt vào oh-my-zsh:
 
-```console
+```sh
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 ```
 
@@ -728,11 +734,11 @@ CopyQ là trình quản lý bảng nhớ tạm – một ứng dụng cho "deskt
 
 Fedora:
 
-  ```console
+  ```sh
   sudo dnf install -y copyq
   ```
 Ubuntu:
-  ```console
+  ```sh
   sudo apt install software-properties-common python-software-properties
   sudo add-apt-repository ppa:hluk/copyq
   sudo apt update
@@ -749,7 +755,7 @@ Ubuntu:
 
 ### Cài đặt cho Ubuntu
 
-```console
+```sh
 sudo add-apt-repository ppa:bamboo-engine/ibus-bamboo
 sudo apt-get update
 sudo apt-get install ibus ibus-bamboo --install-recommends
@@ -767,7 +773,7 @@ Cài đặt các gói phụ thuộc:
 - libx11-dev
 - libxtst-dev
 
-```console
+```sh
 # Debian/Ubuntu:
 sudo apt-get install make golang libx11-dev libxtst-dev libgtk-3-dev
 
@@ -779,7 +785,7 @@ sudo zypper install make go libX11-devel libXtst-devel gtk3-devel
 ```
 
 Tải bamboo repository xuống: 
-```console
+```sh
 wget https://github.com/BambooEngine/ibus-bamboo/archive/master.zip -O ibus-bamboo.zip
 unzip ibus-bamboo.zip
 
@@ -789,7 +795,7 @@ git clone https://github.com/BambooEngine/ibus-bamboo.git
 
 Build và cài đặt: 
 
-```console
+```sh
 cd ibus-bamboo
 sudo make install
 
@@ -799,7 +805,7 @@ ibus restart
 
 Gỡ cài đặt
 
-```console
+```sh
 sudo make uninstall
 ibus restart
 ```
@@ -812,14 +818,14 @@ ibus restart
 
 Sau khi cài đặt xong thì restart lại ibus
 
-```console
+```sh
 ibus restart
 ```
 
 Đặt ibus-bamboo làm bộ gõ mặc định cho `Ubuntu` và `Fedora`:
 - Với command:
 
-  ```console
+  ```sh
   env DCONF_PROFILE=ibus dconf write /desktop/ibus/general/preload-engines "['BambooUs', 'Bamboo']" && gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('ibus', 'Bamboo')]"
   ```
 
@@ -854,14 +860,14 @@ Neofetch được mô tả là "công cụ kiểm tra thông tin hệ thống d�
 
 Debian/Ubuntu:
 
-```console
+```sh
 sudo apt update
 sudo apt install neofetch
 ```
 
 Fedora/RHEL:
 
-```console
+```sh
 sudo dnf makecache --refresh
 #sudo yum install epel-release
 sudo dnf -y install neofetch
@@ -911,7 +917,7 @@ Nhà phát triển tuyên bố `Bpytop` `nhanh hơn` `Bashtop` và Bpytop có nh
 
 Bài này sẽ hướng dẫn cài đặt bashtop nhé.
 
-```console
+```sh
 git clone https://github.com/aristocratos/bashtop.git
 cd bashtop
 sudo make install 
@@ -919,7 +925,7 @@ sudo make install
 
 Sau khi cài đặt xong thì gọi câu lệnh bên dưới để chạy:
 
-```console
+```sh
 bashtop
 ```
 
@@ -937,12 +943,12 @@ Terminator là một trình giả lập thiết bị đầu cuối dành cho cá
 
 **Debian/Ubuntu**
 
-```console
+```sh
 sudo apt-get install terminator
  ```
 
 Nếu cài đặt không thành công, bạn có thể cần thêm kho lưu trữ PPA và phiên bản Ubuntu mới hơn mà bạn không phải chạy lệnh **update**.
-```console
+```sh
 sudo add-apt-repository ppa:gnome-terminator
 sudo apt-get update
 sudo apt-get install terminator
@@ -950,7 +956,7 @@ sudo apt-get install terminator
 
 **Fedora/RHEL**
 
-```console
+```sh
 sudo dnf makecache --refresh
 sudo dnf install terminator
 ```
@@ -967,13 +973,13 @@ Tắt **Show titlebar**: Chuột phải vào màn hình terminator -> Preference
 
 Để **gỡ cài đặt** terminator, dùng câu lệnh:
 
-```console
+```sh
 sudo dnf remove terminator; sudo dnf autoremove terminator;sudo dnf clean packages;
 ```
 
 Tập tin cấu hình của terminator nằm ở địa chỉ: `/home/<your-user-name>/.config/terminator/config`. Để xóa sạch hoàn toàn terminator, ta sẽ xóa luôn thư mục này. 
 
-```console
+```sh
 rm -rfvI /home/your_user_name/.config/terminator
 ```
 
@@ -982,7 +988,7 @@ rm -rfvI /home/your_user_name/.config/terminator
 Là terminal có thể xem ảnh và video ngay bên  trong.
 
 Fedora/RHEL:
-```console
+```sh
 sudo dnf makecache --refresh
 sudo dnf -y install terminology
 ```
@@ -1011,20 +1017,20 @@ Cài thư viện `wmctrl`:
 
 Fedora/RHEL:
 
-```console
+```sh
 sudo dnf -y install wmctrl
 ```
 
 Debian/Ubuntu:
 
-```console
+```sh
 sudo apt-get update
 sudo apt-get install wmctrl
 ```
 
 Câu lệnh: 
 
-```console
+```sh
 wmctrl -k on
 ```
 
@@ -1052,7 +1058,7 @@ Extention thường dùng:
 
 [GNOME Tweaks](https://icare24h.net/cach-cai-dat-gnome-tweaks-tren-fedora-linux/) là một ứng dụng nhỏ tuyệt vời cung cấp cho bạn quyền truy cập vào các tùy chọn bổ sung để sửa đổi trải nghiệm GNOME của bạn. Điều này bao gồm mọi thứ từ tiện ích mở rộng, đến thay đổi chủ đề và điều chỉnh cài đặt nguồn.
 
-```console
+```sh
 sudo dnf makecache --refresh
 sudo dnf install -y gnome-tweaks 
 ```
@@ -1081,19 +1087,19 @@ Ví dụ:
 
 - Tải theme Otis:
 
-```console
+```sh
 git clone https://github.com/EliverLara/Otis.git
 ```
 
 - Sao chép theme Otis vào nơi cài đặt:
 
-```console
+```sh
 sudo cp -r Otis /usr/share/themes/Otis
 ```
 
 - Để sử dụng theme Otis trên Gnome, thì chạy câu lệnh trong Terminal:
 
-```console
+```sh
 gsettings set org.gnome.desktop.interface gtk-theme "Otis"
 gsettings set org.gnome.desktop.wm.preferences theme "Otis"
 ```
@@ -1130,13 +1136,13 @@ Cấu hình Font theo hình bên dưới:
 
 Cài đặt:
 
-```console
+```sh
 sudo dnf install -y gnome-sound-recorder
 ```
 
 Chạy:
 
-```console
+```sh
 gnome-sound-recorder
 ```
 
@@ -1153,7 +1159,7 @@ gnome-sound-recorder
 
 Sửa lỗi : configure: error: Package requirements (gstreamer-1.0 >= 1.4) were not met.
 
-```console
+```sh
 sudo dnf install -y gstreamer1-devel gstreamer1-plugins-base-tools gstreamer1-doc gstreamer1-plugins-base-devel gstreamer1-plugins-good gstreamer1-plugins-good-extras gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-free-devel gstreamer1-plugins-bad-free-extras
 ```
 
@@ -1167,7 +1173,7 @@ libindicator-gtk3-devel
 libindicator-gtk3-tools
 ```
 
-```console 
+```sh 
 sudo dnf makecache --refresh
 # sudo dnf -y install gstreamer1
 ```
@@ -1194,7 +1200,7 @@ sudo dnf makecache --refresh
 
 Bạn có thể [kiểm tra](https://rpmfusion.org/Howto/NVIDIA#Determining_your_card_model) liệu rằng máy vi tính của bạn đã cài GPU NVIDIA hay chưa với câu lệnh sau:
 
-```console
+```sh
 lspci -k | grep -A 2 -E "(VGA|3D)"
 # hoặc
 lspci | egrep 'VGA|NVIDIA'
@@ -1206,7 +1212,7 @@ lspci | egrep 'VGA|NVIDIA'
 
 Kiểm tra card nvidia:
 
-```console
+```sh
 lsmod | grep nvidia
 ```
 
@@ -1220,7 +1226,7 @@ Hầu hết các hệ thống Máy tính để bàn Linux hiện đại như Alm
 
 Về mặt lịch sử, các driver độc quyền của Nouveau chậm hơn của Nvidia, vốn thiếu các tính năng phần cứng, công nghệ phần mềm và hỗ trợ mới nhất của cạc đồ họa. Trong hầu hết các tình huống, việc nâng cấp drivers Nvidia của bạn với các phiên bản driver phù hợp sẽ có lợi hơn là không nâng cấp. Trong một số trường hợp, bạn có thể thấy một số cải tiến đáng kể về tổng thể.
 
-```console
+```sh
 lsmod | grep nouveau
 ```
 
@@ -1232,7 +1238,7 @@ lsmod | grep nouveau
 
 Đầu tiên, cập nhật kho lưu trữ gói DNF cache với câu lệnh bên dưới:
 
-```console
+```sh
 sudo dnf upgrade --refresh -y
 ```
 
@@ -1247,13 +1253,13 @@ Extra Packages for Enterprise Linux.
 
 Trước tiên, bật CRB repository.
 
-```console
+```sh
 sudo dnf config-manager --set-enabled crb
 ```
 
 Tiếp theo, cài đặt `EPEL` thông qua `dnf`.
 
-```console
+```sh
 dnf install epel-release epel-next-release
 ```
 
@@ -1261,14 +1267,14 @@ dnf install epel-release epel-next-release
 
 Tìm EPEL package và tiến hành xoá gói EPEL nếu cài đặt thông qua **rpm**.
 
-```console
+```sh
 rpm -qa | grep epel
 # epel-release-6-8.noarch
 ```
 
 Xoá gói package bằng command **rpm -e**.
 
-```console
+```sh
 # rpm -e epel-release-6-8.noarch
 ```
 
@@ -1282,19 +1288,19 @@ RPM Fusion là một kho chứa các gói tiện ích bổ sung cho Fedora và E
 
 - Thêm RPM Fusion Free repository:
 
-```console
+```sh
 sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 ```
 
 - Thêm RPM Fusion Non-Free repository:
 
-```console
+```sh
 sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 ```
 
 Sau khi cài đặt, làm mới danh sách kho lưu trữ:
 
-```console
+```sh
 sudo dnf makecache
 ```
 
@@ -1308,13 +1314,13 @@ Tham khảo tại [đây](https://www.linuxcapable.com/how-to-install-nvidia-dri
 
 Bây giờ bạn đã nhập kho lưu trữ RPM Fusion, hãy thực thi lệnh sau để cài đặt trình điều khiển Nvidia mới nhất trên hệ thống của bạn.
 
-```console
+```sh
 sudo dnf install -y akmod-nvidia
 ```
 
 Tiếp theo, cài đặt drivers hỗ trợ CUDA. Bạn có thể không cần điều này, nhưng đôi khi nếu sự cố vẫn tiếp diễn, việc cài đặt hỗ trợ CUDA có thể giải quyết vấn đề.
 
-```console
+```sh
 sudo dnf install -y xorg-x11-drv-nvidia-cuda
 ```
 
@@ -1322,7 +1328,7 @@ Lưu ý rằng lệnh NVIDIA-SMI chỉ có thể sử dụng được với sự
 
 Khi mọi thứ đã được cài đặt, bạn phải khởi động lại hệ thống của mình. Theo mặc định, điều này cũng sẽ tự động tắt trình điều khiển Nouveau.
 
-```console
+```sh
 reboot
 ```
 
@@ -1334,7 +1340,7 @@ Khi bạn đã quay lại, xem NVIDIA X Server Settings bằng cách sử dụng
 
 Ngoài ra, nếu bạn đã mở một terminal, hãy sử dụng lệnh sau.
 
-```console
+```sh
 nvidia-settings
 ```
 
@@ -1351,7 +1357,7 @@ Ví dụ nếu cài đặt thành công:
 
 Những hệ thống đã cài đặt **Cuda support** có thể chạy câu lệnh bên dưới.
 
-```console
+```sh
 nvidia-smi
 ```
 
@@ -1359,7 +1365,7 @@ Lệnh `nvidia-smi` chỉ có thể sử dụng được với sự hỗ trợ c
 
 Các trình điều khiển NVIDIA độc quyền được sử dụng, như bạn có thể thấy trong ảnh chụp màn hình bên dưới.
 
-```console
+```sh
 lsmod | grep nvidia
 ```
 
@@ -1369,7 +1375,7 @@ lsmod | grep nvidia
 
 Drivers Nouveau đã không còn được sử dụng.
 
-```console
+```sh
 lsmod | grep nouveau
 ```
 
@@ -1377,7 +1383,7 @@ lsmod | grep nouveau
 
 Tất cả các bản cập nhật trong tương lai sẽ nằm trong quy trình lệnh `dnf refresh` tiêu chuẩn và điều này sẽ kiểm tra kho lưu trữ RPM Fusion để biết các bản cập nhật của các driver và các gói phần mềm còn lại của bạn.
 
-```console
+```sh
 sudo dnf upgrade --refresh
 ```
 
@@ -1385,13 +1391,13 @@ sudo dnf upgrade --refresh
 
 Nếu bạn không muốn tiếp tục sử dụng trình điều khiển chính thức của Nvidia, hãy sử dụng lệnh sau:
 
-```console
+```sh
 sudo dnf -y autoremove akmod-nvidia xorg-x11-drv-nvidia-cuda
 ```
 
 Thao tác này sẽ xóa tất cả các phần phụ thuộc đã cài đặt. Sau khi xóa, bạn phải khởi động lại.
 
-```console
+```sh
 reboot
 ```
 
@@ -1409,26 +1415,26 @@ EnvyControl có thể hoạt động trên bất kỳ bản phân phối nào c�
 
 Mở terminal, tải repository Envy Control:
 
-```console
+```sh
 git clone https://github.com/geminis3/envycontrol.git
 ```
 
 Cài đặt thư viện pip:
 
-```console
+```sh
 sudo dnf install -y python3-pip
 ```
 
 Để áp dụng trên toàn bộ hệ thống, vào thư mục vừa tải và cài đặt gói thông qua pip:
 
-```console
+```sh
 cd envycontrol
 sudo pip3 install .
 ```
 
 Cách dùng:
 
-```console 
+```sh 
 usage: envycontrol.py [-h] [-v] [-s MODE] [-q] [--dm DISPLAY_MANAGER] [--reset_sddm]
 
 options:
@@ -1451,19 +1457,19 @@ envycontrol --query
 
 Chuyển chế độ đồ họa hiện tại thành integrated (tắt nguồn Nvidia dGPU):
 
-```console
+```sh
 sudo envycontrol -s integrated
 ```
 
 Chuyển chế độ đồ họa hiện tại thành nvidia (tự động cài đặt display manager)
 
-```console
+```sh
 sudo envycontrol -s nvidia
 ```
 
 Chuyển chế độ đồ họa hiện tại thành nvidia và cài đặt SDDM display manager.
 
-```console
+```sh
 sudo envycontrol -s nvidia --dm sddm
 ```
 
@@ -1485,7 +1491,7 @@ LƯU Ý: Tiện ích mở rộng này yêu cầu cài đặt [Envy Control](#cà
 
 Sau khi thực hiện chuyển đổi, bạn có thể xác minh nó bằng cách chạy một lệnh duy nhất trong terminal:
 
-```console
+```sh
 glxinfo | egrep "OpenGL vendor|OpenGL renderer"
 ```
 
