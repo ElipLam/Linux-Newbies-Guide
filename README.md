@@ -17,6 +17,7 @@
   - [Chọn kernel làm mặc định](#chọn-kernel-làm-mặc-định)
   - [Xóa kernel](#xóa-kernel)
 - [Cửa hàng ứng dụng gói Flathub và Snap Store](#cửa-hàng-ứng-dụng-gói-flathub-và-snap-store)
+  - [Flatpak](#flatpak)
   - [Snap Store](#snap-store)
 - [Sửa lỗi headphone microphone](#sửa-lỗi-headphone-microphone)
 - [Sửa lỗi không bật được Bluetooth](#sửa-lỗi-không-bật-được-bluetooth)
@@ -397,6 +398,95 @@ Flathub và Snap Store là hai trang web phát triển xung quanh hai định d�
 `Snap` là một định dạng file đến từ Canonical, công ty tạo ra phân phối Linux Ubuntu. Không giống như Flatpak, snap ban đầu được dành cho các máy chủ. Mặc dù snap hoạt động trên rất nhiều bản phân phối Linux khác nhau, nhưng chúng lại cực kỳ phù hợp với Ubuntu. Tất nhiên, với số lượng người sử dụng Ubuntu lớn hơn rất nhiều so với các bản phân phối khác, Snap Store không hề thiếu các ứng dụng.
 
 Xem chi tiết tại [đây](https://quantrimang.com/cong-nghe/so-sanh-flathub-va-snap-store-166089#:~:text=Snap%20l%C3%A0%20m%E1%BB%99t%20%C4%91%E1%BB%8Bnh%20d%E1%BA%A1ng,k%E1%BB%B3%20ph%C3%B9%20h%E1%BB%A3p%20v%E1%BB%9Bi%20Ubuntu).
+
+### Flatpak
+
+Cài đặt flatpak cho Ubuntu:
+
+```sh
+sudo apt install flatpak -y
+sudo apt install gnome-software-plugin-flatpak
+```
+
+*NOTE: flatpak đã cài đặt sẵn trên Fedora.
+
+Đôi khi flathub bị tắt đi vì lý do gì đó: 
+
+```
+error: Unable to load summary from remote flathub: Can't fetch summary from disabled remote ‘flathub’
+```
+
+Kiểm tra xem các nguồn bị tắt:
+
+```console
+$ flatpak remotes --show-disabled
+Name           Options
+fedora         system,oci
+fedora-testing system,disabled,oci
+flathub        system
+flathub-1      system
+pcsx2-origin   system,disabled,no-enumerate,no-gpg-verify
+```
+
+Bật flathub lên: 
+
+```sh
+flatpak remote-modify --enable flathub
+```
+
+Tự động thêm Flathub repository nếu chưa có:
+
+```sh
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+```
+
+*NOTE: Hãy đăng xuất và đăng nhập lại hoặc khởi động lại hệ thống để đảm bảo flatpak chính xác.
+
+Danh sách các ứng dụng đã cài đặt:
+
+```sh
+flatpak list
+```
+
+Tìm kiếm 1 ứng dụng trong flatpak:
+
+```sh
+flatpak search <aapplication name>
+# flatpak search Stremio
+```
+
+Cài đặt 1 ứng dụng trong flatpak:
+
+```sh
+flatpak install <full application id>
+# flatpak install flathub com.stremio.Stremio
+
+# or
+
+flatpak install <aapplication name>
+# flatpak install Stremio
+```
+
+Chạy 1 ứng dụng trong flatpak:
+
+```sh
+flatpak run <application id>
+```
+
+Xóa 1 ứng dụng trong flatpak:
+
+```sh
+flatpak uninstall <application id>
+```
+
+Xóa các runtimes/dependencies không sử dụng trong flatpak:
+
+```sh
+flatpak uninstall --unused
+```
+
+Còn nếu bạn muốn xem tất cả các ứng dụng có sẵn, bạn có thể duyệt Flatpak qua trang web chính thức của Flathub: https://flathub.org.
+
 
 ### Snap Store
 
