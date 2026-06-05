@@ -35,7 +35,7 @@
   - [Hướng dẫn sử dụng](#hướng-dẫn-sử-dụng)
 - [Cài đặt neofetch (ngừng phát triển)](#cài-đặt-neofetch-ngừng-phát-triển)
 - [Cài đặt fastfetch](#cài-đặt-fastfetch)
-- [Cài đặt bashtop](#cài-đặt-bashtop)
+- [Cài đặt btop](#cài-đặt-btop)
 - [Terminal](#terminal)
   - [Terminator](#terminator)
   - [Terminology](#terminology)
@@ -997,33 +997,29 @@ Nếu fastfetch không được đóng gói cho bản phân phối của bạn h
   <img src="./images/fastfetch.png">
 </p>
 
-## Cài đặt bashtop
+## Cài đặt btop
 
 Các công cụ giám sát rất quan trọng và mọi quản trị viên hệ thống đều biết điều đó. Với sự trợ giúp của các ứng dụng giám sát tài nguyên, chúng ta có thể liên tục quan sát tình trạng tài nguyên của hệ thống khi một tác vụ đang chạy.
 
-Tác giả của bộ đôi công cụ giám sát này đã phát triển Bashtop trước và sau đó tạo ra cổng Python của Bashtop và đặt tên là Bpytop. Chúng không có nhiều sự khác biệt. Cả hai tiện ích đều phục vụ cùng một mục đích và có cùng một bộ tính năng. Sự khác biệt duy nhất là cả hai đều được viết bằng các ngôn ngữ lập trình khác nhau. Bashtop được viết bằng Bash và Bpytop được viết bằng Python. Bashtop và Bpytop hỗ trợ GNU / Linux, Mac OS và FreeBSD.
+Bài này sẽ hướng dẫn cài đặt btop nhé.
 
-Nhà phát triển tuyên bố `Bpytop` `nhanh hơn` `Bashtop` và Bpytop có nhiều tính năng hơn và đề xuất chúng tôi sử dụng Bpytop thay vì Bashtop. Tuy nhiên đó là sự lựa chọn cá nhân của bạn. Bạn có thể thử cả hai và chọn loại phù hợp với mình.
-
-Bài này sẽ hướng dẫn cài đặt bashtop nhé.
+Fedora:
 
 ```sh
-git clone https://github.com/aristocratos/bashtop.git
-cd bashtop
-sudo make install 
+sudo dnf install btop
 ```
 
 Sau khi cài đặt xong thì gọi câu lệnh bên dưới để chạy:
 
 ```sh
-bashtop
+btop
 ```
 
 <p align="center">
   <img src="./images/bashtop.png">
 </p>
 
-Tham khảo: https://github.com/aristocratos/bashtop#manual-installation-linux-osx-and-freebsd
+Tham khảo: https://github.com/aristocratos/btop#installation
 
 ## Terminal
 
