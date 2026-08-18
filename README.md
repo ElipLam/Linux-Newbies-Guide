@@ -34,11 +34,12 @@
 - [Cài đặt zsh autosuggestions](#cài-đặt-zsh-autosuggestions)
 - [Theme Power10k cho zsh shell](#theme-power10k-cho-zsh-shell)
 - [CopyQ - Quản lý bảng nhớ tạm](#copyq---quản-lý-bảng-nhớ-tạm)
-- [Cài đặt bộ gõ tiếng Việt](#cài-đặt-bộ-gõ-tiếng-việt)
+- [Bộ gõ tiếng Việt - Ibus-bamboo (ngừng phát triển)](#bộ-gõ-tiếng-việt---ibus-bamboo-ngừng-phát-triển)
   - [Cài đặt cho Ubuntu](#cài-đặt-cho-ubuntu)
   - [Cài đặt từ mã nguồn](#cài-đặt-từ-mã-nguồn)
   - [Cài đặt từ OpenBuildService (khuyên dùng)](#cài-đặt-từ-openbuildservice-khuyên-dùng)
   - [Hướng dẫn sử dụng](#hướng-dẫn-sử-dụng)
+- [Bộ gõ tiếng Việt - Fcitx5 Lotus](#bộ-gõ-tiếng-việt---fcitx5-lotus)
 - [Cài đặt neofetch (ngừng phát triển)](#cài-đặt-neofetch-ngừng-phát-triển)
 - [Cài đặt fastfetch](#cài-đặt-fastfetch)
 - [Cài đặt btop](#cài-đặt-btop)
@@ -976,7 +977,7 @@ Ubuntu:
   <img src="./images/CopyQ.png">
 </p>
 
-## Cài đặt bộ gõ tiếng Việt
+## Bộ gõ tiếng Việt - Ibus-bamboo (ngừng phát triển)
 
 ### Cài đặt cho Ubuntu
 
@@ -1078,6 +1079,147 @@ Mặc định ,để chuyển đổi ngôn ngữ tiếng Anh và tiếng Việt 
 </p>
 
 Nguồn: https://github.com/BambooEngine/ibus-bamboo/blob/master/README.md 
+
+## Bộ gõ tiếng Việt - Fcitx5 Lotus
+
+[Fcitx5 Lotus](https://github.com/LotusInputMethod/fcitx5-lotus) là bộ gõ tiếng Việt dành cho Linux, có ưu điểm là gõ trực tiếp (non-preedit), ít gây gạch chân, nhanh và dễ cấu hình. Đây là lựa chọn khá phù hợp trên Fedora GNOME khi bạn muốn có trải nghiệm gõ tiếng Việt mượt, ổn định, và hỗ trợ cả môi trường bash/zsh.
+
+Tài liệu gốc: https://lotusinputmethod.github.io/#installation
+
+1) Cài đặt từ package manager trên Fedora.
+
+Với Fedora GNOME, ta cài trực tiếp qua `dnf`:
+
+```sh
+RELEASEVER=$(grep '^VERSION_ID=' /etc/os-release | cut -d'=' -f2)
+sudo rpm --import https://fcitx5-lotus.pages.dev/pubkey.gpg
+sudo dnf config-manager addrepo --from-repofile=https://fcitx5-lotus.pages.dev/rpm/fedora/fcitx5-lotus-$RELEASEVER.repo
+sudo dnf install fcitx5-lotus
+```
+
+Nếu muốn kiểm tra gói có tồn tại trên kho, bạn có thể chạy:
+
+```sh
+sudo dnf search fcitx5-lotus
+```
+
+2) Kích hoạt dịch vụ systemd.
+
+Lotus có thể chạy như một service dưới `systemd` để đảm bảo bộ gõ luôn có sẵn khi khởi động. Kích hoạt service theo user hiện tại:
+
+```sh
+sudo systemctl enable --now fcitx5-lotus-server@$(whoami).service
+```
+
+Nếu gặp lỗi do service chưa tạo, có thể chạy thêm:
+
+```sh
+sudo systemd-sysusers
+sudo systemctl enable --now fcitx5-lotus-server@$(whoami).service
+```
+
+Bạn có thể kiểm tra trạng thái service:
+
+```sh
+systemctl status fcitx5-lotus-server@$(whoami).service
+```
+
+3) Tắt IBus nếu đang dùng.
+
+Nếu máy bạn đang dùng `IBus`, nên tắt trước khi chuyển sang `Fcitx5` để tránh xung đột:
+
+```sh
+killall ibus-daemon || ibus exit
+```
+
+Nếu không dùng đến IBus nữa, có thể gỡ bỏ nó:
+
+```sh
+sudo dnf remove -y ibus
+```
+
+4) Thiết lập biến môi trường cho bash và zsh.
+
+Để bộ gõ hoạt động tốt với GTK, Qt và các ứng dụng trên GNOME Wayland, thêm các biến môi trường sau vào shell cấu hình của bạn.
+
+Cho `bash`:
+
+```sh
+cat <<EOF >> ~/.bash_profile
+export XMODIFIERS=@im=fcitx
+export QT_IM_MODULE=fcitx
+export QT_IM_MODULES="wayland;fcitx"
+export GLFW_IM_MODULE=ibus
+EOF
+```
+
+Cho `zsh`:
+
+```sh
+cat <<EOF >> ~/.zprofile
+export XMODIFIERS=@im=fcitx
+export QT_IM_MODULE=fcitx
+export QT_IM_MODULES="wayland;fcitx"
+export GLFW_IM_MODULE=ibus
+EOF
+```
+
+Sau đó, đăng xuất và đăng nhập lại hoặc chạy lệnh sau để nạp lại shell:
+
+```sh
+source ~/.bashrc
+source ~/.zshrc
+```
+
+5) Khởi động cùng GNOME (autostart).
+
+Trên GNOME, bạn có thể bật tự động chạy Fcitx 5:
+
+- `GNOME Tweaks` -> `Startup Applications` -> `Add` -> `Fcitx 5`
+
+6) Cấu hình cuối cùng trong GNOME.
+
+Sau khi đăng xuất và đăng nhập lại:
+
+  - Mở `Fcitx 5 Configuration` hoặc gõ lệnh:
+
+    ```sh
+    fcitx5-configtool
+    ```
+
+  - Tìm `Lotus` trong danh sách các input method.
+  - Chuyển `Lotus` sang cột trái bằng nút mũi tên.
+  - Chọn `Apply` để lưu.
+
+<p align="center">
+  <img src="./images/fcitx5_config_lotus.png">
+</p>
+
+  - Thiết lập phím chuyển input, ví dụ: `Ctrl + Space` hoặc dễ dùng theo ý bạn.
+
+<p align="center">
+  <img src="./images/fcitx5_config_input_method.png">
+</p>
+
+1) Kiểm tra hoạt động.
+
+Mở một terminal hoặc trình soạn thảo văn bản, thử gõ tiếng Việt:
+
+```sh
+echo "Gõ tiếng Việt bằng Fcitx5 Lotus"
+```
+
+Nếu mọi thứ hoạt động, bạn sẽ thấy tiếng Việt được nhập bình thường mà không cần gạch chân như IBus truyền thống.
+
+8) Một số lưu ý.
+
+- Fcitx5 Lotus rất tốt cho GNOME + Fedora + Wayland hoặc X11.
+- Nếu dùng `Wayland`, nên kiểm tra lại cấu hình IM trong môi trường GNOME để đảm bảo `Fcitx5` được chọn là input method mặc định.
+- Với `zsh`, `bash`, và các tool CLI, biến môi trường ở trên giúp ứng dụng Qt/GTK nhận diện đúng bộ gõ.
+
+Rồi thêm các biến môi trường cho bash/zsh, đăng xuất và đăng nhập lại, sau đó vào `fcitx5-configtool` để bật `Lotus` làm bộ gõ mặc định.
+
+Nguồn tham khảo: https://github.com/LotusInputMethod/fcitx5-lotus https://lotusinputmethod.github.io/#installation
 
 ## Cài đặt neofetch (ngừng phát triển)
 
