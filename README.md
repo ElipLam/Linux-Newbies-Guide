@@ -580,6 +580,8 @@ https://teddit.net/r/Fedora/comments/qmtl59/no_sound_audio_after_upgrade_to_fedo
 
 ## Sửa lỗi không bật được Bluetooth
 
+**Updated:** Fedora 44 đã fix lỗi này.
+
 *NOTE: hướng dẫn sửa lỗi này được thực hiện ở Fedora distro:
   - version 41
   - Destop Environment: Gnome 47
