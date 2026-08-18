@@ -21,7 +21,7 @@
   - [Snap Store](#snap-store)
 - [EasyEffects - bộ chỉnh âm thanh cho PipeWire](#easyeffects---bộ-chỉnh-âm-thanh-cho-pipewire)
   - [Cài đặt EasyEffects trên Fedora](#cài-đặt-easyeffects-trên-fedora)
-  - [Cài đặt EasyEffects bằng Flatpak (khuyến khích)](#cài-đặt-easyeffects-bằng-flatpak-khuyến-khích)
+  - [Cài đặt EasyEffects bằng Flatpak (khuyên dùng)](#cài-đặt-easyeffects-bằng-flatpak-khuyên-dùng)
   - [Giới thiệu preset từ EasyEffects-Presets](#giới-thiệu-preset-từ-easyeffects-presets)
   - [Cài đặt preset thủ công](#cài-đặt-preset-thủ-công)
   - [Một số lưu ý khi dùng EasyEffects](#một-số-lưu-ý-khi-dùng-easyeffects)
@@ -34,13 +34,7 @@
 - [Cài đặt zsh autosuggestions](#cài-đặt-zsh-autosuggestions)
 - [Theme Power10k cho zsh shell](#theme-power10k-cho-zsh-shell)
 - [CopyQ - Quản lý bảng nhớ tạm](#copyq---quản-lý-bảng-nhớ-tạm)
-- [Bộ gõ tiếng Việt - Ibus-bamboo (ngừng phát triển)](#bộ-gõ-tiếng-việt---ibus-bamboo-ngừng-phát-triển)
-  - [Cài đặt cho Ubuntu](#cài-đặt-cho-ubuntu)
-  - [Cài đặt từ mã nguồn](#cài-đặt-từ-mã-nguồn)
-  - [Cài đặt từ OpenBuildService (khuyên dùng)](#cài-đặt-từ-openbuildservice-khuyên-dùng)
-  - [Hướng dẫn sử dụng](#hướng-dẫn-sử-dụng)
 - [Bộ gõ tiếng Việt - Fcitx5 Lotus](#bộ-gõ-tiếng-việt---fcitx5-lotus)
-- [Cài đặt neofetch (ngừng phát triển)](#cài-đặt-neofetch-ngừng-phát-triển)
 - [Cài đặt fastfetch](#cài-đặt-fastfetch)
 - [Cài đặt btop](#cài-đặt-btop)
 - [Terminal](#terminal)
@@ -74,6 +68,12 @@
   - [Cài đặt Envy Control](#cài-đặt-envy-control)
   - [Chuyển đổi cạc đồ hoa thông qua System Menu](#chuyển-đổi-cạc-đồ-hoa-thông-qua-system-menu)
 - [Cài đặt ICC profile cho Linux](#cài-đặt-icc-profile-cho-linux)
+- [Cài đặt neofetch (ngừng phát triển)](#cài-đặt-neofetch-ngừng-phát-triển)
+- [Bộ gõ tiếng Việt - Ibus-bamboo (ngừng phát triển)](#bộ-gõ-tiếng-việt---ibus-bamboo-ngừng-phát-triển)
+  - [Cài đặt cho Ubuntu](#cài-đặt-cho-ubuntu)
+  - [Cài đặt từ mã nguồn](#cài-đặt-từ-mã-nguồn)
+  - [Cài đặt từ OpenBuildService (khuyên dùng)](#cài-đặt-từ-openbuildservice-khuyên-dùng)
+  - [Hướng dẫn sử dụng](#hướng-dẫn-sử-dụng)
 - [Tham khảo](#tham-khảo)
         - [on top](#on-top)
 
@@ -571,7 +571,7 @@ Sau khi cài xong, khởi động ứng dụng từ menu chính ứng dụng ho�
 easyeffects
 ```
 
-### Cài đặt EasyEffects bằng Flatpak (khuyến khích)
+### Cài đặt EasyEffects bằng Flatpak (khuyên dùng)
 
 Flatpak là cách khuyến khích nếu bạn muốn cài phiên bản mới nhất và dễ triển khai trên nhiều distro.
 
@@ -977,109 +977,6 @@ Ubuntu:
   <img src="./images/CopyQ.png">
 </p>
 
-## Bộ gõ tiếng Việt - Ibus-bamboo (ngừng phát triển)
-
-### Cài đặt cho Ubuntu
-
-```sh
-sudo add-apt-repository ppa:bamboo-engine/ibus-bamboo
-sudo apt-get update
-sudo apt-get install ibus ibus-bamboo --install-recommends
-ibus restart
-# Đặt ibus-bamboo làm bộ gõ mặc định
-env DCONF_PROFILE=ibus dconf write /desktop/ibus/general/preload-engines "['BambooUs', 'Bamboo']" && gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('ibus', 'Bamboo')]"
-```
-
-### Cài đặt từ mã nguồn
-
-Cài đặt các gói phụ thuộc:
-- make
-- golang
-- libgtk-3-dev
-- libx11-dev
-- libxtst-dev
-
-```sh
-# Debian/Ubuntu:
-sudo apt-get install make golang libx11-dev libxtst-dev libgtk-3-dev
-
-# Fedora, CentOS,...
-sudo yum install make go libX11-devel libXtst-devel gtk3-devel
-
-# openSUSE Tumbleweed
-sudo zypper install make go libX11-devel libXtst-devel gtk3-devel
-```
-
-Tải bamboo repository xuống: 
-```sh
-wget https://github.com/BambooEngine/ibus-bamboo/archive/master.zip -O ibus-bamboo.zip
-unzip ibus-bamboo.zip
-
-# hoặc clone từ github:
-git clone https://github.com/BambooEngine/ibus-bamboo.git
-```
-
-Build và cài đặt: 
-
-```sh
-cd ibus-bamboo
-sudo make install
-
-# Restart ibus
-ibus restart
-```
-
-Gỡ cài đặt
-
-```sh
-sudo make uninstall
-ibus restart
-```
-
-### Cài đặt từ OpenBuildService (khuyên dùng)
-
-[![OpenBuildService](./images/obs.png)](https://software.opensuse.org//download.html?project=home%3Alamlng&package=ibus-bamboo)
-
-### Hướng dẫn sử dụng
-
-Sau khi cài đặt xong thì restart lại ibus
-
-```sh
-ibus restart
-```
-
-Đặt ibus-bamboo làm bộ gõ mặc định cho `Ubuntu` và `Fedora`:
-- Với command:
-
-  ```sh
-  env DCONF_PROFILE=ibus dconf write /desktop/ibus/general/preload-engines "['BambooUs', 'Bamboo']" && gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('ibus', 'Bamboo')]"
-  ```
-
-- Với Gnome:
-  
-  Vào `Settings` -> `Keyboard` -> `Input Source` -> `Add Input Source`. 
-  
-  Kéo xuống cuối, chọn `More`, gõ và chọn `Vietnamese`. 
-
-  <p align="center">
-  <img src="./images/add-keyboard-layout.png">
-</p>
-
-  Chọn 1 layout muốn sử dụng rồi nhấn `Add`.
-
-  <p align="center">
-  <img src="./images/add-keyboard-layout_1.png">
-  </p>
-  
-Mặc định ,để chuyển đổi ngôn ngữ tiếng Anh và tiếng Việt cho nhau, sử dụng tổ hợp phím `Super` + `Space`.
-
-Ảnh minh họa cho cài đặt phím tắt.
-<p align="center">
-<img src="./images/add-keyboard-layout-shortcut.png">
-</p>
-
-Nguồn: https://github.com/BambooEngine/ibus-bamboo/blob/master/README.md 
-
 ## Bộ gõ tiếng Việt - Fcitx5 Lotus
 
 [Fcitx5 Lotus](https://github.com/LotusInputMethod/fcitx5-lotus) là bộ gõ tiếng Việt dành cho Linux, có ưu điểm là gõ trực tiếp (non-preedit), ít gây gạch chân, nhanh và dễ cấu hình. Đây là lựa chọn khá phù hợp trên Fedora GNOME khi bạn muốn có trải nghiệm gõ tiếng Việt mượt, ổn định, và hỗ trợ cả môi trường bash/zsh.
@@ -1220,29 +1117,6 @@ Nếu mọi thứ hoạt động, bạn sẽ thấy tiếng Việt được nh�
 Rồi thêm các biến môi trường cho bash/zsh, đăng xuất và đăng nhập lại, sau đó vào `fcitx5-configtool` để bật `Lotus` làm bộ gõ mặc định.
 
 Nguồn tham khảo: https://github.com/LotusInputMethod/fcitx5-lotus https://lotusinputmethod.github.io/#installation
-
-## Cài đặt neofetch (ngừng phát triển)
-
-Neofetch được mô tả là "công cụ kiểm tra thông tin hệ thống dưới dạng dòng lệnh, được viết bằng bash 3.2+" và dễ sử dụng hơn trên các bản phân phối Linux, nhưng cũng có thể được sử dụng trên macOS và Windows sau khi cài đặt một số thành phần bổ sung.
-
-Debian/Ubuntu:
-
-```sh
-sudo apt update
-sudo apt install neofetch
-```
-
-Fedora/RHEL:
-
-```sh
-sudo dnf makecache --refresh
-#sudo yum install epel-release
-sudo dnf -y install neofetch
-```
-
-<p align="center">
-  <img src="./images/neofetch.png">
-</p>
 
 ## Cài đặt fastfetch
 
@@ -1895,6 +1769,131 @@ Hình ảnh đã chọn thành công.
 
 Đường cong hiệu chỉnh cấu hình (profile calibration curves) sẽ được tải tự động khi đăng nhập hoặc có thể được tải cho tất cả người dùng khi khởi động nếu nhấp vào nút `Set for all users`.
 
+## Cài đặt neofetch (ngừng phát triển)
+
+Neofetch được mô tả là "công cụ kiểm tra thông tin hệ thống dưới dạng dòng lệnh, được viết bằng bash 3.2+" và dễ sử dụng hơn trên các bản phân phối Linux, nhưng cũng có thể được sử dụng trên macOS và Windows sau khi cài đặt một số thành phần bổ sung.
+
+Debian/Ubuntu:
+
+```sh
+sudo apt update
+sudo apt install neofetch
+```
+
+Fedora/RHEL:
+
+```sh
+sudo dnf makecache --refresh
+#sudo yum install epel-release
+sudo dnf -y install neofetch
+```
+
+<p align="center">
+  <img src="./images/neofetch.png">
+</p>
+
+## Bộ gõ tiếng Việt - Ibus-bamboo (ngừng phát triển)
+
+### Cài đặt cho Ubuntu
+
+```sh
+sudo add-apt-repository ppa:bamboo-engine/ibus-bamboo
+sudo apt-get update
+sudo apt-get install ibus ibus-bamboo --install-recommends
+ibus restart
+# Đặt ibus-bamboo làm bộ gõ mặc định
+env DCONF_PROFILE=ibus dconf write /desktop/ibus/general/preload-engines "['BambooUs', 'Bamboo']" && gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('ibus', 'Bamboo')]"
+```
+
+### Cài đặt từ mã nguồn
+
+Cài đặt các gói phụ thuộc:
+- make
+- golang
+- libgtk-3-dev
+- libx11-dev
+- libxtst-dev
+
+```sh
+# Debian/Ubuntu:
+sudo apt-get install make golang libx11-dev libxtst-dev libgtk-3-dev
+
+# Fedora, CentOS,...
+sudo yum install make go libX11-devel libXtst-devel gtk3-devel
+
+# openSUSE Tumbleweed
+sudo zypper install make go libX11-devel libXtst-devel gtk3-devel
+```
+
+Tải bamboo repository xuống: 
+```sh
+wget https://github.com/BambooEngine/ibus-bamboo/archive/master.zip -O ibus-bamboo.zip
+unzip ibus-bamboo.zip
+
+# hoặc clone từ github:
+git clone https://github.com/BambooEngine/ibus-bamboo.git
+```
+
+Build và cài đặt: 
+
+```sh
+cd ibus-bamboo
+sudo make install
+
+# Restart ibus
+ibus restart
+```
+
+Gỡ cài đặt
+
+```sh
+sudo make uninstall
+ibus restart
+```
+
+### Cài đặt từ OpenBuildService (khuyên dùng)
+
+[![OpenBuildService](./images/obs.png)](https://software.opensuse.org//download.html?project=home%3Alamlng&package=ibus-bamboo)
+
+### Hướng dẫn sử dụng
+
+Sau khi cài đặt xong thì restart lại ibus
+
+```sh
+ibus restart
+```
+
+Đặt ibus-bamboo làm bộ gõ mặc định cho `Ubuntu` và `Fedora`:
+- Với command:
+
+  ```sh
+  env DCONF_PROFILE=ibus dconf write /desktop/ibus/general/preload-engines "['BambooUs', 'Bamboo']" && gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('ibus', 'Bamboo')]"
+  ```
+
+- Với Gnome:
+  
+  Vào `Settings` -> `Keyboard` -> `Input Source` -> `Add Input Source`. 
+  
+  Kéo xuống cuối, chọn `More`, gõ và chọn `Vietnamese`. 
+
+  <p align="center">
+  <img src="./images/add-keyboard-layout.png">
+</p>
+
+  Chọn 1 layout muốn sử dụng rồi nhấn `Add`.
+
+  <p align="center">
+  <img src="./images/add-keyboard-layout_1.png">
+  </p>
+  
+Mặc định ,để chuyển đổi ngôn ngữ tiếng Anh và tiếng Việt cho nhau, sử dụng tổ hợp phím `Super` + `Space`.
+
+Ảnh minh họa cho cài đặt phím tắt.
+<p align="center">
+<img src="./images/add-keyboard-layout-shortcut.png">
+</p>
+
+Nguồn: https://github.com/BambooEngine/ibus-bamboo/blob/master/README.md 
 
 ## Tham khảo
 
