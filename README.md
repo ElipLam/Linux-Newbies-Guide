@@ -19,6 +19,12 @@
 - [Cửa hàng ứng dụng gói Flathub và Snap Store](#cửa-hàng-ứng-dụng-gói-flathub-và-snap-store)
   - [Flatpak](#flatpak)
   - [Snap Store](#snap-store)
+- [EasyEffects - bộ chỉnh âm thanh cho PipeWire](#easyeffects---bộ-chỉnh-âm-thanh-cho-pipewire)
+  - [Cài đặt EasyEffects trên Fedora](#cài-đặt-easyeffects-trên-fedora)
+  - [Cài đặt EasyEffects bằng Flatpak (khuyến khích)](#cài-đặt-easyeffects-bằng-flatpak-khuyến-khích)
+  - [Giới thiệu preset từ EasyEffects-Presets](#giới-thiệu-preset-từ-easyeffects-presets)
+  - [Cài đặt preset thủ công](#cài-đặt-preset-thủ-công)
+  - [Một số lưu ý khi dùng EasyEffects](#một-số-lưu-ý-khi-dùng-easyeffects)
 - [Sửa lỗi headphone microphone](#sửa-lỗi-headphone-microphone)
 - [Sửa lỗi không bật được Bluetooth](#sửa-lỗi-không-bật-được-bluetooth)
   - [Sửa lỗi thủ công bằng bash script](#sửa-lỗi-thủ-công-bằng-bash-script)
@@ -523,6 +529,133 @@ sudo snap remove <app name>
 ```
 
 Còn nếu bạn muốn xem tất cả các ứng dụng có sẵn, bạn có thể duyệt Snap Store qua trang web chính thức của Snap: https://snapcraft.io/store.
+
+## EasyEffects - bộ chỉnh âm thanh cho PipeWire
+
+<p align="center">
+  <img src="./images/com.github.wwmm.easyeffects.svg">
+</p>
+
+[EasyEffects](https://github.com/wwmm/easyeffects) là ứng dụng xử lý âm thanh mạnh mẽ cho Linux, dựa trên PipeWire. Nó cho phép bạn chỉnh equalizer, bass boost, limiter, compressor, stereo, reverb, loudness, và rất nhiều hiệu ứng khác. EasyEffects rất phù hợp với người dùng cần cải thiện chất lượng âm thanh trên laptop, loa, tai nghe hoặc muốn có nhiều preset âm thanh tùy chỉnh để nghe nhạc, xem phim hoặc gọi video tốt hơn.
+
+<p align="center">
+  <img src="./images/easyeffects-light-screenshot-1.png">
+</p>
+
+<p align="center">
+  <img src="./images/easyeffects-light-screenshot-2.png">
+</p>
+
+<p align="center">
+  <img src="./images/easyeffects-light-screenshot-3.png">
+</p>
+
+### Cài đặt EasyEffects trên Fedora
+
+Với Fedora, cách dễ nhất là cài trực tiếp qua `dnf` nếu gói có sẵn trong kho mặc định.
+
+```sh
+sudo dnf install easyeffects -y
+```
+
+Nếu muốn kiểm tra gói có trên kho trước khi cài, bạn có thể chạy:
+
+```sh
+dnf search easyeffects
+```
+
+Sau khi cài xong, khởi động ứng dụng từ menu chính ứng dụng hoặc chạy lệnh:
+
+```sh
+easyeffects
+```
+
+### Cài đặt EasyEffects bằng Flatpak (khuyến khích)
+
+Flatpak là cách khuyến khích nếu bạn muốn cài phiên bản mới nhất và dễ triển khai trên nhiều distro.
+
+Cài đặt Flatpak nếu chưa có:
+
+```sh
+sudo dnf install flatpak -y
+```
+
+Thêm kho Flathub:
+
+```sh
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+```
+
+Cài đặt EasyEffects từ Flathub:
+
+```sh
+flatpak install flathub com.github.wwmm.easyeffects
+```
+
+Chạy ứng dụng:
+
+```sh
+flatpak run com.github.wwmm.easyeffects
+```
+
+Ngoài ra, nếu bạn muốn cập nhật sau này:
+
+```sh
+flatpak update com.github.wwmm.easyeffects
+```
+
+### Giới thiệu preset từ EasyEffects-Presets
+
+Bạn có thể tìm thêm các preset sẵn có tại repo sau:
+
+- [JackHack96/EasyEffects-Presets](https://github.com/JackHack96/EasyEffects-Presets)
+
+Repo này cung cấp nhiều preset như: `Bass Enhancing + Perfect EQ`, `Dolby Atmos`, `Boosted`, `LoudnessEqualizer`, `Speaker Sync`, ... rất hữu ích để nghe nhạc, tối ưu loa laptop hoặc nâng khíchtrải nghiệm âm thanh.
+
+Cách cài đặt nhanh nhất bằng script `install.sh` (khuyến khích):
+
+```sh
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/JackHack96/EasyEffects-Presets/master/install.sh)"
+```
+
+Hoặc nếu bạn muốn clone về máy rồi chạy thủ công:
+
+```sh
+git clone https://github.com/JackHack96/EasyEffects-Presets.git
+cd EasyEffects-Presets
+./install.sh
+```
+
+### Cài đặt preset thủ công
+
+Theo hướng dẫn của repo, bạn có thể clone và copy file preset JSON vào thư mục cấu hình EasyEffects của bạn.
+
+Trên Flatpak:
+
+```sh
+~/.var/app/com.github.wwmm.easyeffects/config/easyeffects/
+```
+
+Trên cài đặt hệ thống (PPA/AUR):
+
+```sh
+~/.config/easyeffects/
+```
+
+Bạn chỉ cần copy file `.json` vào thư mục này rồi khởi động lại EasyEffects và chọn preset vừa nhập.
+
+### Một số lưu ý khi dùng EasyEffects
+
+- Không đặt thiết bị ảo của EasyEffects làm thiết bị âm thanh mặc định cho toàn bộ hệ thống.
+- Nếu âm thanh bị ì, rè, hoặc mất đầu ra, hãy kiểm tra lại `PipeWire` và `WirePlumber`.
+- Với hệ thống laptop, nên thử từng preset một để tìm mức bass/treble phù hợp với loa/tai nghe của bạn.
+- Nếu cần dùng tối ưu hơn cho nghe nhạc, hãy thử preset như `Dolby Atmos`, `Bass Enhancing + Perfect EQ`, `Boosted`.
+
+Tham khảo:
+
+- EasyEffects: https://github.com/wwmm/easyeffects
+- EasyEffects Presets: https://github.com/JackHack96/EasyEffects-Presets
+- Flathub: https://flathub.org/apps/com.github.wwmm.easyeffects
 
 ## Sửa lỗi headphone microphone
 
@@ -1251,7 +1384,7 @@ Sửa lỗi : configure: error: Package requirements (gstreamer-1.0 >= 1.4) were
 sudo dnf install -y gstreamer1-devel gstreamer1-plugins-base-tools gstreamer1-doc gstreamer1-plugins-base-devel gstreamer1-plugins-good gstreamer1-plugins-good-extras gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-free-devel gstreamer1-plugins-bad-free-extras
 ```
 
-Tham khảo tại [đây](https://gstreamer.freedesktop.org/documentation/installing/on-linux.html?gi-language=c)
+Tham khảo tại [đây](https://gstreamer.freedesktop.org/documentation/installing/on-linux.html?gi-language=c).
 
 Lỗi: Package requirements (appindicator3-0.1 >= 0.3) were not met: - chưa sửa được.
 
@@ -1396,7 +1529,7 @@ sudo dnf makecache
 
 RPM Fusion có một nhánh thử nghiệm chứa hầu hết các gói chuỗi trình điều khiển NVIDIA phát hành mới hoặc các gói beta. Điều này có thể hữu ích cho những người muốn cài đặt trình điều khiển NVIDIA hiện đại.
 
-Tham khảo tại [đây](https://www.linuxcapable.com/how-to-install-nvidia-drivers-on-almalinux-9/#Optional_-_Enable_RPM_Fusion_TESTING_Branch)
+Tham khảo tại [đây](https://www.linuxcapable.com/how-to-install-nvidia-drivers-on-almalinux-9/#Optional_-_Enable_RPM_Fusion_TESTING_Branch).
 
 ### Cài đặt NVIDIA Drivers
 
