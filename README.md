@@ -29,10 +29,12 @@
 - [Sửa lỗi không bật được Bluetooth](#sửa-lỗi-không-bật-được-bluetooth)
   - [Sửa lỗi thủ công bằng bash script](#sửa-lỗi-thủ-công-bằng-bash-script)
 - [Sửa lỗi Suspend không hoạt động](#sửa-lỗi-suspend-không-hoạt-động)
-- [Cài đặt zsh](#cài-đặt-zsh)
-- [Cài đặt oh-my-zsh](#cài-đặt-oh-my-zsh)
-- [Cài đặt zsh autosuggestions](#cài-đặt-zsh-autosuggestions)
-- [Theme Power10k cho zsh shell](#theme-power10k-cho-zsh-shell)
+- [Tiện ích mở rộng cho Bash (đề xuất)](#tiện-ích-mở-rộng-cho-bash-đề-xuất)
+- [Cài đặt zsh (phương pháp cũ)](#cài-đặt-zsh-phương-pháp-cũ)
+  - [Cài đặt oh-my-zsh](#cài-đặt-oh-my-zsh)
+  - [Cài đặt zsh autosuggestions](#cài-đặt-zsh-autosuggestions)
+  - [Theme Power10k cho zsh shell](#theme-power10k-cho-zsh-shell)
+  - [Gỡ Zsh và cấu hình cũ](#gỡ-zsh-và-cấu-hình-cũ)
 - [CopyQ - Quản lý bảng nhớ tạm](#copyq---quản-lý-bảng-nhớ-tạm)
 - [Bộ gõ tiếng Việt - Fcitx5 Lotus](#bộ-gõ-tiếng-việt---fcitx5-lotus)
 - [Cài đặt fastfetch](#cài-đặt-fastfetch)
@@ -844,7 +846,27 @@ Bật lại suspend:
 sudo systemctl unmask suspend.target
 ```
 
-## Cài đặt zsh
+## Tiện ích mở rộng cho Bash (đề xuất)
+
+Bash thường đã có sẵn trên Linux; script chỉ cài các tiện ích mở rộng và cấu hình Bash tự nạp chúng:
+
+- [`ble.sh`](https://github.com/akinomyoga/ble.sh): trình biên tập dòng lệnh cho Bash, bổ sung tô màu cú pháp, gợi ý lệnh và hoàn thành tương tác.
+- [`bash-completion`](https://github.com/scop/bash-completion): bổ sung hoàn thành lệnh theo ngữ cảnh cho nhiều lệnh và ứng dụng phổ biến.
+- [Starship](https://starship.rs/): prompt đa shell, có thể tùy chỉnh và hiển thị thông tin hữu ích như thư mục hiện tại, Git branch và trạng thái dự án.
+
+**Lưu ý về font:** Starship cần Nerd Font được cài đặt và chọn trong thiết lập của terminal để hiển thị đầy đủ biểu tượng. Có thể dùng [FiraCode Nerd Font](https://www.nerdfonts.com/font-downloads). Nếu chưa chọn Nerd Font, prompt vẫn hoạt động nhưng một số biểu tượng có thể bị lỗi hoặc hiện thành ô vuông.
+
+Script hỗ trợ Debian/Ubuntu và Fedora/RHEL.
+
+Chạy một lệnh:
+
+```sh
+bash ./install_Bash_extensions.sh
+```
+
+Script kiểm tra Bash có sẵn trước khi cài tiện ích, cần Internet và `sudo`; nó tự kiểm tra shell mặc định, chuyển sang Bash nếu cần và báo lỗi nếu không xác nhận được. Sau khi chạy xong, đăng xuất rồi đăng nhập lại để bắt đầu phiên Bash.
+
+## Cài đặt zsh (phương pháp cũ)
 
 > Zsh is a shell designed for interactive use, although it is also a powerful scripting language. Many of the useful features of bash, ksh, and tcsh were incorporated into zsh; many original features were added.
 
@@ -887,7 +909,7 @@ chmod +x ./install_OhMyZsh.sh
 
 Sau đó **Logout** rồi đăng nhập lại.
 
-## Cài đặt oh-my-zsh
+### Cài đặt oh-my-zsh
 
 Oh-my-zsh hiểu đơn giản là một framework giúp bạn quản lý các thiết lập của zsh một cách dễ dàng. oh-my-zsh hiện đang cung cấp hơn 200 plugins và hơn 140 themes được phát triển từ cộng đồng.
 
@@ -895,7 +917,7 @@ Oh-my-zsh hiểu đơn giản là một framework giúp bạn quản lý các th
 sudo curl -L http://install.ohmyz.sh | sh
 ```
 
-## Cài đặt zsh autosuggestions
+### Cài đặt zsh autosuggestions
 
 Cài đặt plugin **zsh-autosuggestions**, giúp tự động **suggetions** các lệnh mà mình đã dùng:
 
@@ -924,7 +946,7 @@ source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 Tham khảo: https://viblo.asia/p/cach-cai-dat-zsh-va-zsh-autosuggestions-tren-ubuntu-LzD5ddDO5jY
 
-## Theme Power10k cho zsh shell
+### Theme Power10k cho zsh shell
 
 Powerlevel10k là theme cho Zsh. Nó nhấn mạnh vào [tốc độ](https://github.com/romkatv/powerlevel10k#uncompromising-performance), [tính linh hoạt](https://github.com/romkatv/powerlevel10k#extremely-customizable) và [trải nghiệm vượt trội](https://github.com/romkatv/powerlevel10k#configuration-wizard).
 
@@ -953,6 +975,22 @@ Dưới đây là [giao diện của mình](.p10k.zsh) đã tùy chỉnh.
 </p>
 
 Tham khảo: https://github.com/romkatv/powerlevel10k#configuration
+
+### Gỡ Zsh và cấu hình cũ
+
+Trước khi gỡ Zsh, hãy chuyển shell mặc định sang một shell khác đã cài đặt. Ví dụ, để chuyển sang Bash:
+
+```sh
+chsh -s "$(command -v bash)"
+```
+
+Đăng xuất rồi đăng nhập lại để phiên hiện tại cũng dùng shell mới. Sau đó chạy lệnh sau để sao lưu cấu hình Zsh/Oh My Zsh/Powerlevel10k và gỡ gói Zsh:
+
+```sh
+bash ./remove_Zsh.sh
+```
+
+Script chỉ tiếp tục khi shell đăng nhập và phiên hiện tại đều không còn là Zsh. Cấu hình cũ được giữ trong `~/.local/share/zsh-migration-backups/`.
 
 ## CopyQ - Quản lý bảng nhớ tạm
 
