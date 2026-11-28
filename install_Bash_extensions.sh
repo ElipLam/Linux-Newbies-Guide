@@ -23,16 +23,37 @@ distro_like=$(awk -F= '$1 == "ID_LIKE" {gsub(/"/, "", $2); print $2; exit}' /etc
 case " $distro_id $distro_like " in
   *" debian "*|*" ubuntu "*|*" linuxmint "*|*" pop "*)
     sudo apt-get update
-    sudo apt-get install -y bash-completion git make gawk curl
+    sudo apt-get install -y bash-completion git make gawk curl fontconfig
     ;;
   *" fedora "*|*" rhel "*|*" rocky "*|*" almalinux "*|*" centos "*|*" nobara "*)
-    sudo dnf install -y bash-completion git make gawk curl
+    sudo dnf install -y bash-completion git make gawk curl fontconfig
     ;;
   *)
     printf '%s\n' "Automatic setup is not supported on this distro. Supported: Debian/Ubuntu and Fedora/RHEL." >&2
     exit 1
     ;;
 esac
+
+install_fonts() {
+  local font_dir="/usr/share/fonts/JetBrainsMono"
+  local font_url_base="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/JetBrainsMono/Ligatures"
+
+  printf '%s\n' "Installing JetBrainsMono Nerd Font..."
+  sudo mkdir -p "$font_dir"
+  for font in "JetBrainsMonoNerdFont-Regular.ttf" "JetBrainsMonoNerdFont-Bold.ttf" \
+              "JetBrainsMonoNerdFont-Italic.ttf" "JetBrainsMonoNerdFont-BoldItalic.ttf"; do
+    if [[ ! -f "$font_dir/$font" ]]; then
+      printf '%s\n' "Downloading $font..."
+      sudo curl -fsSL "$font_url_base/$font" -o "$font_dir/$font"
+    else
+      printf '%s\n' "$font already exists, skipping..."
+    fi
+  done
+
+  sudo fc-cache -f "$font_dir"
+}
+
+install_fonts
 
 bash_realpath=$(readlink -f "$bash_path")
 is_bash_path() {
@@ -77,6 +98,9 @@ if [[ $- == *i* ]]; then
   elif [[ -r /etc/profile.d/bash_completion.sh ]]; then
     source /etc/profile.d/bash_completion.sh
   fi
+  if ! declare -F command_not_found_handle >/dev/null 2>&1 && [[ -r /etc/profile.d/PackageKit.sh ]]; then
+    source /etc/profile.d/PackageKit.sh
+  fi
   source -- "$HOME/.local/share/blesh/ble.sh" --attach=none
 fi
 # <<< linux-newbies-guide bash stack: early setup <<<
@@ -118,4 +142,4 @@ if ! is_bash_path "$current_shell"; then
 fi
 
 printf '%s\n' "Bash is verified as the default shell. Log out and back in to start a new Bash session."
-printf '%s\n' "For Starship symbols, install and select a Nerd Font (e.g. FiraCode Nerd Font) in your terminal settings."
+printf '%s\n' "JetBrainsMono Nerd Font is installed. Select it in your terminal settings for Starship symbols."
