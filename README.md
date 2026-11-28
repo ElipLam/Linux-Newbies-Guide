@@ -46,6 +46,7 @@
 - [Cài đặt phím tắt](#cài-đặt-phím-tắt)
   - [Phím tắt mở Terminal mới](#phím-tắt-mở-terminal-mới)
   - [Phím tắt đến Desktop](#phím-tắt-đến-desktop)
+  - [Chỉnh fnmode cho driver hid_apple](#chỉnh-fnmode-cho-driver-hid_apple)
 - [Gnome extentions](#gnome-extentions)
 - [GNOME Tweaks](#gnome-tweaks)
 - [Themes](#themes)
@@ -1502,6 +1503,40 @@ Câu lệnh:
 ```sh
 wmctrl -k on
 ```
+
+### Chỉnh fnmode cho driver hid_apple
+
+Trên Nobara Linux (dựa trên Fedora), nếu các phím `F1`-`F12` không hoạt động như phím
+chức năng chuẩn, chẳng hạn chỉ chỉnh âm lượng/độ sáng hoặc không nhận phím, và tổ hợp
+`Fn` + `Esc` không đổi được, hãy thử các cách sau.
+
+Một số bàn phím bị Linux nhận diện qua module `hid_apple` nên ưu tiên phím media thay vì
+phím `F1`-`F12`. Có thể thử thay đổi nhanh trong Terminal:
+
+```bash
+echo 2 | sudo tee /sys/module/hid_apple/parameters/fnmode
+```
+
+Các giá trị có thể dùng:
+
+- `2`: ưu tiên phím `F1`-`F12` mặc định; nhấn kèm `Fn` để dùng phím media.
+- `1`: ưu tiên phím media mặc định.
+- `0`: tắt xử lý `Fn` của module này.
+
+Nếu thiết lập có hiệu quả và muốn giữ sau khi khởi động lại trên Nobara/Fedora, tạo file
+cấu hình module rồi tái tạo initramfs:
+
+```bash
+echo "options hid_apple fnmode=2" | sudo tee /etc/modprobe.d/hid_apple.conf
+sudo dracut --regenerate-all --force
+```
+
+> Lưu ý: lệnh `dracut --regenerate-all --force` có thể mất vài phút vì đang tái tạo
+> `initramfs` cho tất cả kernel đã cài đặt. Không nhấn `Ctrl+C` trong quá trình này.
+
+Khởi động lại máy để áp dụng cấu hình. Cách này chỉ áp dụng khi module `hid_apple` đang
+được sử dụng; nếu đường dẫn `/sys/module/hid_apple` không tồn tại thì bàn phím đang dùng
+driver khác.
 
 Tham khảo: 
 
