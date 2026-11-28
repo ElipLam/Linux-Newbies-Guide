@@ -47,6 +47,7 @@
   - [Phím tắt mở Terminal mới](#phím-tắt-mở-terminal-mới)
   - [Phím tắt đến Desktop](#phím-tắt-đến-desktop)
   - [Chỉnh fnmode cho driver hid_apple](#chỉnh-fnmode-cho-driver-hid_apple)
+- [Mở thư mục bằng Visual Studio Code từ menu chuột phải](#mở-thư-mục-bằng-visual-studio-code-từ-menu-chuột-phải)
 - [Gnome extentions](#gnome-extentions)
 - [GNOME Tweaks](#gnome-tweaks)
 - [Themes](#themes)
@@ -1577,6 +1578,89 @@ Tham khảo:
 
 https://www.redhat.com/sysadmin/linux-terminal-window
 https://askubuntu.com/questions/97219/how-to-show-desktop-from-command-line 
+
+## Mở thư mục bằng Visual Studio Code từ menu chuột phải
+
+### Nobara KDE Plasma (Dolphin)
+
+Trong Dolphin, mở **Menu** (biểu tượng ba gạch) -> **Configure** -> **Configure Dolphin**
+-> **Context Menu**. Nếu có mục **Open with Visual Studio Code**, tích chọn rồi bấm **OK**.
+
+Nếu mục này chưa có, thêm một KIO service menu bằng Terminal:
+
+```bash
+icon_dir="$HOME/.local/share/icons"
+icon_path="$icon_dir/visual-studio-code.png"
+mkdir -p "$icon_dir"
+curl -fsSL \
+  https://code.visualstudio.com/assets/branding/code-stable.png \
+  -o "$icon_path"
+
+mkdir -p ~/.local/share/kio/servicemenus
+cat <<EOF > ~/.local/share/kio/servicemenus/vscode.desktop
+[Desktop Entry]
+Type=Service
+MimeType=inode/directory;
+Actions=openInVSCode
+X-KDE-Priority=TopLevel
+
+[Desktop Action openInVSCode]
+Name=Open with VS Code
+Icon=$icon_path
+Exec=code "%f"
+EOF
+chmod +x ~/.local/share/kio/servicemenus/vscode.desktop
+kbuildsycoca6 --noincremental
+```
+
+Đóng rồi mở lại Dolphin. Tùy phiên bản, mục này có thể nằm trực tiếp trong menu chuột phải
+hoặc bên trong **Actions**.
+
+Lệnh trên tự tải logo VS Code từ trang branding chính thức vào `~/.local/share/icons` và
+gán đường dẫn tuyệt đối cho action. `X-KDE-Priority=TopLevel`
+giúp đưa mục này lên menu chuột phải chính thay vì ẩn trong **Actions**.
+
+`Icon=` chỉ thêm biểu tượng VS Code bên cạnh action, không thay đổi màu hoặc biểu tượng
+của thư mục. Nếu icon không hiện do theme chưa có tên `com.visualstudio.code`, tìm icon
+đã cài trên hệ thống:
+
+```bash
+find /usr/share/icons /usr/share/pixmaps ~/.local/share/icons \
+  -iname '*visual*studio*code*' -o -iname '*visual*code*' 2>/dev/null
+```
+
+Sau đó thay giá trị `Icon=` bằng đường dẫn tuyệt đối tìm được, ví dụ:
+
+```ini
+Icon=/usr/share/pixmaps/com.visualstudio.code.png
+```
+
+KIO service menu không hỗ trợ một khóa phím tắt chung đáng tin cậy trong file `.desktop`.
+Sau khi action xuất hiện, mở **Dolphin** -> **Settings** -> **Configure Keyboard Shortcuts**
+và tìm `Open with VS Code` để gán phím tắt nếu phiên bản Dolphin đang dùng cho phép. Nếu
+action không xuất hiện trong danh sách shortcut, có thể dùng menu chuột phải hoặc tạo một
+Custom Shortcut của KDE gọi `code` riêng.
+
+### Nobara GNOME (Files/Nautilus)
+
+Tạo một script trong thư mục Scripts của Nautilus:
+
+```bash
+mkdir -p ~/.local/share/nautilus/scripts
+cat <<'EOF' > ~/.local/share/nautilus/scripts/Open\ in\ VS\ Code
+#!/usr/bin/env bash
+code "$@"
+EOF
+chmod +x ~/.local/share/nautilus/scripts/Open\ in\ VS\ Code
+```
+
+Khi chuột phải vào thư mục, chọn **Scripts** -> **Open in VS Code**.
+
+Nếu VS Code được cài bằng Flatpak thay vì gói RPM, thay `code "$@"` bằng:
+
+```bash
+flatpak run com.visualstudio.code "$@"
+```
 
 ## Gnome extentions
 
