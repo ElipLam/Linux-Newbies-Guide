@@ -75,6 +75,22 @@ git clone --recursive --depth 1 --shallow-submodules \
   https://github.com/akinomyoga/ble.sh.git "$temp_dir/ble.sh"
 make -C "$temp_dir/ble.sh" install PREFIX="$HOME/.local"
 
+blerc="$HOME/.blerc"
+if ! grep -Fq '# >>> linux-newbies-guide ble emacs keymap >>>' "$blerc" 2>/dev/null; then
+  cat <<'EOF' >> "$blerc"
+
+# >>> linux-newbies-guide ble emacs keymap >>>
+function blerc/emacs-load-hook {
+  ble-bind -f 'C-m' 'accept-line'
+  ble-bind -f 'RET' 'accept-line'
+  ble-bind -f 'M-RET' 'newline'
+  ble-bind -f 'M-C-m' 'newline'
+}
+blehook/eval-after-load keymap_emacs blerc/emacs-load-hook
+# <<< linux-newbies-guide ble emacs keymap <<<
+EOF
+fi
+
 mkdir -p "$HOME/.local/bin"
 curl -fsSL https://starship.rs/install.sh -o "$temp_dir/starship-install.sh"
 sh "$temp_dir/starship-install.sh" -y -b "$HOME/.local/bin"

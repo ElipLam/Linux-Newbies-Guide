@@ -989,7 +989,11 @@ Script kiểm tra Bash có sẵn trước khi cài tiện ích, cần Internet v
 
 ### Sử dụng chế độ multiline của ble.sh
 
-Khi dán hoặc nhập nhiều dòng lệnh, `ble.sh` có thể hiển thị:
+Bạn hoàn toàn có thể cấu hình `ble.sh` để phím `Enter` chạy lệnh ngay cả khi ở chế độ
+multiline, giống Bash mặc định. Điều này giúp không phải dùng `Ctrl+J`, vốn có thể bị
+trùng với phím tắt đóng/mở Panel của VS Code.
+
+Mặc định, khi dán lệnh nhiều dòng hoặc gõ thiếu ngoặc, `ble.sh` chuyển sang chế độ:
 
 ```text
 -- MULTILINE --
@@ -1005,6 +1009,37 @@ Các phím điều khiển:
 Trong terminal tích hợp của VS Code, `Ctrl+J` có thể bị một phím tắt của VS Code giữ lại. Để kiểm tra, mở **Keyboard Shortcuts** (`Ctrl+K`, rồi `Ctrl+S`), tìm `Ctrl+J` và xem lệnh nào đang dùng phím này. Có thể thay đổi hoặc xóa phím tắt gây xung đột tại đó.
 
 Nếu chưa chạy được multiline, nhấn `Ctrl+C` để hủy nội dung đang nhập. Sau đó nhập từng lệnh trên một dòng và nhấn `Enter` để chạy, chờ lệnh hoàn tất trước khi nhập lệnh tiếp theo.
+
+**Đổi Enter thành chạy lệnh luôn trong ble.sh**
+
+Mở hoặc tạo file `~/.blerc` rồi thêm đoạn sau để biến phím `Enter` (`RET`/`C-m`) thành
+phím thực thi lệnh. Các phím `Alt+Enter` được gán để xuống dòng thủ công khi cần:
+
+`install_Bash_extensions.sh` tự động thêm cấu hình này một lần. Nếu cấu hình đã có marker
+của script, các lần chạy sau sẽ bỏ qua và không ghi đè `~/.blerc`.
+
+```bash
+# Nếu dùng chế độ gõ mặc định (Emacs mode)
+function blerc/emacs-load-hook {
+  # Bấm Enter luôn chạy lệnh kể cả ở chế độ multiline
+  ble-bind -f 'C-m' 'accept-line'
+  ble-bind -f 'RET' 'accept-line'
+
+  # (Tùy chọn) Dùng Alt + Enter để xuống dòng khi cần
+  ble-bind -f 'M-RET' 'newline'
+  ble-bind -f 'M-C-m' 'newline'
+}
+blehook/eval-after-load keymap_emacs blerc/emacs-load-hook
+```
+
+Nếu dùng Vi mode trong `ble.sh`, thay `keymap_emacs` bằng `keymap_vi` và thêm `-m vi_imap`
+vào các lệnh `ble-bind`.
+
+Sau khi lưu `~/.blerc`, áp dụng ngay hoặc mở terminal Bash mới:
+
+```bash
+source ~/.blerc
+```
 
 ## Cài đặt zsh (phương pháp cũ)
 
