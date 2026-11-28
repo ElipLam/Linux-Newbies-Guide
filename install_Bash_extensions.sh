@@ -17,12 +17,15 @@ if [[ -z "$bash_path" ]]; then
   exit 1
 fi
 
-case "$(awk -F= '$1 == "ID" {gsub(/"/, "", $2); print $2; exit}' /etc/os-release)" in
-  debian|ubuntu|linuxmint|pop)
+distro_id=$(awk -F= '$1 == "ID" {gsub(/"/, "", $2); print $2; exit}' /etc/os-release)
+distro_like=$(awk -F= '$1 == "ID_LIKE" {gsub(/"/, "", $2); print $2; exit}' /etc/os-release)
+
+case " $distro_id $distro_like " in
+  *" debian "*|*" ubuntu "*|*" linuxmint "*|*" pop "*)
     sudo apt-get update
     sudo apt-get install -y bash-completion git make gawk curl
     ;;
-  fedora|rhel|rocky|almalinux|centos)
+  *" fedora "*|*" rhel "*|*" rocky "*|*" almalinux "*|*" centos "*|*" nobara "*)
     sudo dnf install -y bash-completion git make gawk curl
     ;;
   *)
