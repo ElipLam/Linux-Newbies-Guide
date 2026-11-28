@@ -1649,9 +1649,25 @@ và tìm `Open with VS Code` để gán phím tắt nếu phiên bản Dolphin �
 action không xuất hiện trong danh sách shortcut, có thể dùng menu chuột phải hoặc tạo một
 Custom Shortcut của KDE gọi `code` riêng.
 
-### Nobara GNOME (Files/Nautilus)
+**Gỡ mục VS Code khỏi Dolphin:**
 
-Tạo một script trong thư mục Scripts của Nautilus:
+Để xóa mục **Open with VS Code** đã tạo ở trên khỏi menu chuột phải của Dolphin:
+
+```bash
+rm -f "$HOME/.local/share/kio/servicemenus/vscode.desktop"
+rm -f "$HOME/.local/share/icons/visual-studio-code.png"
+if command -v kbuildsycoca6 >/dev/null 2>&1; then
+  kbuildsycoca6 --noincremental
+elif command -v kbuildsycoca5 >/dev/null 2>&1; then
+  kbuildsycoca5 --noincremental
+fi
+```
+
+Đóng rồi mở lại Dolphin để cập nhật menu.
+
+### Fedora/Nobara GNOME (Files/Nautilus)
+
+Để mở thư mục bằng VS Code từ menu chuột phải, tạo Nautilus Script:
 
 ```bash
 mkdir -p ~/.local/share/nautilus/scripts
@@ -1662,13 +1678,25 @@ EOF
 chmod +x ~/.local/share/nautilus/scripts/Open\ in\ VS\ Code
 ```
 
-Khi chuột phải vào thư mục, chọn **Scripts** -> **Open in VS Code**.
-
 Nếu VS Code được cài bằng Flatpak thay vì gói RPM, thay `code "$@"` bằng:
 
 ```bash
 flatpak run com.visualstudio.code "$@"
 ```
+
+Khi chuột phải vào thư mục, chọn **Scripts -> Open in VS Code**.
+
+**Gỡ Nautilus Script:**
+
+Để xóa mục **Open in VS Code** khỏi menu **Scripts**:
+
+```bash
+rm -f "$HOME/.local/share/nautilus/scripts/Open in VS Code"
+rmdir --ignore-fail-on-non-empty "$HOME/.local/share/nautilus/scripts" 2>/dev/null || true
+nautilus -q 2>/dev/null || true
+```
+
+Đóng rồi mở lại Files/Nautilus để cập nhật menu.
 
 ## Gnome extentions
 
