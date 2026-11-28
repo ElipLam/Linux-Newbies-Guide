@@ -1592,9 +1592,16 @@ Nếu mục này chưa có, thêm một KIO service menu bằng Terminal:
 icon_dir="$HOME/.local/share/icons"
 icon_path="$icon_dir/visual-studio-code.png"
 mkdir -p "$icon_dir"
-curl -fsSL \
-  https://code.visualstudio.com/assets/branding/code-stable.png \
-  -o "$icon_path"
+if ! curl -fsSL \
+    https://code.visualstudio.com/assets/branding/code-stable.png \
+    -o "$icon_path"; then
+  if [ -f ./images/visual-studio-code.png ]; then
+    cp ./images/visual-studio-code.png "$icon_path"
+  else
+    printf '%s\n' "Could not download VS Code icon and local fallback is missing." >&2
+    exit 1
+  fi
+fi
 
 mkdir -p ~/.local/share/kio/servicemenus
 cat <<EOF > ~/.local/share/kio/servicemenus/vscode.desktop
@@ -1616,8 +1623,9 @@ kbuildsycoca6 --noincremental
 Đóng rồi mở lại Dolphin. Tùy phiên bản, mục này có thể nằm trực tiếp trong menu chuột phải
 hoặc bên trong **Actions**.
 
-Lệnh trên tự tải logo VS Code từ trang branding chính thức vào `~/.local/share/icons` và
-gán đường dẫn tuyệt đối cho action. `X-KDE-Priority=TopLevel`
+Lệnh trên tự tải logo VS Code từ trang branding chính thức vào `~/.local/share/icons`.
+Nếu tải thất bại, nó dùng ảnh dự phòng `images/visual-studio-code.png` trong repository.
+Sau đó ảnh được gán bằng đường dẫn tuyệt đối cho action. `X-KDE-Priority=TopLevel`
 giúp đưa mục này lên menu chuột phải chính thay vì ẩn trong **Actions**.
 
 `Icon=` chỉ thêm biểu tượng VS Code bên cạnh action, không thay đổi màu hoặc biểu tượng
