@@ -209,6 +209,24 @@ Khi có nhiều gói có thể cung cấp cùng một lệnh, có thể yêu c�
 MultipleInstall=ask
 ```
 
+Có thể cập nhật chính xác hai khóa bằng `sed` thay vì sửa thủ công. Lệnh dưới đây chỉ thay
+đổi các dòng bắt đầu bằng đúng tên khóa, đồng thời tạo bản sao lưu trước khi chỉnh sửa:
+
+```sh
+config=/etc/PackageKit/CommandNotFound.conf
+sudo cp -a "$config" "$config.backup-$(date +%Y%m%d-%H%M%S)"
+sudo sed -i -E \
+  -e 's/^[[:space:]]*SingleInstall[[:space:]]*=.*/SingleInstall=ask/' \
+  -e 's/^[[:space:]]*MultipleInstall[[:space:]]*=.*/MultipleInstall=ask/' \
+  "$config"
+```
+
+Xác minh giá trị thực tế sau khi chạy:
+
+```sh
+grep -E '^[[:space:]]*(SingleInstall|MultipleInstall)[[:space:]]*=' "$config"
+```
+
 Sau đó cập nhật metadata và khởi động lại terminal:
 
 ```sh
