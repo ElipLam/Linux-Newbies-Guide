@@ -6,6 +6,7 @@
   - [Kiểm tra phiên bản của distro](#kiểm-tra-phiên-bản-của-distro)
   - [Kiểm tra Display Server](#kiểm-tra-display-server)
   - [Kiểm tra các gói đã cài đặt](#kiểm-tra-các-gói-đã-cài-đặt)
+  - [Bật gợi ý lệnh command-not-found](#bật-gợi-ý-lệnh-command-not-found)
 - [Thao tác với kho lưu trữ (repositories)](#thao-tác-với-kho-lưu-trữ-repositories)
   - [Thêm repositories](#thêm-repositories)
   - [Kích hoạt repositories](#kích-hoạt-repositories)
@@ -134,6 +135,107 @@ sudo dnf list installed
 # or
 # sudo dnf list
 # sudo dnf list installed | grep <package name>
+```
+
+### Bật gợi ý lệnh command-not-found
+
+Nếu terminal không gợi ý gói cần cài khi bạn nhập sai hoặc nhập một lệnh chưa có, hệ điều hành có thể đang thiếu gói `command-not-found` hoặc cơ sở dữ liệu đi kèm chưa được kích hoạt/cập nhật.
+
+Trên Fedora, tính năng này được cung cấp bởi gói `PackageKit-command-not-found`. Các distro khác có thể không cài sẵn hoặc tắt mặc định tính năng này để tiết kiệm tài nguyên.
+
+#### Ubuntu/Debian
+
+```sh
+sudo apt update
+sudo apt install command-not-found
+sudo update-command-not-found
+```
+
+Khởi động lại terminal sau khi cài đặt.
+
+#### Arch Linux
+
+Cài đặt `pkgfile` và đồng bộ cơ sở dữ liệu:
+
+```sh
+sudo pacman -S pkgfile
+sudo pkgfile --update
+```
+
+Thêm dòng sau vào cuối `~/.bashrc` nếu dùng Bash hoặc `~/.zshrc` nếu dùng Zsh:
+
+```sh
+source /usr/share/doc/pkgfile/command-not-found.bash
+```
+
+Sau đó tải lại cấu hình shell:
+
+```sh
+source ~/.bashrc  # Bash
+source ~/.zshrc   # Zsh
+```
+
+#### Fedora/RHEL
+
+Nếu đang dùng bản minimal hoặc container và tính năng còn thiếu:
+
+```sh
+sudo dnf install PackageKit-command-not-found
+```
+
+##### Không xuất hiện câu hỏi cài đặt `[N/y]`
+
+Nếu terminal chỉ in ra gợi ý tên gói nhưng không hỏi `Install package ...? [N/y]`, có thể do một trong các nguyên nhân sau:
+
+- Tùy chọn hỏi cài đặt bị tắt trong cấu hình PackageKit.
+- `ble.sh` can thiệp vào luồng nhập/xuất tương tác của Bash.
+- Cơ sở dữ liệu PackageKit chưa được đồng bộ đầy đủ.
+
+Kiểm tra file cấu hình:
+
+```sh
+sudo nano /etc/PackageKit/CommandNotFound.conf
+```
+
+Để PackageKit hỏi trước khi cài một gói duy nhất, đặt tùy chọn sau:
+
+```ini
+SingleInstall=ask
+```
+
+Khi có nhiều gói có thể cung cấp cùng một lệnh, có thể yêu cầu hỏi người dùng bằng:
+
+```ini
+MultipleInstall=ask
+```
+
+Sau đó cập nhật metadata và khởi động lại terminal:
+
+```sh
+sudo dnf makecache
+sudo pkcon refresh force
+```
+
+Kiểm tra Bash có đang nạp hook hay không:
+
+```sh
+declare -F command_not_found_handle
+```
+
+Nếu đang dùng `ble.sh`, hãy thử mở một terminal Bash sạch để kiểm tra:
+
+```sh
+bash --noprofile --norc
+```
+
+Trong terminal sạch, nhập lại một lệnh không tồn tại. Nếu prompt `[N/y]` xuất hiện ở đó nhưng không xuất hiện trong terminal thông thường, nguyên nhân nhiều khả năng là cấu hình hoặc hook của `ble.sh`. Có thể tạm thời bỏ dòng nạp `ble.sh` trong `~/.bashrc`, mở terminal mới và kiểm tra lại.
+
+#### macOS (Zsh)
+
+macOS không tích hợp sẵn cơ sở dữ liệu này. Có thể cài thông qua Homebrew:
+
+```sh
+brew tap homebrew/command-not-found
 ```
 
 ## Thao tác với kho lưu trữ (repositories)
@@ -866,6 +968,25 @@ bash ./install_Bash_extensions.sh
 
 Script kiểm tra Bash có sẵn trước khi cài tiện ích, cần Internet và `sudo`; nó tự kiểm tra shell mặc định, chuyển sang Bash nếu cần và báo lỗi nếu không xác nhận được. Sau khi chạy xong, đăng xuất rồi đăng nhập lại để bắt đầu phiên Bash.
 
+### Sử dụng chế độ multiline của ble.sh
+
+Khi dán hoặc nhập nhiều dòng lệnh, `ble.sh` có thể hiển thị:
+
+```text
+-- MULTILINE --
+(RET or C-m: insert a newline, C-j: run)
+```
+
+Các phím điều khiển:
+
+- `Enter` hoặc `Ctrl+M`: thêm dòng mới.
+- `Ctrl+J`: chạy toàn bộ nội dung multiline.
+- `Ctrl+C`: hủy nội dung đang nhập.
+
+Trong terminal tích hợp của VS Code, `Ctrl+J` có thể bị một phím tắt của VS Code giữ lại. Để kiểm tra, mở **Keyboard Shortcuts** (`Ctrl+K`, rồi `Ctrl+S`), tìm `Ctrl+J` và xem lệnh nào đang dùng phím này. Có thể thay đổi hoặc xóa phím tắt gây xung đột tại đó.
+
+Nếu chưa chạy được multiline, nhấn `Ctrl+C` để hủy nội dung đang nhập. Sau đó nhập từng lệnh trên một dòng và nhấn `Enter` để chạy, chờ lệnh hoàn tất trước khi nhập lệnh tiếp theo.
+
 ## Cài đặt zsh (phương pháp cũ)
 
 > Zsh is a shell designed for interactive use, although it is also a powerful scripting language. Many of the useful features of bash, ksh, and tcsh were incorporated into zsh; many original features were added.
@@ -1026,10 +1147,17 @@ Tài liệu gốc: https://lotusinputmethod.github.io/#installation
 Với Fedora GNOME, ta cài trực tiếp qua `dnf`:
 
 ```sh
-RELEASEVER=$(grep '^VERSION_ID=' /etc/os-release | cut -d'=' -f2)
 sudo rpm --import https://fcitx5-lotus.pages.dev/pubkey.gpg
-sudo dnf config-manager addrepo --from-repofile=https://fcitx5-lotus.pages.dev/rpm/fedora/fcitx5-lotus-$RELEASEVER.repo
+sudo dnf config-manager addrepo --from-repofile=https://fcitx5-lotus.pages.dev/rpm/fedora/fcitx5-lotus.repo
 sudo dnf install fcitx5-lotus
+```
+
+Tải lại udev rules và nạp module `uinput` để server có thể tạo thiết bị input ảo:
+
+```sh
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+sudo modprobe uinput
 ```
 
 Nếu muốn kiểm tra gói có tồn tại trên kho, bạn có thể chạy:
@@ -1067,17 +1195,19 @@ Nếu máy bạn đang dùng `IBus`, nên tắt trước khi chuyển sang `Fcit
 killall ibus-daemon || ibus exit
 ```
 
-Nếu không dùng đến IBus nữa, có thể gỡ bỏ nó:
+Tắt autostart của IBus nếu có. Nếu muốn gỡ IBus, hãy kiểm tra danh sách gói phụ thuộc mà DNF dự định gỡ trước khi xác nhận.
 
 ```sh
 sudo dnf remove -y ibus
 ```
 
-4) Thiết lập biến môi trường cho bash và zsh.
+4) Thiết lập biến môi trường cho Bash và Zsh trên Wayland.
 
-Để bộ gõ hoạt động tốt với GTK, Qt và các ứng dụng trên GNOME Wayland, thêm các biến môi trường sau vào shell cấu hình của bạn.
+Thêm các biến môi trường sau vào shell đăng nhập. Trên Wayland, một số ứng dụng có thể cần cấu hình input method riêng; các biến trong shell không nhất thiết được áp dụng cho ứng dụng mở từ menu đồ họa.
 
-Cho `bash`:
+Chọn cấu hình phù hợp với môi trường desktop và shell đang dùng. Chỉ chạy một trong các đoạn sau; chạy lại sẽ thêm nội dung trùng lặp vào file.
+
+**GNOME, Bash:**
 
 ```sh
 cat <<EOF >> ~/.bash_profile
@@ -1088,7 +1218,7 @@ export GLFW_IM_MODULE=ibus
 EOF
 ```
 
-Cho `zsh`:
+**GNOME, Zsh:**
 
 ```sh
 cat <<EOF >> ~/.zprofile
@@ -1099,20 +1229,42 @@ export GLFW_IM_MODULE=ibus
 EOF
 ```
 
-Sau đó, đăng xuất và đăng nhập lại hoặc chạy lệnh sau để nạp lại shell:
+**KDE Plasma, Bash:**
 
 ```sh
-source ~/.bashrc
-source ~/.zshrc
+cat <<EOF >> ~/.bash_profile
+export XMODIFIERS=@im=fcitx
+export GLFW_IM_MODULE=ibus
+EOF
 ```
 
-5) Khởi động cùng GNOME (autostart).
+**KDE Plasma, Zsh:**
 
-Trên GNOME, bạn có thể bật tự động chạy Fcitx 5:
+```sh
+cat <<EOF >> ~/.zprofile
+export XMODIFIERS=@im=fcitx
+export GLFW_IM_MODULE=ibus
+EOF
+```
+
+Sau đó đăng xuất và đăng nhập lại để áp dụng cấu hình cho phiên mới.
+
+5) Tự động khởi chạy Fcitx 5 (autostart).
+
+**GNOME:**
 
 - `GNOME Tweaks` -> `Startup Applications` -> `Add` -> `Fcitx 5`
 
-6) Cấu hình cuối cùng trong GNOME.
+**KDE Plasma:**
+
+Trên KDE Plasma Wayland, hãy chọn **một trong hai cách** để khởi chạy Fcitx 5:
+
+1. Nếu `Fcitx 5` xuất hiện trong `System Settings` -> `Keyboard` -> `Virtual Keyboard`, chọn `Fcitx 5` và áp dụng. Plasma sẽ quản lý việc khởi chạy bộ gõ; không cần thêm Fcitx 5 vào Autostart.
+2. Nếu không dùng cách trên, mở `System Settings` -> `Autostart` -> `Add` -> `Add Application`, rồi chọn `Fcitx 5`.
+
+Không bật cả hai cách cùng lúc để tránh khởi chạy trùng. Tên và vị trí các mục có thể khác nhau tùy phiên bản KDE Plasma.
+
+6) Cấu hình bộ gõ Fcitx5 trên GNOME và KDE Plasma.
 
 Sau khi đăng xuất và đăng nhập lại:
 
@@ -1150,11 +1302,35 @@ Nếu mọi thứ hoạt động, bạn sẽ thấy tiếng Việt được nh�
 
 - Fcitx5 Lotus rất tốt cho GNOME + Fedora + Wayland hoặc X11.
 - Nếu dùng `Wayland`, nên kiểm tra lại cấu hình IM trong môi trường GNOME để đảm bảo `Fcitx5` được chọn là input method mặc định.
-- Với `zsh`, `bash`, và các tool CLI, biến môi trường ở trên giúp ứng dụng Qt/GTK nhận diện đúng bộ gõ.
+- Biến trong cấu hình shell có thể không được truyền đến ứng dụng khởi chạy từ menu đồ họa.
+
+Trên Wayland, nên bật Xwayland nếu môi trường desktop hỗ trợ. Fcitx có thể dùng cửa sổ X11 dự phòng để hiển thị bảng gõ ở vị trí phù hợp; Xwayland cũng có thể giúp khắc phục một số vấn đề với trình soạn thảo rich text như Google Docs.
+
+Với Chromium hoặc ứng dụng Electron, có thể thử các tùy chọn Wayland IME khi khởi chạy (hỗ trợ tùy phiên bản ứng dụng):
+
+```text
+--enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime
+```
+
+Với Firefox, có thể thử chạy bằng frontend Wayland:
+
+```sh
+GTK_IM_MODULE=wayland firefox
+```
+
+Nếu dùng Kanata, thêm thiết bị Lotus vào danh sách loại trừ trong cấu hình `defcfg` hiện có:
+
+```lisp
+linux-dev-names-exclude ("Lotus-Uinput-Server")
+```
 
 Rồi thêm các biến môi trường cho bash/zsh, đăng xuất và đăng nhập lại, sau đó vào `fcitx5-configtool` để bật `Lotus` làm bộ gõ mặc định.
 
-Nguồn tham khảo: https://github.com/LotusInputMethod/fcitx5-lotus https://lotusinputmethod.github.io/#installation
+**Tham khảo:**
+
+- [Trang chủ Lotus Input Method](https://lotusinputmethod.github.io/)
+- [Hướng dẫn cài đặt Lotus](https://lotusinputmethod.github.io/#installation)
+- [Mã nguồn Fcitx5 Lotus](https://github.com/LotusInputMethod/fcitx5-lotus)
 
 ## Cài đặt fastfetch
 
